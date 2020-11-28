@@ -1,6 +1,8 @@
 # `ljc`
 Lovejoy compiler for the ARMv8-A AArch64 instruction set.
 
+![C/2014 Q2](https://upload.wikimedia.org/wikipedia/commons/5/55/C2014_Q2.jpg)
+
 ## Pipeline
 - Parse with incremental lexing.
 - Macro expansion onto parse tree, spawn new compiler instance for ACE*.
@@ -20,6 +22,7 @@ Lovejoy compiler for the ARMv8-A AArch64 instruction set.
 - Minimal grammar, very few keywords, instead very strong macro system.
 - Patter matching.
 - Strong type system, with inference, (exact system to be decided).
+- GADTs (Generalized algebraic datatypes), but distinct records and union syntax too (?).
 - Fat pointers.
 - Closures.
 - Overloading.
