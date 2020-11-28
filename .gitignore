@@ -29,6 +29,7 @@
 *.dylib
 
 # Executables
+ljc
 *.exe
 *.out
 *.app
