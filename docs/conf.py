@@ -46,13 +46,19 @@ html_theme = 'alabaster'
 #html_theme = 'bizstyle'
 #html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+html_logo = '_static/lovejoy.png'
+html_favicon = '_static/lovejoy_icon.png'
 html_css_files = [
     'styles.css',
     'fonts.css'
+]
+html_js_files = [
+    'onload.js'
 ]
 html_theme_options = {
     'github_user': 'Demonstrandum',
     'github_repo': 'ljc',
     'github_type': 'star',
-    'github_count': 'true'
+    'github_count': 'true',
+    'logo': None
 }

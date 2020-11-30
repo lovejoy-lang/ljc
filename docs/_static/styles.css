@@ -42,6 +42,10 @@ dd::before, dd::after {
 
 }
 
+p.logo {
+	display: none;
+}
+
 div.body h1, div.body h2, div.body h3,
 div.body h4, div.body h5, div.body h6 {
 	font-family: var(--disp);
