@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a18d295a837ac71add5578860b55e5502:
+
+Define STR
+==========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: STR

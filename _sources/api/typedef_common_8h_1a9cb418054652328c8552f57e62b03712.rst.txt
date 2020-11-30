@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a9cb418054652328c8552f57e62b03712:
+
+Typedef i16
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: i16

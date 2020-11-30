@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a509e2a08aaa04bc55a2adab499d7d85a:
+
+Define V_MAJOR
+==============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: V_MAJOR

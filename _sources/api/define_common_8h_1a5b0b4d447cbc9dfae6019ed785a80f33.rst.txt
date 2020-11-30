@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a5b0b4d447cbc9dfae6019ed785a80f33:
+
+Define record
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: record

@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1aa745da6284a1d2d21d94a71635a795d4:
+
+Typedef u32
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: u32

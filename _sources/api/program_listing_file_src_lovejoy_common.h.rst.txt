@@ -1,0 +1,78 @@
+
+.. _program_listing_file_src_lovejoy_common.h:
+
+Program Listing for File common.h
+=================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_lovejoy_common.h>` (``src/lovejoy/common.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   
+   #include <stdlib.h>
+   #include <stdbool.h>
+   #include <stdint.h>
+   #include <stddef.h>
+   
+   /* Misc macros */
+   #define STR_HELPER(x) #x
+   #define STR(x) STR_HELPER(x)
+   
+   /* Version number */
+   #define V_MAJOR 0
+   #define V_MINOR 1
+   #define V_TINY  0
+   
+   #define VERSION "v" STR(V_MAJOR) "." STR(V_MINOR) "." STR(V_TINY)
+   
+   /* Syntax helpers */
+   #define newtype(NT, T) typedef struct __##NT { T value; } NT
+   #define record(S) typedef struct S S
+   
+   /* Types */
+   newtype(atomic_t, int);
+   
+   typedef  __int8_t i8;
+   typedef __uint8_t u8;
+   
+   typedef u8 byte;
+   
+   typedef  __int16_t i16;
+   typedef __uint16_t u16;
+   
+   typedef  __int32_t i32;
+   typedef __uint32_t u32;
+   
+   typedef u32 rune;
+   
+   #if (_MIPS_SZLONG == 64)
+       typedef   signed long i64;
+       typedef unsigned long u64;
+   #else
+       typedef  __int64_t i64;
+       typedef __uint64_t u64;
+   #endif
+   
+   #ifdef __SIZEOF_INT128__
+       typedef  __int128_t i128;
+       typedef __uint128_t u128;
+   #endif
+   
+   typedef ptrdiff_t isize;
+   typedef    size_t usize; 
+   
+   typedef  intptr_t iptr;
+   typedef uintptr_t uptr; 
+   
+   typedef  float f32;
+   typedef double f64;
+   
+   
+   /* NOTES: */
+   /*
+    * Read this: https://www.cprogramming.com/tutorial/unicode.html
+    * by Jeff Bezanson, about modern unicode in C.
+    *
+    */

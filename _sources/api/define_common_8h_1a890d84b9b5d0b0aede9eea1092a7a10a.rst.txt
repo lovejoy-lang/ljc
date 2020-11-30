@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a890d84b9b5d0b0aede9eea1092a7a10a:
+
+Define STR_HELPER
+=================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: STR_HELPER

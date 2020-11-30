@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a781c2bad5a2975bbee603b5c82f1ba1d:
+
+Define newtype
+==============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: newtype

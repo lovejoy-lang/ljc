@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1abf2c3265a418950e081576cce7314cde:
+
+Define V_TINY
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: V_TINY

@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1ad42ac94c77c1c5c274577d22c547c0ce:
+
+Typedef u8
+==========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: u8

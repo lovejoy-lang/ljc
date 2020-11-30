@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a46dcd17713e61f23856c4df33f3bbd4e:
+
+Typedef rune
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: rune

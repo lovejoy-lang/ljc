@@ -1,0 +1,90 @@
+:root {
+	--mono: 'GT-Pressura-Mono', monospace;
+	--disp: 'Alp-Sta', serif;
+	--body:  'GT-Corporate-Web', 'GT-Corporate-Web-LCGV', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+.headerlink {
+	visibility: visible !important;
+}
+
+body, div.body {
+	color: #000;
+	font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.375;
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -webkit-font-kerning: normal;
+    font-kerning: normal;
+    font-feature-settings: "kern" 1,"pnum" 1;
+}
+
+dd::before {
+	content: "/*\00a0";
+}
+dd::after {
+	content: " */";
+}
+dd::before, dd::after {
+	color: #777;
+	font-family: var(--mono);
+	margin-left: -10pt;
+
+}
+
+p.logo {
+	display: none;
+}
+
+div.body h1, div.body h2, div.body h3,
+div.body h4, div.body h5, div.body h6 {
+	font-family: var(--disp);
+	font-weight: 300;
+}
+
+div.topic {
+	background-color: #00000005;
+	border: 1pt solid #00000017;
+	padding: 1em 0em 2em 1em;
+	border-radius: 4pt;
+}
+
+code, pre, .code, .pre {
+	font-family: var(--mono);
+}
+
+code {
+	background-color: #f3f3f3;
+	border: 1pt solid #e7e7e7;
+	border-radius: 4pt;
+	padding: 0 0.2em;
+}
+
+h1 code, h2 code, h3 code,
+h4 code, h5 code, h6 code,
+code.descname {
+	border: none;
+}
+
+div.sphinxsidebar a {
+	font-weight: inherit;
+	color: #5d6c9a;
+}
+
+div.sphinxsidebar h3,
+div.sphinxsidebar h4,
+div.sphinxsidebar h1 {
+	font-family: var(--disp);
+	font-weight: 300;
+}
+

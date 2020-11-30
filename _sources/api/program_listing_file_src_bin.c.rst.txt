@@ -1,0 +1,28 @@
+
+.. _program_listing_file_src_bin.c:
+
+Program Listing for File bin.c
+==============================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_bin.c>` (``src/bin.c``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   
+   #include <lovejoy/common.h>
+   #include <stdio.h>
+   
+   i32 main(i32 argc, byte **argv)
+   {
+       puts("ljc - Lovejoy Compiler, " VERSION ".");
+   
+       for (i32 i = 1; i < argc; ++i)
+           if (*argv[i] == '-')
+               printf("Option: %s\n", argv[i]);
+           else
+               printf("Source file: %s\n", argv[i]);
+   
+       return EXIT_SUCCESS;
+   }

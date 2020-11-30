@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a93a1409151dffdb2c15147214279817a:
+
+Typedef uptr
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: uptr

@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a1436c3bda94547287cbc2d66af2606e3:
+
+Typedef iptr
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: iptr

@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a2a3d7d03160a26ad597674a9b21fd02b:
+
+Typedef atomic_t
+================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: atomic_t

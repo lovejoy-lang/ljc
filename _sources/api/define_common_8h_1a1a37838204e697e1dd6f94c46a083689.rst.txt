@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a1a37838204e697e1dd6f94c46a083689:
+
+Define V_MINOR
+==============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: V_MINOR

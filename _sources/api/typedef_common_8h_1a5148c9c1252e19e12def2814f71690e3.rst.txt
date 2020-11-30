@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a5148c9c1252e19e12def2814f71690e3:
+
+Typedef usize
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: usize

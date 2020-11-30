@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File common.h &#8212; Lovejoy Compiler 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/onload.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="shortcut icon" href="../_static/lovejoy_icon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-common-h">
+<span id="program-listing-file-src-lovejoy-common-h"></span><h1>Program Listing for File common.h<a class="headerlink" href="#program-listing-for-file-common-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_lovejoy_common.h.html#file-src-lovejoy-common-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/lovejoy/common.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdbool.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp"></span>
+
+<span class="cm">/* Misc macros */</span>
+<span class="cp">#define STR_HELPER(x) #x</span>
+<span class="cp">#define STR(x) STR_HELPER(x)</span>
+
+<span class="cm">/* Version number */</span>
+<span class="cp">#define V_MAJOR 0</span>
+<span class="cp">#define V_MINOR 1</span>
+<span class="cp">#define V_TINY  0</span>
+
+<span class="cp">#define VERSION &quot;v&quot; STR(V_MAJOR) &quot;.&quot; STR(V_MINOR) &quot;.&quot; STR(V_TINY)</span>
+
+<span class="cm">/* Syntax helpers */</span>
+<span class="cp">#define newtype(NT, T) typedef struct __##NT { T value; } NT</span>
+<span class="cp">#define record(S) typedef struct S S</span>
+
+<span class="cm">/* Types */</span>
+<span class="n">newtype</span><span class="p">(</span><span class="n">atomic_t</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+
+<span class="k">typedef</span>  <span class="n">__int8_t</span> <span class="n">i8</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">__uint8_t</span> <span class="n">u8</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">u8</span> <span class="n">byte</span><span class="p">;</span>
+
+<span class="k">typedef</span>  <span class="n">__int16_t</span> <span class="n">i16</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">__uint16_t</span> <span class="n">u16</span><span class="p">;</span>
+
+<span class="k">typedef</span>  <span class="n">__int32_t</span> <span class="n">i32</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">__uint32_t</span> <span class="n">u32</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">u32</span> <span class="n">rune</span><span class="p">;</span>
+
+<span class="cp">#if (_MIPS_SZLONG == 64)</span>
+    <span class="k">typedef</span>   <span class="kt">signed</span> <span class="kt">long</span> <span class="n">i64</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">u64</span><span class="p">;</span>
+<span class="cp">#else</span>
+    <span class="k">typedef</span>  <span class="n">__int64_t</span> <span class="n">i64</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">__uint64_t</span> <span class="n">u64</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#ifdef __SIZEOF_INT128__</span>
+    <span class="k">typedef</span>  <span class="n">__int128_t</span> <span class="n">i128</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">__uint128_t</span> <span class="n">u128</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+<span class="k">typedef</span> <span class="kt">ptrdiff_t</span> <span class="n">isize</span><span class="p">;</span>
+<span class="k">typedef</span>    <span class="kt">size_t</span> <span class="n">usize</span><span class="p">;</span>
+
+<span class="k">typedef</span>  <span class="kt">intptr_t</span> <span class="n">iptr</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">uintptr_t</span> <span class="n">uptr</span><span class="p">;</span>
+
+<span class="k">typedef</span>  <span class="kt">float</span> <span class="n">f32</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">double</span> <span class="n">f64</span><span class="p">;</span>
+
+
+<span class="cm">/* NOTES: */</span>
+<span class="cm">/*</span>
+<span class="cm"> * Read this: https://www.cprogramming.com/tutorial/unicode.html</span>
+<span class="cm"> * by Jeff Bezanson, about modern unicode in C.</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/lovejoy.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">Lovejoy Compiler</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Demonstrandum&repo=ljc&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="root.html">Lovejoy Compiler API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+    &#127279; Copyleft all wrongs reserved
+</div>
+
+  </body>
+</html>
