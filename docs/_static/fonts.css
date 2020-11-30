@@ -1,0 +1,126 @@
+@font-face {
+    font-family: GT-Corporate-Web;
+    src: url(https://www.grillitype.com/assets/fonts/gt-corporate/GT-Corporate-Web.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-corporate/GT-Corporate-Web.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-corporate/GT-Corporate-Web.ttf) format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: GT-Corporate-Web-LCGV;
+    src: url(https://www.grillitype.com/assets/fonts/gt-corporate/GT-Corporate-LCGV.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-corporate/GT-Corporate-LCGV.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-corporate/GT-Corporate-LCGV.ttf) format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Alp-Sta;
+    src: url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Thin.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Thin.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Thin.ttf) format("truetype");
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Alp-Sta;
+    src: url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Thin-Italic.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Thin-Italic.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Thin-Italic.ttf) format("truetype");
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: Alp-Sta;
+    src: url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Light.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Light.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Light.ttf) format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Alp-Sta;
+    src: url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Light-Italic.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Light-Italic.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Light-Italic.ttf) format("truetype");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: Alp-Sta-Regular;
+    src: url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Regular.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Regular.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Regular.ttf) format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Alp-Sta;
+    src: url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Regular-Italic.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Regular-Italic.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Regular-Italic.ttf) format("truetype");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: Alp-Sta;
+    src: url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Medium.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Medium.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Medium.ttf) format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Alp-Sta;
+    src: url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Medium-Italic.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Medium-Italic.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Medium-Italic.ttf) format("truetype");
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: Alp-Sta;
+    src: url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Bold.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Bold.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Bold.ttf) format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Alp-Sta;
+    src: url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Bold-Italic.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Bold-Italic.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-alpina/GT-Alpina-Standard-Bold-Italic.ttf) format("truetype");
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: GT-Pressura-Mono;
+    src: url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Light.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Light.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Light.ttf) format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: GT-Pressura-Mono;
+    src: url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Light-Italic.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Light-Italic.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Light-Italic.ttf) format("truetype");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: GT-Pressura-Mono;
+    src: url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Regular.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Regular.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Regular.ttf) format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: GT-Pressura-Mono;
+    src: url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Regular-Italic.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Regular-Italic.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Regular-Italic.ttf) format("truetype");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: GT-Pressura-Mono;
+    src: url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Bold.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Bold.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Bold.ttf) format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: GT-Pressura-Mono;
+    src: url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Bold-Italic.woff2) format("woff2"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Bold-Italic.woff) format("woff"),url(https://www.grillitype.com/assets/fonts/gt-pressura/GT-Pressura-LCGV-Mono-Bold-Italic.ttf) format("truetype");
+    font-weight: 700;
+    font-style: italic;
+}
+

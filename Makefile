@@ -2,7 +2,8 @@ CC := gcc
 OPT := -O3
 WARN := -Wall -Wpedantic -Wextra -Wshadow
 LINKS := -lpthread
-CFLAGS := $(WARN) $(OPT)
+INCLUDES := -Isrc
+CFLAGS := $(WARN) $(OPT) $(INCLUDES)
 TARGET := ljc
 OBJS := bin.o
 

@@ -1,3 +1,7 @@
+//! @file common.h
+//! Defines basic macros and datatypes which are in
+//! common through-out the whole project.
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -19,18 +23,31 @@
 #define record(S) typedef struct S S
 
 /* Types */
+/// Useful for resource counting etc.
 newtype(atomic_t, int);
 
-typedef   signed char i8;
-typedef unsigned char u8;
-typedef   signed short i16;
-typedef unsigned short u16;
-typedef   signed int i32;
-typedef unsigned int u32;
+typedef  __int8_t i8;
+typedef __uint8_t u8;
+
+/// Don't use `char' when you want `byte'.
+typedef u8 byte;
+
+typedef  __int16_t i16;
+typedef __uint16_t u16;
+
+typedef  __int32_t i32;
+typedef __uint32_t u32;
+
+/// Unicode codepoint (32 bits), don't use `char',
+/// and definitely do not use `wchar_t'.
+typedef u32 rune;
 
 #if (_MIPS_SZLONG == 64)
 	typedef   signed long i64;
 	typedef unsigned long u64;
+#else
+	typedef  __int64_t i64;
+	typedef __uint64_t u64;
 #endif
 
 #ifdef __SIZEOF_INT128__
@@ -39,10 +56,18 @@ typedef unsigned int u32;
 #endif
 
 typedef ptrdiff_t isize;
-typedef    size_t usize;
+typedef    size_t usize; ///< Use for storing array indices or object sizes.
 
 typedef  intptr_t iptr;
-typedef uintptr_t uptr;
+typedef uintptr_t uptr; ///< Large enough to store a pointer, like (void *).
 
 typedef  float f32;
 typedef double f64;
+
+
+/* NOTES: */
+/*
+ * Read this: https://www.cprogramming.com/tutorial/unicode.html
+ * by Jeff Bezanson, about modern unicode in C.
+ *
+ */

@@ -1,7 +1,7 @@
 # `ljc`
 Lovejoy compiler for the ARMv8-A AArch64 instruction set.
 
-![C/2014 Q2](https://upload.wikimedia.org/wikipedia/commons/5/55/C2014_Q2.jpg)
+![C/2014 Q2](./docs/_static/lovejoy.png)
 
 ## Pipeline
 - Parse with incremental lexing.
