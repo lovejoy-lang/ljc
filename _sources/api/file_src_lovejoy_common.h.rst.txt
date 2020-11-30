@@ -34,6 +34,8 @@ Includes
 --------
 
 
+- ``limits.h``
+
 - ``stdbool.h``
 
 - ``stddef.h``
@@ -64,6 +66,10 @@ Defines
 -------
 
 
+- :ref:`exhale_define_common_8h_1a62984e9ab4013c8b0c1b3be5338bd3ff`
+
+- :ref:`exhale_define_common_8h_1a62984e9ab4013c8b0c1b3be5338bd3ff`
+
 - :ref:`exhale_define_common_8h_1a781c2bad5a2975bbee603b5c82f1ba1d`
 
 - :ref:`exhale_define_common_8h_1a5b0b4d447cbc9dfae6019ed785a80f33`
@@ -86,8 +92,6 @@ Typedefs
 
 
 - :ref:`exhale_typedef_common_8h_1a2a3d7d03160a26ad597674a9b21fd02b`
-
-- :ref:`exhale_typedef_common_8h_1ab862f2d862051450cf946971b59176da`
 
 - :ref:`exhale_typedef_common_8h_1a5f6906312a689f27d70e9d086649d3fd`
 
@@ -118,4 +122,13 @@ Typedefs
 - :ref:`exhale_typedef_common_8h_1a93a1409151dffdb2c15147214279817a`
 
 - :ref:`exhale_typedef_common_8h_1a5148c9c1252e19e12def2814f71690e3`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_common_8h_1a3e70998d8910bff599abc4a0fbfcd13d`
+
+- :ref:`exhale_variable_common_8h_1a82b52bf2b45e214a8f2100ebfdf1aee4`
 

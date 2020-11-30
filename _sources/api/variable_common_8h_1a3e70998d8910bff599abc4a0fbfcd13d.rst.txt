@@ -1,0 +1,13 @@
+.. _exhale_variable_common_8h_1a3e70998d8910bff599abc4a0fbfcd13d:
+
+Variable __uint8_t
+==================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: __uint8_t

@@ -18,11 +18,35 @@ Functions
 .. toctree::
    :maxdepth: 5
 
-   function_bin_8c_1a083ddd0be7cbfdc69e09b3ba79b2bc87.rst
+   function_bin_8c_1a4730686ddd8423c27f2f4b033a6803a3.rst
+
+Variables
+*********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   variable_common_8h_1a3e70998d8910bff599abc4a0fbfcd13d.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   variable_common_8h_1a82b52bf2b45e214a8f2100ebfdf1aee4.rst
 
 Defines
 *******
 
+
+.. toctree::
+   :maxdepth: 5
+
+   define_common_8h_1a62984e9ab4013c8b0c1b3be5338bd3ff.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   define_common_8h_1a62984e9ab4013c8b0c1b3be5338bd3ff.rst
 
 .. toctree::
    :maxdepth: 5
@@ -72,11 +96,6 @@ Typedefs
    :maxdepth: 5
 
    typedef_common_8h_1a2a3d7d03160a26ad597674a9b21fd02b.rst
-
-.. toctree::
-   :maxdepth: 5
-
-   typedef_common_8h_1ab862f2d862051450cf946971b59176da.rst
 
 .. toctree::
    :maxdepth: 5

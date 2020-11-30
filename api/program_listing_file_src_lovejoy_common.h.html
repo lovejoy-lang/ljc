@@ -45,6 +45,7 @@
 <span class="cp">#include</span> <span class="cpf">&lt;stdbool.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;limits.h&gt;</span><span class="cp"></span>
 
 <span class="cm">/* Misc macros */</span>
 <span class="cp">#define STR_HELPER(x) #x</span>
@@ -64,10 +65,25 @@
 <span class="cm">/* Types */</span>
 <span class="n">newtype</span><span class="p">(</span><span class="n">atomic_t</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
 
-<span class="k">typedef</span>  <span class="n">__int8_t</span> <span class="n">i8</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">__uint8_t</span> <span class="n">u8</span><span class="p">;</span>
+<span class="cp">#define __uchar8 char</span>
 
-<span class="k">typedef</span> <span class="n">u8</span> <span class="n">byte</span><span class="p">;</span>
+<span class="cp">#if (CHAR_BIT == 8)</span>
+    <span class="k">typedef</span>   <span class="kt">signed</span> <span class="kt">char</span> <span class="n">i8</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">u8</span><span class="p">;</span>
+
+    <span class="cp">#if (CHAR_MIN &lt; 0)</span>
+        <span class="cp">#undef  __uchar8</span>
+        <span class="cp">#define __uchar8 unsigned char</span>
+    <span class="cp">#endif</span>
+<span class="cp">#else</span>
+    <span class="k">typedef</span>  <span class="n">__int8_t</span> <span class="n">i8</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">__uint8_t</span> <span class="n">u8</span><span class="p">;</span>
+
+    <span class="cp">#undef  __uchar8</span>
+    <span class="cp">#define __uchar8 __uint8_t;</span>
+<span class="cp">#endif</span>
+
+<span class="k">typedef</span> <span class="n">__uchar8</span> <span class="n">byte</span><span class="p">;</span>
 
 <span class="k">typedef</span>  <span class="n">__int16_t</span> <span class="n">i16</span><span class="p">;</span>
 <span class="k">typedef</span> <span class="n">__uint16_t</span> <span class="n">u16</span><span class="p">;</span>

@@ -1,0 +1,13 @@
+.. _exhale_function_bin_8c_1a4730686ddd8423c27f2f4b033a6803a3:
+
+Function main
+=============
+
+- Defined in :ref:`file_src_bin.c`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: main(i32, const byte **)

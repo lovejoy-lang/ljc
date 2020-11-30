@@ -14,7 +14,7 @@ Program Listing for File bin.c
    #include <lovejoy/common.h>
    #include <stdio.h>
    
-   i32 main(i32 argc, byte **argv)
+   i32 main(i32 argc, const byte **argv)
    {
        puts("ljc - Lovejoy Compiler, " VERSION ".");
    

@@ -1,0 +1,13 @@
+.. _exhale_variable_common_8h_1a82b52bf2b45e214a8f2100ebfdf1aee4:
+
+Variable byte
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: byte
