@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stddef.h>
+#include <limits.h>
 
 /* Misc macros */
 #define STR_HELPER(x) #x
@@ -26,11 +27,26 @@
 /// Useful for resource counting etc.
 newtype(atomic_t, int);
 
-typedef  __int8_t i8;
-typedef __uint8_t u8;
+#define __uchar8 char
+
+#if (CHAR_BIT == 8)
+	typedef   signed char i8;
+	typedef unsigned char u8;
+
+	#if (CHAR_MIN < 0)
+		#undef  __uchar8
+		#define __uchar8 unsigned char
+	#endif
+#else
+	typedef  __int8_t i8;
+	typedef __uint8_t u8;
+
+	#undef  __uchar8
+	#define __uchar8 __uint8_t;
+#endif
 
 /// Don't use `char' when you want `byte'.
-typedef u8 byte;
+typedef __uchar8 byte;
 
 typedef  __int16_t i16;
 typedef __uint16_t u16;

@@ -9,7 +9,7 @@
  * Handle command-line arguments,
  * compile files with given options.
  */
-i32 main(i32 argc, byte **argv)
+i32 main(i32 argc, const byte **argv)
 {
 	puts("ljc - Lovejoy Compiler, " VERSION ".");
 
