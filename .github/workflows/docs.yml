@@ -15,7 +15,7 @@ jobs:
     # Standard drop-in approach that should work for most people.
     - uses: ammaraskar/sphinx-action@master
       with:
-        pre-build-command: "apt-get update -y && apt-get install -y doxygen"
+        pre-build-command: "apt-get update -y && apt-get install -y doxygen python-dev build-essential && /usr/local/bin/python -m pip install --upgrade pip && pip --upgrade sphinx"
         docs-folder: "docs/"
     # Great extra actions to compose with:
     # Create an artifact of the html output.
