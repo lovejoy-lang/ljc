@@ -66,9 +66,9 @@ Defines
 -------
 
 
-- :ref:`exhale_define_common_8h_1a62984e9ab4013c8b0c1b3be5338bd3ff`
+- :ref:`exhale_define_common_8h_1a56fb1fb2cb4eb61002a8b03f90dc28ab`
 
-- :ref:`exhale_define_common_8h_1a62984e9ab4013c8b0c1b3be5338bd3ff`
+- :ref:`exhale_define_common_8h_1a56fb1fb2cb4eb61002a8b03f90dc28ab`
 
 - :ref:`exhale_define_common_8h_1a781c2bad5a2975bbee603b5c82f1ba1d`
 

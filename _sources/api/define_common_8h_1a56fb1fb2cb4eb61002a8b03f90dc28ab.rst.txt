@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a56fb1fb2cb4eb61002a8b03f90dc28ab:
+
+Define __UCHAR8__
+=================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: __UCHAR8__
