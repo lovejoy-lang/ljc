@@ -9,8 +9,8 @@ Lovejoy compiler for the ARMv8-A AArch64 instruction set.
 - Generate HIR, similar to AST, closest to source.
 - Type checking and semantic analysis.
 - Reduce to MIR, mid-level, simplistic closer to machine-code representation.
-- Optimisations (TCO, LICM, etc.)
-- Peephole optimisations.
+- Optimizations (TCO, LICM, etc.)
+- Peephole optimizations.
 - Final translation into ARM machine code.
 
 *[Include a graphic here representing pipeline]*
@@ -20,7 +20,7 @@ Lovejoy compiler for the ARMv8-A AArch64 instruction set.
 - Minimal, low-level, simple, C inspired.
 - ACE *(Arbitrary Compile-time Execution)* (May require implementing a viritual machine, which could also be used for a REPL).
 - Minimal grammar, very few keywords, instead very strong macro system.
-- Patter matching.
+- Pattern matching.
 - Strong type system, with inference, (exact system to be decided).
 - GADTs (Generalized algebraic datatypes), but distinct records and union syntax too (?).
 - Fat pointers.
