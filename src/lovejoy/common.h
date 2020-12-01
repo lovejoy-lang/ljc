@@ -45,8 +45,7 @@ newtype(atomic_t, int);
 	#define __UCHAR8__ __uint8_t;
 #endif
 
-/// Don't use `char' when you want `byte'.
-typedef __UCHAR8__ byte;
+typedef __UCHAR8__ byte;  ///< Don't use `char' when you want `byte'.
 
 typedef  __int16_t i16;
 typedef __uint16_t u16;
@@ -58,9 +57,12 @@ typedef __uint32_t u32;
 /// and definitely do not use `wchar_t'.
 typedef u32 rune;
 
-#if (_MIPS_SZLONG == 64)
+#if (__LONG_WIDTH__ == 64)
 	typedef   signed long i64;
 	typedef unsigned long u64;
+#elif (__LONG_LONG_WIDTH__ == 64)
+	typedef   signed long long i64;
+	typedef unsigned long long u64;
 #else
 	typedef  __int64_t i64;
 	typedef __uint64_t u64;
@@ -70,6 +72,7 @@ typedef u32 rune;
 	typedef  __int128_t i128;
 	typedef __uint128_t u128;
 #endif
+
 
 typedef ptrdiff_t isize;
 typedef    size_t usize; ///< Use for storing array indices or object sizes.
