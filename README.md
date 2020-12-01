@@ -3,6 +3,27 @@ Lovejoy compiler for the ARMv8-A AArch64 instruction set.
 
 ![C/2014 Q2](./docs/_static/lovejoy.png)
 
+## Code Documentation
+
+Compiler documentation can be found at [lovejoy-lang.github.io/ljc](https://lovejoy-lang.github.io/ljc/).
+It may also be compiled and browsed locally, see [docs/README.md](./docs/README.md).
+
+## Language Specification
+
+See [LANGUAGE_SPEC_DRAFT.md](./LANGUAGE_SPEC_DRAFT.md)
+
+## Compiler Usage
+
+In the root of this repository, run `make` to build `ljc`,
+```cosole
+$ make
+```
+then use the generated binary,
+```console
+$ ./ljc my-source.lj -o my-binary
+```
+
+
 ## Pipeline
 - Parse with incremental lexing.
 - Macro expansion onto parse tree, spawn new compiler instance for ACE*.

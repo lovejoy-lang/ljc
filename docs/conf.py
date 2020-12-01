@@ -56,7 +56,7 @@ html_js_files = [
     'onload.js'
 ]
 html_theme_options = {
-    'github_user': 'Demonstrandum',
+    'github_user': 'lovejoy-lang',
     'github_repo': 'ljc',
     'github_type': 'star',
     'github_count': 'true',
