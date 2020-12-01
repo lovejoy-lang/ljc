@@ -93,9 +93,12 @@
 
 <span class="k">typedef</span> <span class="n">u32</span> <span class="n">rune</span><span class="p">;</span>
 
-<span class="cp">#if (_MIPS_SZLONG == 64)</span>
+<span class="cp">#if (__LONG_WIDTH__ == 64)</span>
     <span class="k">typedef</span>   <span class="kt">signed</span> <span class="kt">long</span> <span class="n">i64</span><span class="p">;</span>
     <span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">u64</span><span class="p">;</span>
+<span class="cp">#elif (__LONG_LONG_WIDTH__ == 64)</span>
+    <span class="k">typedef</span>   <span class="kt">signed</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">i64</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">u64</span><span class="p">;</span>
 <span class="cp">#else</span>
     <span class="k">typedef</span>  <span class="n">__int64_t</span> <span class="n">i64</span><span class="p">;</span>
     <span class="k">typedef</span> <span class="n">__uint64_t</span> <span class="n">u64</span><span class="p">;</span>
@@ -105,6 +108,7 @@
     <span class="k">typedef</span>  <span class="n">__int128_t</span> <span class="n">i128</span><span class="p">;</span>
     <span class="k">typedef</span> <span class="n">__uint128_t</span> <span class="n">u128</span><span class="p">;</span>
 <span class="cp">#endif</span>
+
 
 <span class="k">typedef</span> <span class="kt">ptrdiff_t</span> <span class="n">isize</span><span class="p">;</span>
 <span class="k">typedef</span>    <span class="kt">size_t</span> <span class="n">usize</span><span class="p">;</span>
