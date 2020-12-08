@@ -6,7 +6,7 @@ INCLUDES := -Isrc
 GCC_OPTIONS := -funsigned-char
 CFLAGS := $(WARN) $(OPT) $(INCLUDES) $(GCC_OPTIONS)
 TARGET := ljc
-OBJS := bin.o
+OBJS := bin.o lexer.o display.o
 
 ifeq ($(PREFIX),)
 	PREFIX := /usr/local
@@ -23,8 +23,14 @@ install: $(TARGET)
 	install -d $(PREFIX)/bin
 	install -m 755 $(TARGET) $(PREFIX)/bin
 
-bin.o:
+bin.o: lexer.o display.o
 	$(CC) -c $(CFLAGS) src/bin.c $(LINKS)
+
+lexer.o:
+	$(CC) -c $(CFLAGs) src/lovejoy/lexer.c $(LINKS)
+
+display.o:
+	$(CC) -c $(CFLAGS) src/lovejoy/display.c $(LINKS)
 
 clean:
 	@echo "Cleaning build."

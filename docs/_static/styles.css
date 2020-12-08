@@ -29,17 +29,20 @@ body, div.body {
     font-feature-settings: "kern" 1,"pnum" 1;
 }
 
-dd::before {
+dd:empty {
+	display: none;
+}
+
+.cpp > dd::before {
 	content: "/*\00a0";
 }
-dd::after {
+.cpp > dd::after {
 	content: " */";
 }
 dd::before, dd::after {
 	color: #777;
 	font-family: var(--mono);
 	margin-left: -10pt;
-
 }
 
 p.logo {

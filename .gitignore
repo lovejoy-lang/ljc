@@ -1,3 +1,6 @@
+# Test source files
+test_*
+
 # Docs
 docs/_build/
 docs/xml

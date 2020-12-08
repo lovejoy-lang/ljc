@@ -1,0 +1,11 @@
+a = 3
+f = 1
+
+-- This is a single line comment
+b = 4
+
+-* Everything
+in between here
+will be ignored *-
+
+c = 6

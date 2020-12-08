@@ -2,6 +2,9 @@
 //! Defines basic macros and datatypes which are in
 //! common through-out the whole project.
 
+#ifndef COMMON_HEADER
+#define COMMON_HEADER
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -20,12 +23,18 @@
 #define VERSION "v" STR(V_MAJOR) "." STR(V_MINOR) "." STR(V_TINY)
 
 /* Syntax helpers */
+#define unless(cond) if (!(cond))
+#define until(cond) while (!(cond))
 #define newtype(NT, T) typedef struct __##NT { T value; } NT
-#define record(S) typedef struct S S
+#define unqualify(D, T) typedef D T T
 
 /* Types */
 /// Useful for resource counting etc.
 newtype(atomic_t, int);
+
+/// The type that occupies no space.
+/// Thanks to Terry for this one.
+typedef void u0;
 
 #define __UCHAR8__ char
 
@@ -80,9 +89,14 @@ typedef    size_t usize; ///< Use for storing array indices or object sizes.
 typedef  intptr_t iptr;
 typedef uintptr_t uptr; ///< Large enough to store a pointer, like (void *).
 
-typedef  float f32;
-typedef double f64;
 
+#ifdef __STDC_IEC_559__
+	typedef  float f32;
+	typedef double f64;
+#endif
+
+typedef __float80 f80;
+typedef __float128 f128;
 
 /* NOTES: */
 /*
@@ -90,3 +104,5 @@ typedef double f64;
  * by Jeff Bezanson, about modern unicode in C.
  *
  */
+
+#endif

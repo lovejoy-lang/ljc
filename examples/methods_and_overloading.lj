@@ -1,0 +1,38 @@
+import io::{self, puts}
+
+Vec2D := record {
+	x : f64 = 0
+	y : f64 = 0
+}
+
+Vec3D := record {
+	x : f64
+	y : f64
+	z : f64
+}
+
+-- Self key-word allows use of `.' operator.
+add(self: Vec2D, other: Vec2D): Vec2D
+	= Vec2D(self.x + other.x, self.y + other.y)
+
+add(self: Vec3D, other: Vec3D): Vec3D
+	= Vec3D(self.x + other.x, self.y + other.y, self.z + other.z)
+
+-*
+ * ptr[]  signifies a fat pointer,
+ * *ptr   signifies a thin regualr pointer,
+ *  ptr?  signigies a nullable pointer.
+ *-
+main(argv[][]: byte): u0 = {
+	puts("Hello, World.")
+
+	u_1 = Vec2D(x = 4, y = 5)
+	u_2 = Vec2D(x = 1, y = 9)
+	assert(u_1.add(u_2) == Vec2D(5, 14))
+
+	v_1 = Vec3D(1, 2, 3)
+	v_2 = Vec3D(5, 4, 3)
+	assert(v_1.add(v_2) == Vec3D(x = 6, y = 6, z = 6))
+
+	exit(0)
+}
