@@ -1,0 +1,13 @@
+.. _exhale_function_lexer_8h_1aff05387e6482b2f20650c5da3046eca2:
+
+Function peek
+=============
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: peek(LexerContext *, u16, const byte *)

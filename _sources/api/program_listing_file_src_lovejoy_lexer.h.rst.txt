@@ -1,0 +1,62 @@
+
+.. _program_listing_file_src_lovejoy_lexer.h:
+
+Program Listing for File lexer.h
+================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_lovejoy_lexer.h>` (``src/lovejoy/lexer.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include "common.h"
+   
+   struct LexerContext {
+       const byte *filename;
+       const byte *lineptr;  
+       usize lineno;
+   };
+   unqualify(struct, LexerContext);
+   
+   extern LexerContext NewLexer;
+   
+   enum TokenType {
+       TT_NUMBER,  
+       TT_STRING,  
+       TT_CHAR,    
+       TT_OPERATOR,
+       TT_IDENT,
+       TT_LPAREN,
+       TT_RPAREN,
+       TT_LBRACKET,
+       TT_RBRACKET,
+       TT_LCURLY,
+       TT_RCURLY,
+       TT_TERM,  
+       TT_NONE 
+   };
+   unqualify(enum, TokenType);
+   
+   struct Lexeme {
+       TokenType type;
+       const byte *start;  
+       const byte *end;    
+       const byte *line;   
+       usize lineno;  
+   };
+   unqualify(struct, Lexeme);
+   
+   usize lexeme_span(const Lexeme *);
+   
+   byte *lexeme_substring(const Lexeme *);
+   
+   TokenType character_type(byte);
+   
+   Lexeme *lex(LexerContext *, const byte *source);
+   
+   Lexeme *peek(LexerContext *, u16 count, const byte *source);
+   
+   u0 lexeme_free(Lexeme *);

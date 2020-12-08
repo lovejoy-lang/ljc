@@ -1,0 +1,13 @@
+.. _exhale_variable_lexer_8h_1a6919137ba7e375ce8d62b7c48b1b3ff1:
+
+Variable NewLexer
+=================
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: NewLexer

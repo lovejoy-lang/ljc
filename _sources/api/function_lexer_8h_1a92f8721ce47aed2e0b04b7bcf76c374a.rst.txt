@@ -1,0 +1,13 @@
+.. _exhale_function_lexer_8h_1a92f8721ce47aed2e0b04b7bcf76c374a:
+
+Function lex
+============
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: lex(LexerContext *, const byte *)

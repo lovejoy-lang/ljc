@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a5cb1bd2c5ce49510372265835944d758:
+
+Define unqualify
+================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: unqualify

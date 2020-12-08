@@ -1,0 +1,13 @@
+.. _exhale_function_lexer_8h_1a15ee16aa94427be108da355ed8ce3023:
+
+Function lexeme_substring
+=========================
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: lexeme_substring(const Lexeme *)

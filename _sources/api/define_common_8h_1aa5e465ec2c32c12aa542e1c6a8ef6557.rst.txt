@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1aa5e465ec2c32c12aa542e1c6a8ef6557:
+
+Define unless
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: unless

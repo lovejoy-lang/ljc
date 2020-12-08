@@ -1,0 +1,13 @@
+.. _exhale_function_bin_8c_1a75a96868e2670019ca1e5cca6b58e0ee:
+
+Function compile_source
+=======================
+
+- Defined in :ref:`file_src_bin.c`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: compile_source(const byte *, const byte *)

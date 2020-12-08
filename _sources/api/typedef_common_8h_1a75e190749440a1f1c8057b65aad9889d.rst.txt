@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a75e190749440a1f1c8057b65aad9889d:
+
+Typedef u0
+==========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: u0

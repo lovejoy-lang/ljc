@@ -1,0 +1,16 @@
+.. _exhale_struct_structLexerContext:
+
+Struct LexerContext
+===================
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: LexerContext
+   :members:
+   :protected-members:
+   :undoc-members:

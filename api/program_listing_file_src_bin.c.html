@@ -42,20 +42,66 @@
 <span id="program-listing-file-src-bin-c"></span><h1>Program Listing for File bin.c<a class="headerlink" href="#program-listing-for-file-bin-c" title="Permalink to this headline">¶</a></h1>
 <p>↰ <a class="reference internal" href="file_src_bin.c.html#file-src-bin-c"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/bin.c</span></code>)</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;lovejoy/common.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;lovejoy/lexer.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;lovejoy/display.h&gt;</span><span class="cp"></span>
+
 <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+
+<span class="n">byte</span> <span class="o">*</span><span class="nf">compile_source</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">);</span>
 
 <span class="n">i32</span> <span class="nf">main</span><span class="p">(</span><span class="n">i32</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">puts</span><span class="p">(</span><span class="s">&quot;ljc - Lovejoy Compiler, &quot;</span> <span class="n">VERSION</span> <span class="s">&quot;.&quot;</span><span class="p">);</span>
+    <span class="n">fputs</span><span class="p">(</span><span class="s">&quot;ljc - Lovejoy Compiler, &quot;</span> <span class="n">VERSION</span> <span class="s">&quot;.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">stderr</span><span class="p">);</span>
 
     <span class="k">for</span> <span class="p">(</span><span class="n">i32</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">argc</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span>
-            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Option: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-        <span class="k">else</span>
-            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Source file: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Option: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Source file: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+
+            <span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s">&quot;rb&quot;</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">f</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+
+            <span class="n">byte</span> <span class="o">*</span><span class="n">source</span><span class="p">;</span>
+            <span class="n">usize</span> <span class="n">source_len</span><span class="p">;</span>
+
+            <span class="n">fseek</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SEEK_END</span><span class="p">);</span>
+            <span class="n">source_len</span> <span class="o">=</span> <span class="n">ftell</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+            <span class="n">rewind</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">source_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="n">fread</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">source_len</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">f</span><span class="p">);</span>
+
+            <span class="n">byte</span> <span class="o">*</span><span class="n">bin</span> <span class="o">=</span> <span class="n">compile_source</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">source</span><span class="p">);</span>
+            <span class="n">fclose</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+            <span class="n">free</span><span class="p">(</span><span class="n">source</span><span class="p">);</span>
+        <span class="p">}</span>
 
     <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
 <span class="p">}</span>
+
+<span class="cp">#ifndef IMPLEMENTATION</span>
+
+<span class="n">byte</span> <span class="o">*</span><span class="nf">compile_source</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">source</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Compiling: `%s&#39;.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+
+    <span class="n">LexerContext</span> <span class="n">lexer_ctx</span> <span class="o">=</span> <span class="n">NewLexer</span><span class="p">;</span>
+    <span class="n">lexer_ctx</span><span class="p">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+
+    <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nb">NULL</span> <span class="o">!=</span> <span class="p">(</span><span class="n">lexeme</span> <span class="o">=</span> <span class="n">lex</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lexer_ctx</span><span class="p">,</span> <span class="n">source</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">end</span><span class="p">;</span>
+
+        <span class="c1">// Print fo debugging</span>
+        <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;lexem[%lu] -&gt; %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">lineno</span><span class="p">,</span>
+            <span class="n">display_lexeme</span><span class="p">(</span><span class="n">lexeme</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 </div>

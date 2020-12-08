@@ -16,5 +16,9 @@ Files
 -----
 
 - :ref:`file_src_lovejoy_common.h`
+- :ref:`file_src_lovejoy_display.c`
+- :ref:`file_src_lovejoy_display.h`
+- :ref:`file_src_lovejoy_lexer.c`
+- :ref:`file_src_lovejoy_lexer.h`
 
 

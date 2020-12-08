@@ -1,0 +1,13 @@
+.. _exhale_typedef_lexer_8h_1abb3ac3c7d13ebf90ad1d345939a74add:
+
+Typedef LexerContext
+====================
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: LexerContext

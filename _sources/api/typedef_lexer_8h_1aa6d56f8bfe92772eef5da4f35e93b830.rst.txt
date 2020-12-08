@@ -1,0 +1,13 @@
+.. _exhale_typedef_lexer_8h_1aa6d56f8bfe92772eef5da4f35e93b830:
+
+Typedef Lexeme
+==============
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: Lexeme

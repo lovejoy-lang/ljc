@@ -1,0 +1,13 @@
+.. _exhale_function_display_8h_1a238ecf01b9d2c9d164f51c4e77882f31:
+
+Function display_lexeme
+=======================
+
+- Defined in :ref:`file_src_lovejoy_display.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: display_lexeme(const Lexeme *)

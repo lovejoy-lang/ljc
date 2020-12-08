@@ -1,0 +1,13 @@
+.. _exhale_function_lexer_8h_1a5548c25cbf88603b64a9a371da7a98cd:
+
+Function character_type
+=======================
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: character_type(byte)

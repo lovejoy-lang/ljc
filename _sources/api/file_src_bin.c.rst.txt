@@ -36,6 +36,10 @@ Includes
 
 - ``lovejoy/common.h`` (:ref:`file_src_lovejoy_common.h`)
 
+- ``lovejoy/display.h`` (:ref:`file_src_lovejoy_display.h`)
+
+- ``lovejoy/lexer.h`` (:ref:`file_src_lovejoy_lexer.h`)
+
 - ``stdio.h``
 
 
@@ -46,6 +50,8 @@ Includes
 Functions
 ---------
 
+
+- :ref:`exhale_function_bin_8c_1a75a96868e2670019ca1e5cca6b58e0ee`
 
 - :ref:`exhale_function_bin_8c_1a4730686ddd8423c27f2f4b033a6803a3`
 

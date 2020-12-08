@@ -52,6 +52,10 @@ Included By
 
 - :ref:`file_src_bin.c`
 
+- :ref:`file_src_lovejoy_display.h`
+
+- :ref:`file_src_lovejoy_lexer.h`
+
 
 
 
@@ -72,11 +76,15 @@ Defines
 
 - :ref:`exhale_define_common_8h_1a781c2bad5a2975bbee603b5c82f1ba1d`
 
-- :ref:`exhale_define_common_8h_1a5b0b4d447cbc9dfae6019ed785a80f33`
-
 - :ref:`exhale_define_common_8h_1a18d295a837ac71add5578860b55e5502`
 
 - :ref:`exhale_define_common_8h_1a890d84b9b5d0b0aede9eea1092a7a10a`
+
+- :ref:`exhale_define_common_8h_1aa5e465ec2c32c12aa542e1c6a8ef6557`
+
+- :ref:`exhale_define_common_8h_1a5cb1bd2c5ce49510372265835944d758`
+
+- :ref:`exhale_define_common_8h_1a7696d938fcfb7595f79d6587cf7ef257`
 
 - :ref:`exhale_define_common_8h_1a509e2a08aaa04bc55a2adab499d7d85a`
 
@@ -93,9 +101,9 @@ Typedefs
 
 - :ref:`exhale_typedef_common_8h_1a2a3d7d03160a26ad597674a9b21fd02b`
 
-- :ref:`exhale_typedef_common_8h_1a5f6906312a689f27d70e9d086649d3fd`
+- :ref:`exhale_typedef_common_8h_1a93a06e1ba4dd88dbb8021024216a0049`
 
-- :ref:`exhale_typedef_common_8h_1a94dab5770726ccbef8c7d026cfbdf8e5`
+- :ref:`exhale_typedef_common_8h_1a6095ea686cbe382f9ed50b172eff38bb`
 
 - :ref:`exhale_typedef_common_8h_1a9cb418054652328c8552f57e62b03712`
 
@@ -110,6 +118,8 @@ Typedefs
 - :ref:`exhale_typedef_common_8h_1a2992909b9c1ee26479af8fa433d4479f`
 
 - :ref:`exhale_typedef_common_8h_1a46dcd17713e61f23856c4df33f3bbd4e`
+
+- :ref:`exhale_typedef_common_8h_1a75e190749440a1f1c8057b65aad9889d`
 
 - :ref:`exhale_typedef_common_8h_1ae5e0aa93ddb4634d6022f292ce8f4836`
 

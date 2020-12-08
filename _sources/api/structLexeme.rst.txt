@@ -1,0 +1,16 @@
+.. _exhale_struct_structLexeme:
+
+Struct Lexeme
+=============
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: Lexeme
+   :members:
+   :protected-members:
+   :undoc-members:

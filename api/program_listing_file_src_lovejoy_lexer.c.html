@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File lexer.c &#8212; Lovejoy Compiler 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/onload.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="shortcut icon" href="../_static/lovejoy_icon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-lexer-c">
+<span id="program-listing-file-src-lovejoy-lexer-c"></span><h1>Program Listing for File lexer.c<a class="headerlink" href="#program-listing-for-file-lexer-c" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_lovejoy_lexer.c.html#file-src-lovejoy-lexer-c"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/lovejoy/lexer.c</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;lexer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#ifndef IMPLEMENTATION</span>
+
+<span class="n">LexerContext</span> <span class="n">NewLexer</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">lineptr</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">lineno</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">};</span>
+
+<span class="n">usize</span> <span class="nf">lexeme_span</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">-</span> <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">byte</span> <span class="o">*</span><span class="nf">lexeme_substring</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">usize</span> <span class="n">span</span> <span class="o">=</span> <span class="n">lexeme_span</span><span class="p">(</span><span class="n">lexeme</span><span class="p">);</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">ss</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">((</span><span class="n">span</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+    <span class="n">strncpy</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">,</span> <span class="n">span</span><span class="p">);</span>
+    <span class="n">ss</span><span class="p">[</span><span class="n">span</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">ss</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">u0</span> <span class="nf">lexeme_free</span><span class="p">(</span><span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">free</span><span class="p">((</span><span class="n">u0</span> <span class="o">*</span><span class="p">)</span><span class="n">lexeme</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Lexeme</span> <span class="o">*</span><span class="nf">peek</span><span class="p">(</span><span class="n">LexerContext</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="n">u16</span> <span class="n">count</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">source</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">LexerContext</span> <span class="n">tmp_ctx</span> <span class="o">=</span> <span class="o">*</span><span class="n">ctx</span><span class="p">;</span>
+
+    <span class="n">Lexeme</span> <span class="o">*</span><span class="n">peeked</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">u16</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">peeked</span> <span class="o">=</span> <span class="n">lex</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp_ctx</span><span class="p">,</span> <span class="n">source</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">peeked</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">peeked</span><span class="o">-&gt;</span><span class="n">end</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1">// While not at last iteration:</span>
+            <span class="n">lexeme_free</span><span class="p">(</span><span class="n">peeked</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">peeked</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">TokenType</span> <span class="nf">character_type</span><span class="p">(</span><span class="n">byte</span> <span class="n">chr</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Spaces or null.</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">chr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="sc">&#39;\n&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;;&#39;</span><span class="o">:</span>
+            <span class="k">return</span> <span class="n">TT_TERM</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;\0&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;\t&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;\v&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;\f&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;\r&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="mh">0xA0</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39; &#39;</span><span class="o">:</span>
+            <span class="k">return</span> <span class="n">TT_NONE</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">chr</span> <span class="o">&gt;=</span> <span class="sc">&#39;A&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">chr</span> <span class="o">&lt;=</span> <span class="sc">&#39;Z&#39;</span><span class="p">)</span>
+     <span class="o">||</span> <span class="p">(</span><span class="n">chr</span> <span class="o">&gt;=</span> <span class="sc">&#39;a&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">chr</span> <span class="o">&lt;=</span> <span class="sc">&#39;z&#39;</span><span class="p">)</span>
+     <span class="o">||</span> <span class="p">(</span><span class="n">chr</span> <span class="o">==</span> <span class="sc">&#39;_&#39;</span> <span class="o">||</span> <span class="n">chr</span> <span class="o">==</span> <span class="sc">&#39;$&#39;</span><span class="p">)</span>
+     <span class="o">||</span> <span class="p">(</span><span class="n">chr</span> <span class="o">&gt;=</span> <span class="mh">0xA1</span> <span class="p">))</span>
+        <span class="k">return</span> <span class="n">TT_IDENT</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">chr</span> <span class="o">&gt;=</span> <span class="sc">&#39;0&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">chr</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TT_NUMBER</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">chr</span> <span class="o">==</span> <span class="sc">&#39;&quot;&#39;</span><span class="p">)</span>  <span class="k">return</span> <span class="n">TT_STRING</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">chr</span> <span class="o">==</span> <span class="mh">0x27</span><span class="p">)</span> <span class="k">return</span> <span class="n">TT_CHAR</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">chr</span> <span class="o">==</span> <span class="sc">&#39;(&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="n">TT_LPAREN</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">chr</span> <span class="o">==</span> <span class="sc">&#39;)&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="n">TT_RPAREN</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">chr</span> <span class="o">==</span> <span class="sc">&#39;{&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="n">TT_LCURLY</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">chr</span> <span class="o">==</span> <span class="sc">&#39;}&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="n">TT_RCURLY</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">chr</span> <span class="o">==</span> <span class="sc">&#39;[&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="n">TT_LBRACKET</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">chr</span> <span class="o">==</span> <span class="sc">&#39;]&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="n">TT_RBRACKET</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">chr</span> <span class="o">&gt;=</span> <span class="mh">0x01</span> <span class="o">&amp;&amp;</span> <span class="n">chr</span> <span class="o">&lt;=</span> <span class="mh">0x1f</span><span class="p">)</span>
+     <span class="o">||</span> <span class="p">(</span><span class="n">chr</span> <span class="o">&gt;=</span> <span class="mh">0x7f</span> <span class="o">&amp;&amp;</span> <span class="n">chr</span> <span class="o">&lt;=</span> <span class="mh">0x9f</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">TT_NONE</span><span class="p">;</span>  <span class="c1">// Control characters.</span>
+
+    <span class="c1">// Default is operator, since they&#39;re spread everywhere.</span>
+    <span class="k">return</span> <span class="n">TT_OPERATOR</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Lexeme</span> <span class="o">*</span><span class="nf">lex</span><span class="p">(</span><span class="n">LexerContext</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">source</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="c1">// Look for comments</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// EOL comment.</span>
+            <span class="o">++</span><span class="n">source</span><span class="p">;</span>
+            <span class="n">until</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="o">++</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span> <span class="o">||</span> <span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\n&#39;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="sc">&#39;*&#39;</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// Multiline comment.</span>
+            <span class="c1">// TODO: Allow for nested multiline comments.</span>
+            <span class="o">++</span><span class="n">source</span><span class="p">;</span>
+            <span class="n">until</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span>
+            <span class="o">||</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="o">++</span> <span class="o">==</span> <span class="sc">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span>
+            <span class="o">||</span> <span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\n&#39;</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="o">++</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineno</span><span class="p">;</span>
+                    <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineptr</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="o">++</span><span class="n">source</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">switch</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="sc">&#39;\n&#39;</span><span class="o">:</span>
+        <span class="o">++</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineno</span><span class="p">;</span>
+        <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineptr</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">case</span> <span class="sc">&#39;;&#39;</span><span class="o">:</span>
+        <span class="k">goto</span> <span class="n">nonwhitespace</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Skip over any whitespace tokens.</span>
+    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="sc">&#39;\0&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;\t&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;\v&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;\f&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;\r&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="mh">0xA0</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39; &#39;</span><span class="o">:</span>
+            <span class="o">++</span><span class="n">source</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="k">goto</span> <span class="n">nonwhitespace</span><span class="p">;</span>
+        <span class="p">}</span>
+
+<span class="nl">nonwhitespace</span><span class="p">:;</span>
+    <span class="n">TokenType</span> <span class="n">tt</span> <span class="o">=</span> <span class="n">character_type</span><span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_NONE</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">Lexeme</span> <span class="o">*</span><span class="n">token</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Lexeme</span><span class="p">));</span>
+    <span class="n">token</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">=</span> <span class="n">tt</span><span class="p">;</span>
+    <span class="n">token</span><span class="o">-&gt;</span><span class="n">start</span> <span class="o">=</span> <span class="n">source</span><span class="p">;</span>
+    <span class="n">token</span><span class="o">-&gt;</span><span class="n">line</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineptr</span><span class="p">;</span>
+    <span class="n">token</span><span class="o">-&gt;</span><span class="n">lineno</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineno</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_TERM</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_STRING</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// TODO: String parsing w/ escapes...</span>
+        <span class="c1">// Maybe use repeated character parsing.</span>
+        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_CHAR</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// TODO.</span>
+        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">switch</span> <span class="p">(</span><span class="n">tt</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nl">TT_LPAREN</span><span class="p">:</span>
+    <span class="k">case</span> <span class="nl">TT_RPAREN</span><span class="p">:</span>
+    <span class="k">case</span> <span class="nl">TT_LBRACKET</span><span class="p">:</span>
+    <span class="k">case</span> <span class="nl">TT_RBRACKET</span><span class="p">:</span>
+    <span class="k">case</span> <span class="nl">TT_LCURLY</span><span class="p">:</span>
+    <span class="k">case</span> <span class="nl">TT_RCURLY</span><span class="p">:</span>
+        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nl">TT_NUMBER</span><span class="p">:</span>
+        <span class="c1">// TODO: Decimal point.</span>
+        <span class="c1">// TODO: Scientific notation, e.g. 3.7e-11.</span>
+        <span class="c1">// TODO: Hex exponent, e.g. 0xF1.D3p+4A</span>
+        <span class="c1">// TODO: Radix notation, e.g. 0775r8 == 0o0775.</span>
+        <span class="c1">// Mainly we need to accommodate for the</span>
+        <span class="c1">// use of &#39;.&#39;, &#39;+&#39; and &#39;-&#39; characters, which would</span>
+        <span class="c1">// otherwise be considered TT_OPERATORs, as opposed</span>
+        <span class="c1">// to being part of TT_NUMBER literals.</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_NUMBER</span> <span class="o">||</span> <span class="n">tt</span> <span class="o">==</span> <span class="n">TT_IDENT</span><span class="p">)</span>
+            <span class="n">tt</span> <span class="o">=</span> <span class="n">character_type</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="o">++</span><span class="n">source</span><span class="p">));</span>
+
+        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nl">TT_IDENT</span><span class="p">:</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_NUMBER</span> <span class="o">||</span> <span class="n">tt</span> <span class="o">==</span> <span class="n">TT_IDENT</span><span class="p">)</span>
+            <span class="n">tt</span> <span class="o">=</span> <span class="n">character_type</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="o">++</span><span class="n">source</span><span class="p">));</span>
+
+        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nl">TT_OPERATOR</span><span class="p">:</span>
+        <span class="c1">// TODO: Check which operators exists, and try and</span>
+        <span class="c1">// match against the longest operators first.</span>
+        <span class="c1">// e.g.  2+-3 becomes 2 + (-3), but if an operator &#39;+-&#39; exists,</span>
+        <span class="c1">// then it becomes 2 +- 3.</span>
+        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/lovejoy.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">Lovejoy Compiler</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=lovejoy-lang&repo=ljc&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="root.html">Lovejoy Compiler API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+    &#127279; Copyleft all wrongs reserved
+</div>
+
+  </body>
+</html>

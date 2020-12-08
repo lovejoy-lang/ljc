@@ -11,6 +11,9 @@ Program Listing for File common.h
 .. code-block:: cpp
 
    
+   #ifndef COMMON_HEADER
+   #define COMMON_HEADER
+   
    #include <stdlib.h>
    #include <stdbool.h>
    #include <stdint.h>
@@ -29,11 +32,15 @@ Program Listing for File common.h
    #define VERSION "v" STR(V_MAJOR) "." STR(V_MINOR) "." STR(V_TINY)
    
    /* Syntax helpers */
+   #define unless(cond) if (!(cond))
+   #define until(cond) while (!(cond))
    #define newtype(NT, T) typedef struct __##NT { T value; } NT
-   #define record(S) typedef struct S S
+   #define unqualify(D, T) typedef D T T
    
    /* Types */
    newtype(atomic_t, int);
+   
+   typedef void u0;
    
    #define __UCHAR8__ char
    
@@ -86,9 +93,14 @@ Program Listing for File common.h
    typedef  intptr_t iptr;
    typedef uintptr_t uptr; 
    
-   typedef  float f32;
-   typedef double f64;
    
+   #ifdef __STDC_IEC_559__
+       typedef  float f32;
+       typedef double f64;
+   #endif
+   
+   typedef __float80 f80;
+   typedef __float128 f128;
    
    /* NOTES: */
    /*
@@ -96,3 +108,5 @@ Program Listing for File common.h
     * by Jeff Bezanson, about modern unicode in C.
     *
     */
+   
+   #endif

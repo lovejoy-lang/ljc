@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a6095ea686cbe382f9ed50b172eff38bb:
+
+Typedef f80
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: f80

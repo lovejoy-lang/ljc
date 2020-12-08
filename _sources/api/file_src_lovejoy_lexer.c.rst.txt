@@ -1,0 +1,39 @@
+
+.. _file_src_lovejoy_lexer.c:
+
+File lexer.c
+============
+
+|exhale_lsh| :ref:`Parent directory <dir_src_lovejoy>` (``src/lovejoy``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/lovejoy/lexer.c``)
+------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_lovejoy_lexer.c.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``lexer.h`` (:ref:`file_src_lovejoy_lexer.h`)
+
+- ``string.h``
+
+
+
+
+

@@ -41,7 +41,10 @@
   <div class="section" id="program-listing-for-file-common-h">
 <span id="program-listing-file-src-lovejoy-common-h"></span><h1>Program Listing for File common.h<a class="headerlink" href="#program-listing-for-file-common-h" title="Permalink to this headline">¶</a></h1>
 <p>↰ <a class="reference internal" href="file_src_lovejoy_common.h.html#file-src-lovejoy-common-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/lovejoy/common.h</span></code>)</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef COMMON_HEADER</span>
+<span class="cp">#define COMMON_HEADER</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stdbool.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp"></span>
@@ -59,11 +62,15 @@
 <span class="cp">#define VERSION &quot;v&quot; STR(V_MAJOR) &quot;.&quot; STR(V_MINOR) &quot;.&quot; STR(V_TINY)</span>
 
 <span class="cm">/* Syntax helpers */</span>
+<span class="cp">#define unless(cond) if (!(cond))</span>
+<span class="cp">#define until(cond) while (!(cond))</span>
 <span class="cp">#define newtype(NT, T) typedef struct __##NT { T value; } NT</span>
-<span class="cp">#define record(S) typedef struct S S</span>
+<span class="cp">#define unqualify(D, T) typedef D T T</span>
 
 <span class="cm">/* Types */</span>
 <span class="n">newtype</span><span class="p">(</span><span class="n">atomic_t</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+
+<span class="k">typedef</span> <span class="kt">void</span> <span class="n">u0</span><span class="p">;</span>
 
 <span class="cp">#define __UCHAR8__ char</span>
 
@@ -116,9 +123,14 @@
 <span class="k">typedef</span>  <span class="kt">intptr_t</span> <span class="n">iptr</span><span class="p">;</span>
 <span class="k">typedef</span> <span class="kt">uintptr_t</span> <span class="n">uptr</span><span class="p">;</span>
 
-<span class="k">typedef</span>  <span class="kt">float</span> <span class="n">f32</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="kt">double</span> <span class="n">f64</span><span class="p">;</span>
 
+<span class="cp">#ifdef __STDC_IEC_559__</span>
+    <span class="k">typedef</span>  <span class="kt">float</span> <span class="n">f32</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="kt">double</span> <span class="n">f64</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+<span class="k">typedef</span> <span class="n">__float80</span> <span class="n">f80</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">__float128</span> <span class="n">f128</span><span class="p">;</span>
 
 <span class="cm">/* NOTES: */</span>
 <span class="cm">/*</span>
@@ -126,6 +138,8 @@
 <span class="cm"> * by Jeff Bezanson, about modern unicode in C.</span>
 <span class="cm"> *</span>
 <span class="cm"> */</span>
+
+<span class="cp">#endif</span>
 </pre></div>
 </div>
 </div>
