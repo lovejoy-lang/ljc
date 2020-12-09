@@ -49,7 +49,8 @@
 <span class="n">LexerContext</span> <span class="n">NewLexer</span> <span class="o">=</span> <span class="p">{</span>
     <span class="p">.</span><span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span>
     <span class="p">.</span><span class="n">lineptr</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span>
-    <span class="p">.</span><span class="n">lineno</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="p">.</span><span class="n">lineno</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">last_token_type</span> <span class="o">=</span> <span class="n">TT_NONE</span>
 <span class="p">};</span>
 
 <span class="n">usize</span> <span class="nf">lexeme_span</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span><span class="p">)</span>
@@ -130,9 +131,31 @@
     <span class="k">return</span> <span class="n">TT_OPERATOR</span><span class="p">;</span>
 <span class="p">}</span>
 
+<span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="nf">skip_whitespace</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">source</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="sc">&#39;\0&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="n">source</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;\t&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;\v&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;\f&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39;\r&#39;</span><span class="o">:</span>
+        <span class="k">case</span> <span class="mh">0xA0</span><span class="o">:</span>
+        <span class="k">case</span> <span class="sc">&#39; &#39;</span><span class="o">:</span>
+            <span class="o">++</span><span class="n">source</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="k">return</span> <span class="n">source</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+
 <span class="n">Lexeme</span> <span class="o">*</span><span class="nf">lex</span><span class="p">(</span><span class="n">LexerContext</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">source</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">source</span> <span class="o">=</span> <span class="n">skip_whitespace</span><span class="p">(</span><span class="n">source</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
     <span class="c1">// Look for comments</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// EOL comment.</span>
@@ -152,33 +175,31 @@
         <span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="k">switch</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="sc">&#39;\n&#39;</span><span class="o">:</span>
-        <span class="o">++</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineno</span><span class="p">;</span>
-        <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineptr</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="k">case</span> <span class="sc">&#39;;&#39;</span><span class="o">:</span>
-        <span class="k">goto</span> <span class="n">nonwhitespace</span><span class="p">;</span>
-    <span class="p">}</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">skip_whitespace</span><span class="p">(</span><span class="n">source</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
 
-    <span class="c1">// Skip over any whitespace tokens.</span>
-    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">switch</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="sc">&#39;\0&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-        <span class="k">case</span> <span class="sc">&#39;\t&#39;</span><span class="o">:</span>
-        <span class="k">case</span> <span class="sc">&#39;\v&#39;</span><span class="o">:</span>
-        <span class="k">case</span> <span class="sc">&#39;\f&#39;</span><span class="o">:</span>
-        <span class="k">case</span> <span class="sc">&#39;\r&#39;</span><span class="o">:</span>
-        <span class="k">case</span> <span class="mh">0xA0</span><span class="o">:</span>
-        <span class="k">case</span> <span class="sc">&#39; &#39;</span><span class="o">:</span>
+    <span class="c1">// Collect multiple terminators together.</span>
+    <span class="kt">bool</span> <span class="n">is_terminal</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">do</span> <span class="k">switch</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="sc">&#39;\n&#39;</span><span class="o">:</span>
+            <span class="o">++</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineno</span><span class="p">;</span>
+            <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineptr</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;;&#39;</span><span class="o">:</span>
             <span class="o">++</span><span class="n">source</span><span class="p">;</span>
+            <span class="n">is_terminal</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
             <span class="k">break</span><span class="p">;</span>
         <span class="k">default</span><span class="o">:</span>
-            <span class="k">goto</span> <span class="n">nonwhitespace</span><span class="p">;</span>
-        <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">is_terminal</span><span class="p">)</span> <span class="o">--</span><span class="n">source</span><span class="p">;</span>
+            <span class="k">goto</span> <span class="n">make_token</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">is_terminal</span><span class="p">);</span>
 
-<span class="nl">nonwhitespace</span><span class="p">:;</span>
+<span class="nl">make_token</span><span class="p">:;</span>
     <span class="n">TokenType</span> <span class="n">tt</span> <span class="o">=</span> <span class="n">character_type</span><span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_NONE</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="c1">// Stop the lexer from returning many consecutive</span>
+    <span class="c1">// terminator tokens.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_TERM</span> <span class="o">&amp;&amp;</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">last_token_type</span> <span class="o">==</span> <span class="n">TT_TERM</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">lex</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>  <span class="c1">// Tail recursion should be optimised.</span>
 
     <span class="n">Lexeme</span> <span class="o">*</span><span class="n">token</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Lexeme</span><span class="p">));</span>
     <span class="n">token</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">=</span> <span class="n">tt</span><span class="p">;</span>
@@ -188,18 +209,18 @@
 
     <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_TERM</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">return_token</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_STRING</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// TODO: String parsing w/ escapes...</span>
         <span class="c1">// Maybe use repeated character parsing.</span>
         <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">return_token</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_CHAR</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// TODO.</span>
         <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">return_token</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="k">switch</span> <span class="p">(</span><span class="n">tt</span><span class="p">)</span> <span class="p">{</span>
@@ -210,7 +231,7 @@
     <span class="k">case</span> <span class="nl">TT_LCURLY</span><span class="p">:</span>
     <span class="k">case</span> <span class="nl">TT_RCURLY</span><span class="p">:</span>
         <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">return_token</span><span class="p">;</span>
     <span class="k">case</span> <span class="nl">TT_NUMBER</span><span class="p">:</span>
         <span class="c1">// TODO: Decimal point.</span>
         <span class="c1">// TODO: Scientific notation, e.g. 3.7e-11.</span>
@@ -224,23 +245,27 @@
             <span class="n">tt</span> <span class="o">=</span> <span class="n">character_type</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="o">++</span><span class="n">source</span><span class="p">));</span>
 
         <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">return_token</span><span class="p">;</span>
     <span class="k">case</span> <span class="nl">TT_IDENT</span><span class="p">:</span>
         <span class="k">while</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_NUMBER</span> <span class="o">||</span> <span class="n">tt</span> <span class="o">==</span> <span class="n">TT_IDENT</span><span class="p">)</span>
             <span class="n">tt</span> <span class="o">=</span> <span class="n">character_type</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="o">++</span><span class="n">source</span><span class="p">));</span>
 
         <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">return_token</span><span class="p">;</span>
     <span class="k">case</span> <span class="nl">TT_OPERATOR</span><span class="p">:</span>
         <span class="c1">// TODO: Check which operators exists, and try and</span>
         <span class="c1">// match against the longest operators first.</span>
         <span class="c1">// e.g.  2+-3 becomes 2 + (-3), but if an operator &#39;+-&#39; exists,</span>
         <span class="c1">// then it becomes 2 +- 3.</span>
         <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">return_token</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+<span class="nl">return_token</span><span class="p">:;</span>
+    <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">last_token_type</span> <span class="o">=</span> <span class="n">token</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">token</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="cp">#endif</span>

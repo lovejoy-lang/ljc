@@ -14,15 +14,6 @@ Program Listing for File lexer.h
    
    #include "common.h"
    
-   struct LexerContext {
-       const byte *filename;
-       const byte *lineptr;  
-       usize lineno;
-   };
-   unqualify(struct, LexerContext);
-   
-   extern LexerContext NewLexer;
-   
    enum TokenType {
        TT_NUMBER,  
        TT_STRING,  
@@ -39,6 +30,16 @@ Program Listing for File lexer.h
        TT_NONE 
    };
    unqualify(enum, TokenType);
+   
+   struct LexerContext {
+       const byte *filename;
+       const byte *lineptr;  
+       usize lineno;
+       TokenType last_token_type;
+   };
+   unqualify(struct, LexerContext);
+   
+   extern LexerContext NewLexer;
    
    struct Lexeme {
        TokenType type;
