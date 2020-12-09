@@ -6,7 +6,8 @@
 LexerContext NewLexer = {
 	.filename = "<stdin>",
 	.lineptr = NULL,
-	.lineno = 1
+	.lineno = 1,
+	.last_token_type = TT_NONE
 };
 
 usize lexeme_span(const Lexeme *lexeme)
@@ -87,9 +88,31 @@ TokenType character_type(byte chr)
 	return TT_OPERATOR;
 }
 
+const byte *skip_whitespace(const byte *source)
+{
+	while (1)
+		switch (*source) {
+		case '\0': return source;
+		case '\t':
+		case '\v':
+		case '\f':
+		case '\r':
+		case 0xA0:
+		case ' ':
+			++source;
+			break;
+		default:
+			return source;
+		}
+}
+
 Lexeme *lex(LexerContext *ctx, const byte *source)
 {
 	if (*source == '\0') return NULL;
+
+	source = skip_whitespace(source);
+	if (*source == '\0') return NULL;
+
 	// Look for comments
 	if (*source == '-') {
 		if (*(source + 1) == '-') {  // EOL comment.
@@ -109,33 +132,31 @@ Lexeme *lex(LexerContext *ctx, const byte *source)
 		}
 	}
 
-	switch (*source) {
-	case '\n':
-		++ctx->lineno;
-		ctx->lineptr = source + 1;
-	case ';':
-		goto nonwhitespace;
-	}
+	source = skip_whitespace(source);
+	if (*source == '\0') return NULL;
 
-	// Skip over any whitespace tokens.
-	while (1)
-		switch (*source) {
-		case '\0': return NULL;
-		case '\t':
-		case '\v':
-		case '\f':
-		case '\r':
-		case 0xA0:
-		case ' ':
+	// Collect multiple terminators together.
+	bool is_terminal = false;
+	do switch (*source) {
+		case '\n':
+			++ctx->lineno;
+			ctx->lineptr = source + 1;
+		case ';':
 			++source;
+			is_terminal = true;
 			break;
 		default:
-			goto nonwhitespace;
-		}
+			if (is_terminal) --source;
+			goto make_token;
+	} while (is_terminal);
 
-nonwhitespace:;
+make_token:;
 	TokenType tt = character_type(*source);
 	if (tt == TT_NONE) return NULL;
+	// Stop the lexer from returning many consecutive
+	// terminator tokens.
+	if (tt == TT_TERM && ctx->last_token_type == TT_TERM)
+		return lex(ctx, source + 1);  // Tail recursion should be optimised.
 
 	Lexeme *token = malloc(sizeof(Lexeme));
 	token->type = tt;
@@ -145,18 +166,18 @@ nonwhitespace:;
 
 	if (tt == TT_TERM) {
 		token->end = source + 1;
-		return token;
+		goto return_token;
 	}
 	if (tt == TT_STRING) {
 		// TODO: String parsing w/ escapes...
 		// Maybe use repeated character parsing.
 		token->end = source + 1;
-		return token;
+		goto return_token;
 	}
 	if (tt == TT_CHAR) {
 		// TODO.
 		token->end = source + 1;
-		return token;
+		goto return_token;
 	}
 
 	switch (tt) {
@@ -167,7 +188,7 @@ nonwhitespace:;
 	case TT_LCURLY:
 	case TT_RCURLY:
 		token->end = source + 1;
-		return token;
+		goto return_token;
 	case TT_NUMBER:
 		// TODO: Decimal point.
 		// TODO: Scientific notation, e.g. 3.7e-11.
@@ -181,23 +202,27 @@ nonwhitespace:;
 			tt = character_type(*(++source));
 
 		token->end = source;
-		return token;
+		goto return_token;
 	case TT_IDENT:
 		while (tt == TT_NUMBER || tt == TT_IDENT)
 			tt = character_type(*(++source));
 
 		token->end = source;
-		return token;
+		goto return_token;
 	case TT_OPERATOR:
 		// TODO: Check which operators exists, and try and
 		// match against the longest operators first.
 		// e.g.  2+-3 becomes 2 + (-3), but if an operator '+-' exists,
 		// then it becomes 2 +- 3.
 		token->end = source + 1;
-		return token;
+		goto return_token;
 	}
 
 	return NULL;
+
+return_token:;
+	ctx->last_token_type = token->type;
+	return token;
 }
 
 #endif

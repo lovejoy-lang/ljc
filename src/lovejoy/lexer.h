@@ -2,16 +2,6 @@
 
 #include "common.h"
 
-/// Lexer environment.
-struct LexerContext {
-	const byte *filename;
-	const byte *lineptr;  ///< Start of current line pointer.
-	usize lineno;
-};
-unqualify(struct, LexerContext);
-
-extern LexerContext NewLexer;
-
 /// Token Type (TT), classifies each lexeme.
 enum TokenType {
 	TT_NUMBER,  ///< Literal.
@@ -29,6 +19,17 @@ enum TokenType {
 	TT_NONE ///< Whitespace, &c.
 };
 unqualify(enum, TokenType);
+
+/// Lexer environment.
+struct LexerContext {
+	const byte *filename;
+	const byte *lineptr;  ///< Start of current line pointer.
+	usize lineno;
+	TokenType last_token_type;
+};
+unqualify(struct, LexerContext);
+
+extern LexerContext NewLexer;
 
 /// Lexeme, a substring of the source.
 struct Lexeme {

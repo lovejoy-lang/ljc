@@ -1,0 +1,29 @@
+*byte_pointer: u8
+byte_pointer: &u8
+-- In C:
+-- uint8_t *byte_pointer;
+
+byte_array[20]: u8
+byte_array: [u8; 20]
+-- In C:
+-- uint8_t byte_array[20]
+
+byte_array.size      -->  0
+byte_array.capacity  --> 20
+
+dyn_byte_array[]: u8
+dyn_byte_array: [u8]
+-- Dynamic arrays and arrays of unknown size/capacity
+-- have no distinction.  All arrays (dynamic or not) can
+-- be treated the same, i.e. you may push and pop them, but
+-- you may not push more elements to a fixed capacity array
+-- than has been stated in the type.
+
+byte_array_slice[]: u8
+byte_array_slice: [u8]
+byte_array_slice = byte_array[2:5]
+-- This is a slice, it does not create a new array,
+-- it is just a view into the old one. It stores a pointer
+-- to the second element of byte_array, a length, and a capacity (of 3).
+-- pushing to a slice will work if length < capacity. This will also
+-- modify the original array.  It is, in most cases, not smart.

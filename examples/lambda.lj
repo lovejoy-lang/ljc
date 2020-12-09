@@ -1,0 +1,42 @@
+-- Pattern matching function declaration
+named_function(a: i32, b: f64): u8 = {
+	c := a + b
+	return c + 1
+}
+
+-- The same function using a lambda syntax
+named_function := (a: i32, b: f64): u8 -> {
+	c := a + b
+	return c + 1
+}
+
+-- Using `where' macro
+named_function := (a: 132, b: f64): u8 -> c + 1
+	where c := a + b
+
+-- NOTE: The use of explicit return types is not
+-- required, they can be always be inferred (by the
+-- (first return statement), under our type system.
+-- Actually, completely general functions can be created
+-- by not specifing any types at all, and letting them
+-- be inferred through usage in the function body, and
+-- generating an appropriately typed function for each
+-- function call (that has known types).
+-- See the Hindley–Milner type system.
+
+-- The use of {..} should not be *required* anywhere,
+-- it's just a grouping syntax.
+-- e.g.
+y = if (x > 2) { 10 } else { 11 }
+y = if x > 2 { 10 } else { 11 }
+y = if x > 2 10 else 11
+y = if x > 2
+		10 else 11
+-* these statments are equivalent, hence juxtaposition
+ * must have low precedence, this is not ambiguous as long
+ * as we have a good grammar.
+ *-
+
+-- e.g. higher order functions
+[1, 2, 3, 4].map((e: i32) -> { e + 1 })
+[1, 2, 3, 4].map({ %1 + 1 })  -- unamed/implicit paramter.
