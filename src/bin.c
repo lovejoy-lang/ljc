@@ -7,6 +7,7 @@
 #include <lovejoy/display.h>
 
 #include <stdio.h>
+#include <locale.h>
 
 /**
  * Compiles source code to binary executable.
@@ -19,13 +20,16 @@ byte *compile_source(const byte *, const byte *);
  */
 i32 main(i32 argc, const byte **argv)
 {
-	fputs("ljc - Lovejoy Compiler, " VERSION ".\n", stderr);
+	byte *locale; UNUSED(locale);
+    locale = setlocale(LC_ALL, "");
+
+	eputs("ljc - Lovejoy Compiler, " VERSION ".");
 
 	for (i32 i = 1; i < argc; ++i)
 		if (*argv[i] == '-') {
-			fprintf(stderr, "Option: %s\n", argv[i]);
+			eprintf("Option: %s\n", argv[i]);
 		} else {
-			fprintf(stderr, "Source file: %s\n", argv[i]);
+			eprintf("Source file: %s\n", argv[i]);
 
 			FILE *f = fopen(argv[i], "rb");
 			if (f == NULL)  return 1;
@@ -36,10 +40,11 @@ i32 main(i32 argc, const byte **argv)
 			fseek(f, 0, SEEK_END);
 			source_len = ftell(f);
 			rewind(f);
-			source = calloc(1, source_len + 1);
+			source = (byte *)calloc(source_len + 1, sizeof(byte));
 			fread(source, source_len, 1, f);
 
-			byte *bin = compile_source(argv[i], source);
+			byte *bin __attribute__((unused));
+			bin = compile_source(argv[i], source);
 			fclose(f);
 			free(source);
 		}
@@ -51,7 +56,7 @@ i32 main(i32 argc, const byte **argv)
 
 byte *compile_source(const byte *name, const byte *source)
 {
-	fprintf(stderr, "Compiling: `%s'.\n", name);
+	eprintln("Compiling: `%s'.", name);
 
 	LexerContext lexer_ctx = NewLexer;
 	lexer_ctx.filename = name;
@@ -61,11 +66,18 @@ byte *compile_source(const byte *name, const byte *source)
 		source = lexeme->end;
 
 		// Print fo debugging
-		fprintf(stderr, "lexem[%lu] -> %s\n",
+		byte *lexeme_repr = display_lexeme(lexeme);
+		eprintln("lexem[%02lu:%02lu] -> %s",
 			lexeme->lineno,
-			display_lexeme(lexeme));
-	}
+			lexeme_col(lexeme),
+			lexeme_repr);
 
+		free(lexeme_repr);
+		lexeme_free(lexeme);
+	}
+	eputs("EOT - End of Token Stream");
+
+	// Not producing executables yet.
 	return NULL;
 }
 

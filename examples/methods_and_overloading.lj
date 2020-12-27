@@ -1,15 +1,16 @@
 import io::{self, puts}
 
-Vec2D := record {
-	x : f64 = 0
-	y : f64 = 0
-}
+-- With defaults
+Vec2D := data Vec2D(
+	x: f64 = 0,
+	y: f64 = 0
+)
 
-Vec3D := record {
-	x : f64
-	y : f64
-	z : f64
-}
+Vec3D := data Vec3D(
+	x: f64,
+	y: f64,
+	z: f64
+)
 
 -- Self key-word allows use of `.' operator.
 add(self: Vec2D, other: Vec2D): Vec2D

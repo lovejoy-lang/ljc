@@ -1,0 +1,42 @@
+-- The `record` (struct) macro
+record Vec3D(x: f64, y: f64, z: f64)
+-- is the same as
+Vec3D := data { Vec3D(x: f64, y: f64, z: f64): Self }
+-- thus
+vec: Vec3D = Vec3D(3.4, 1.8, 9.6)
+vec.x == 3.4
+vec.0 == 3.4
+vec.y == 1.8
+vec.1 == 1.8
+
+-- Record with nameless fields
+record Pair(i32, i32)
+
+-- Generic record
+record($A) Pair(A, A)
+-- same as
+Pair := data($A) { Pair(A, A): Self(A) }
+
+pair: Pair(u8) = Pair(0xA, 0x3)
+
+-- accessing
+fst := pair.0
+snd := pair.1
+-- or, pattern matching
+Pair(fst, snd) := pair
+fst == 0xA
+snd == 0x3
+
+
+-- Newtype/wrapper-type, for extra type safety
+record Years(u32)
+record Age(Years)
+
+years_old: Years = Years(26)
+age := Age(years_old)
+
+Age(Years(number)) := age
+number == 26
+-- or, without pattern matching
+age.0.0 == 26  -- but this is less clear than pattern matching.
+

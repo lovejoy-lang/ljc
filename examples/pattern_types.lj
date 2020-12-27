@@ -1,3 +1,29 @@
+-- **NB:** (a *kind* can be thought of the type of a type).
+
+-- What is u0?
+Unit := data { Unit }
+u0: Type = Unit
+-- Side note: The `Unit` that is being assigned to is a type,
+-- (i.e. `Unit: Type = data Unit`), while the `Unit` after `data`
+-- (`data Unit`) is the constructor/value representaton of the Unit type.
+-- It represents a datum of size 0, (zero bits of information, 2^0 = 1
+-- possible value).
+-- Its name comes from the unsigned integer types (u8, u16, u32, etc.)
+-- but this one has zero size (hence, u0).  A return value of `Unit` is
+-- implicit when the return parameter is left blank.
+-- (i.e. `return;` <=> `return Unit;`)
+
+#assert(sizeof(u0) == 0)
+
+-- What is `!`?
+! := data {}
+-- The bottom type (never type), type of something that has no
+-- value/representation, it will never evaluate/return.
+-- Example: `exit(code: i32): !`, since the exit function
+-- never returns (it aborts the whole program).
+
+-* Pointers & Arrays *-
+
 *byte_pointer: u8
 byte_pointer: &u8
 -- In C:
@@ -8,22 +34,39 @@ byte_array: [u8; 20]
 -- In C:
 -- uint8_t byte_array[20]
 
+-- Statically known size, not stored at runtime.
 byte_array.size      -->  0
 byte_array.capacity  --> 20
 
 dyn_byte_array[]: u8
-dyn_byte_array: [u8]
+dyn_byte_array: &[u8]  -- Automatically a fat pointer!
 -- Dynamic arrays and arrays of unknown size/capacity
 -- have no distinction.  All arrays (dynamic or not) can
 -- be treated the same, i.e. you may push and pop them, but
 -- you may not push more elements to a fixed capacity array
 -- than has been stated in the type.
 
+-- NOTE: you will never see a variable with type of [u8],
+-- since its size is not known at compile time, and thus
+-- cannot be stored on the stack, it must always be a reference
+-- to a [u8] on the heap, i.e. &[u8], which is fat, and stores
+-- size and capacity information with it. e.g.
+SliceRef := data($A) SliceRef(*ptr: A, capacity: usize, size: usize)
+-- So, &[u8] is essentially a SliceRef(u8).
+
 byte_array_slice[]: u8
-byte_array_slice: [u8]
+byte_array_slice: &[u8]
 byte_array_slice = byte_array[2:5]
 -- This is a slice, it does not create a new array,
 -- it is just a view into the old one. It stores a pointer
 -- to the second element of byte_array, a length, and a capacity (of 3).
 -- pushing to a slice will work if length < capacity. This will also
 -- modify the original array.  It is, in most cases, not smart.
+
+
+-- IN SUMMARY
+
+sizeof(&[u8]) == 2 * sizeof(usize) + sizeof(&u8)  -- Fat pointer.
+sizeof([u8; 6]) == 6 * sizeof(u8)  -- Not a pointer.
+sizeof(&[u8; 6]) == sizeof(&u8)  -- Skinny pointer, size of any other pointer.
+sizoof([u8]) -- ERROR! [u8] has no known size...

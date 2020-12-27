@@ -1,12 +1,12 @@
-CC := gcc
-OPT := -O3
+CC ?= gcc
+OPT ?= -O3
 WARN := -Wall -Wpedantic -Wextra -Wshadow
-LINKS := -lpthread
+LINKS :=
 INCLUDES := -Isrc
-GCC_OPTIONS := -funsigned-char
-CFLAGS := $(WARN) $(OPT) $(INCLUDES) $(GCC_OPTIONS)
-TARGET := ljc
-OBJS := bin.o lexer.o display.o
+OPTIONS := -funsigned-char
+CFLAGS += $(WARN) $(OPTIONS) $(OPT) $(INCLUDES)
+TARGET ?= ljc
+OBJS := common.o utf.o operators.o lexer.o display.o bin.o
 
 ifeq ($(PREFIX),)
 	PREFIX := /usr/local
@@ -23,14 +23,23 @@ install: $(TARGET)
 	install -d $(PREFIX)/bin
 	install -m 755 $(TARGET) $(PREFIX)/bin
 
-bin.o: lexer.o display.o
-	$(CC) -c $(CFLAGS) src/bin.c $(LINKS)
+bin.o: common.o lexer.o display.o
+	$(CC) $(CFLAGS) -c src/bin.c $(LINKS)
+
+common.o:
+	$(CC) $(CFLAGS) -c src/lovejoy/common.c $(LINKS)
+
+utf.o: common.o
+	$(CC) $(CFLAGS) -c src/lovejoy/utf.c $(LINKS)
 
 lexer.o:
-	$(CC) -c $(CFLAGs) src/lovejoy/lexer.c $(LINKS)
+	$(CC) $(CFLAGS) -c src/lovejoy/lexer.c $(LINKS)
 
 display.o:
-	$(CC) -c $(CFLAGS) src/lovejoy/display.c $(LINKS)
+	$(CC) $(CFLAGS) -c src/lovejoy/display.c $(LINKS)
+
+operators.o:
+	$(CC) $(CFLAGS) -c src/lovejoy/operators.c $(LINKS)
 
 clean:
 	@echo "Cleaning build."

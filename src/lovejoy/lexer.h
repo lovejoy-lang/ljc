@@ -42,7 +42,15 @@ struct Lexeme {
 unqualify(struct, Lexeme);
 
 /// Number of bytes in token.
-usize lexeme_span(const Lexeme *);
+
+inline
+usize lexeme_span(const Lexeme *lexeme)
+	{ return lexeme->end - lexeme->start; }
+
+/// Line column number that token starts at.
+inline
+usize lexeme_col(const Lexeme *lexeme)
+	{ return lexeme->start - lexeme->line + 1; }
 
 /// Get stand-alone substring of lexeme.
 /// @note Allocates memory.

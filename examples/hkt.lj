@@ -1,0 +1,94 @@
+Functor := interface($A) {
+	map(Self(A), A -> $B): Self(B)
+}
+
+Applicative := interface($A) {
+	Functor(A)
+	wrap(A): Self(A)
+	lift(Self(A), Self($B), (A, B) -> $C): Self(C)
+}
+
+Monad := interface($A) {
+	Applicative(A)
+	bind(Self(A), A -> Self($B)): Self(B)
+}
+
+Alternative := interface($A) {
+	Applicative(A)
+	empty: Self(A)
+	either(Self(A), Self(A)): Self(A)
+}
+
+-- Applicative methods
+apply(self: Applicative($A), other: Applicative(A -> $B)): Applicative(B) = {
+	return other.lift(self, (f: A -> B, a: A): B -> f(a))
+}
+
+-- Or, using type constraints/sub-types.
+-*
+apply(self: $Ap($A), other: Ap(A -> $B)): Ap(B) where Ap <: Applicative
+	= other.lift(self, (f: A -> B, a: A): B -> f(a))
+*-
+
+-- Monadic methods
+then(self: Monad($A), other: Monad($B)): Monad(B) = {
+	return self.bind(const(other))  -- Ignores value of `self`.
+}
+join(self: Monad(Monad($A))): Monad(A) = {
+	return self.bind(id)   -- Removes one layer of monad, safely.
+}
+
+
+Maybe := data($A) {
+	None: Self(A)
+	Some(A): Self(A)
+}
+
+-- Make Maybe a Functor.
+map(self: Maybe($A), f: A -> $B): Maybe(B) = {
+	return match self {
+		None => None
+		Some(a) => Some(f(a))
+	}
+}
+
+-- Make Maybe an Applicative
+wrap(self: $A): Maybe(A) = {
+	return Some(self)
+}
+-- The `self` variable name will make this
+-- a method on all data-types,
+-- e.g. `"Hello".wrap()`, `(3.2).wrap()`, etc.
+-- (provided you have stated the type to be `Maybe(...)`).
+
+lift(self: Maybe($A), other: Maybe($B), f: (A, B) -> $C): Maybe(C) = {
+	match self, other {
+		Some(a), Some(b) => Some(f(a, b))
+		None, _ => None
+		_, None => None
+	}
+}
+
+-- Make Maybe an Alternative
+empty: Maybe($A) = Nothing
+either(self: Maybe($A), other: Maybe(A)): Maybe(A) = {
+	return match self, other {
+		None, r => r
+		l,    _ => l
+	}
+}
+
+-- Make Maybe a Moand.
+bind(self: Maybe($A), f: A -> Maybe($B)): Maybe(B) = {
+	return match self {
+		None => None
+		Some(a) => f(a)
+	}
+}
+
+
+-- Some(2).map(a -> a + 3) == Some(5)
+-- Some(2).apply(Some(a -> a + 3))
+-- Some(a -> a + 3).lift(Some(2), (f, x) -> f(x))
+-- Some((a -> a + 3)(2))
+-- Some(5)

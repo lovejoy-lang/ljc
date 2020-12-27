@@ -1,0 +1,127 @@
+-- Option type (like in Rust, `Maybe` in Haskell)
+Option := data($T) {
+	None: Self(T)
+	Some(T): Self(T)
+}
+
+-- Binary tree
+Tree := data($A) {
+	Empty: Self(A)
+	Leaf(A): Self(A)
+	Branch(A, &Self(A), &Self(A)): Self(A)
+}
+
+-- Rose tree
+RoseTree := data($A) {
+	RoseTree(A, &[Self(A)]): Self(A)
+}
+
+-- Structs: Family of structs/records (named fields)
+Point := data {
+	Point2D(x: f64, y: f64)  -- `: Self` automatically appended if omitted.
+	Point3D(x: f64, y: f64, z: f64)
+}
+
+p: Point
+p = Point2D(2, 3)
+p = Point3D(7, 8, 9)  -- Can be either at runtime
+
+p.x  -- Exits on both, fine
+p.y  -- Still fine
+p.z  -- Error!  Unknown whether point is 2D or 3D, have to do a `match`.
+
+
+-- Enum: enumarable types, again, no special synatx
+Day := data {
+	Monday: Day
+	Tuesday: Day
+	Wednesday: Day
+	Thursday: Self  -- `Self` same as `Day` type.
+	Friday: Self
+	Saturday  -- `: Self` can optionally be omitted, implicit.
+	Sunday
+}
+
+-- enums can hold values, fields can even be named
+Direction := data {
+	East(degrees: u16)
+	West(degrees: u16)
+	North(degrees: u16)
+	South(degrees: u16)
+}
+--   N
+-- W + E
+--   S
+d: Direction = East(270)
+d.degrees == 270
+d = North(0)  -- Same direction, but degrees are measuring from north.
+d.degrees == 0
+
+-- Define equality operation on Direction
+degrees_from_north(self: Direcrtion): u16 =
+	self.direction + match self {
+		North(_) => 0
+		East(_)  => 90
+		South(_) => 180
+		West(_)  => 270
+	}
+
+(==)(self: Direction, other: Direction): bool =
+	self.degrees_from_north() == other.degrees_from_north()
+
+East(0) == North(90)   -- true.
+-- This is an example of how it does not make sense to
+-- automatically define equality for data types.
+
+
+-- Safer linked list
+Empty := data {}    -- Empty type, no value.
+NonEmpty := data {}
+
+SafeList := data($A, $B) {
+	Nil: Self(A, Empty)
+	Cons(A, Self(A, B)): Self(A, NonEmpty)
+}
+
+head(list: SafeList($A, NonEmpty)): A = {
+	return match list {
+		Cons(a, _) => a
+	}
+}
+
+-- Peano
+Natural := data {
+	Zero: Self
+	Succ(&Self): Self
+}
+
+(+)(n: Natural, m: Natural): Natural = {
+	match n {
+		Zero => m
+		Succ(&l) => Succ(l + m)
+	}
+}
+
+-- AST evaluation
+Equality := interface($A) {
+	(==)(A, A): bool
+}
+
+-- The type varaible `A` for `Expr` is not explicitly used
+-- in the block below, but still holds on to the type that
+-- `Self` was instantiated with, and is clearly necessary.
+Expr := data($A) {
+	Number(n: i32): Self(i32)
+	Bool(b: bool): Self(bool)
+	Add(Self(i32), Self(i32)): Self(i32)
+	Mul(Self(i32), Self(i32)): Self(i32)
+	Equ(Self(Equality), Self(Equality)): Self(bool)
+}
+
+evaluate(Expr($A)): A = match {
+	Number(n) => n
+	Bool(b) => b
+	Add(e1, e2) => evaluate(e1) + evaluate(e2)
+	Mul(e1, e2) => evaluate(e1) * evaluate(e2)
+	Equ(e1, e2) => evaluate(e1) == evaluate(e2)
+}

@@ -1,0 +1,26 @@
+Show := interface($A) {
+	show(A): String
+}
+
+show(n: i32): String = {
+	return c::itoa(n)
+}
+
+print_something(showable: Show) = {
+	print_string(show(showable))
+}
+
+main() = {
+	number: i32 = 3
+	print_something(number)
+}
+
+
+-- Number is the type of anything that
+-- implements basic (closed) arithmetic.
+Number := inerface($A) {
+	(+)(A, A): A
+	(-)(A): A
+	(*)(A, A): A
+	recip(A): A
+}

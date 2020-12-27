@@ -1,0 +1,35 @@
+-- This will be in the prelude
+Allocator := interface {
+	-- `Self`: allocator object.
+	-- `usize`: length/size of object.
+	-- `$A?`: pointer to the type of the object being returned.
+	alloc(Self, usize): $A?
+	realloc(Self, &$A, usize): &A?
+	free(Self, &$A): u0
+	-- etc.
+}
+
+-- This is also in the prelude
+Try := data($T, $E) {
+	Okay(T): Self(T, E)
+	Fail(E): Self(T, E)
+}
+-- with `try` macro, which either unwraps the `Okay(..)` data,
+-- or forces a return from the function with the error in `Fail(..)`.
+
+concat(allocater: &Allocator, a: &[$A], b: &[A]): Try(&[A], AllocErr) = {
+	res: &[A] = try allocator.alloc(a.count + b.count)
+	mem::copy(res, a)
+	mem::copy(res + a.count, b)  -- pointer arith. can also use slices.
+	return res
+}
+
+
+main(argv[][]: u8) := {
+	c := concat("foo", "bar")
+	match c {
+		Okay(s) => assert(s == "foobar")
+		Fail(e) => println("Failed to concat: " ++ e.message)
+	}
+}
+

@@ -39,6 +39,7 @@ docs/api
 
 # Executables
 ljc
+ljc_*
 *.exe
 *.out
 *.app

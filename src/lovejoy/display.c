@@ -5,7 +5,7 @@
 
 byte *display_tt(TokenType tt)
 {
-	byte *repr = malloc(16 * sizeof(byte));
+	byte *repr = (byte *)malloc(16 * sizeof(byte));
 	switch (tt) {
 		case TT_NUMBER:   strcpy(repr,        "number"); break;
 		case TT_STRING:   strcpy(repr,        "string"); break;

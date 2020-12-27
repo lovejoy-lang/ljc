@@ -11,7 +11,7 @@ named_function := (a: i32, b: f64): u8 -> {
 }
 
 -- Using `where' macro
-named_function := (a: 132, b: f64): u8 -> c + 1
+named_function := (a: i32, b: f64): u8 -> c + 1
 	where c := a + b
 
 -- NOTE: The use of explicit return types is not
