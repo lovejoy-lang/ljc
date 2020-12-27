@@ -30,6 +30,11 @@ Files
 .. toctree::
    :maxdepth: 5
 
+   file_src_lovejoy_common.c.rst
+
+.. toctree::
+   :maxdepth: 5
+
    file_src_lovejoy_common.h.rst
 
 .. toctree::
@@ -51,3 +56,23 @@ Files
    :maxdepth: 5
 
    file_src_lovejoy_lexer.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_lovejoy_operators.c.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_lovejoy_operators.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_lovejoy_utf.c.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_lovejoy_utf.h.rst

@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a08e34aa06be51536095f72fec1b96229:
+
+Typedef imin
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: imin

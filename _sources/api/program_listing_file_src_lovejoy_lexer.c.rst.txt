@@ -22,15 +22,10 @@ Program Listing for File lexer.c
        .last_token_type = TT_NONE
    };
    
-   usize lexeme_span(const Lexeme *lexeme)
-   {
-       return lexeme->end - lexeme->start;
-   }
-   
    byte *lexeme_substring(const Lexeme *lexeme)
    {
        usize span = lexeme_span(lexeme);
-       byte *ss = malloc((span + 1) * sizeof(byte));
+       byte *ss = (byte *)malloc((span + 1) * sizeof(byte));
        strncpy(ss, lexeme->start, span);
        ss[span + 1] = '\0';
        return ss;
@@ -100,7 +95,7 @@ Program Listing for File lexer.c
        return TT_OPERATOR;
    }
    
-   const byte *skip_whitespace(const byte *source)
+   static const byte *skip_whitespace(const byte *source)
    {
        while (1)
            switch (*source) {
@@ -120,6 +115,8 @@ Program Listing for File lexer.c
    
    Lexeme *lex(LexerContext *ctx, const byte *source)
    {
+       if (ctx->lineptr == NULL)
+           ctx->lineptr = source;
        if (*source == '\0') return NULL;
    
        source = skip_whitespace(source);
@@ -153,6 +150,7 @@ Program Listing for File lexer.c
            case '\n':
                ++ctx->lineno;
                ctx->lineptr = source + 1;
+               // fallthrough
            case ';':
                ++source;
                is_terminal = true;
@@ -170,7 +168,7 @@ Program Listing for File lexer.c
        if (tt == TT_TERM && ctx->last_token_type == TT_TERM)
            return lex(ctx, source + 1);  // Tail recursion should be optimised.
    
-       Lexeme *token = malloc(sizeof(Lexeme));
+       Lexeme *token = (Lexeme *)malloc(sizeof(Lexeme));
        token->type = tt;
        token->start = source;
        token->line = ctx->lineptr;
@@ -228,9 +226,9 @@ Program Listing for File lexer.c
            // then it becomes 2 +- 3.
            token->end = source + 1;
            goto return_token;
+       default:
+           return NULL;
        }
-   
-       return NULL;
    
    return_token:;
        ctx->last_token_type = token->type;

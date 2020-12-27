@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a6f4c871fa6a8a7ccb67a673f823adc88:
+
+Typedef runic
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: runic

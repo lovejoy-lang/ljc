@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a8093cf142de43413a3649101cf95152c:
+
+Define loop
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: loop

@@ -1,0 +1,13 @@
+.. _exhale_function_utf_8h_1a58b0e461943c90053accfd568070eda4:
+
+Function escape_rune
+====================
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: escape_rune(string, rune)

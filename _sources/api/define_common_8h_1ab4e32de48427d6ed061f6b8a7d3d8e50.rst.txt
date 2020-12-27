@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ab4e32de48427d6ed061f6b8a7d3d8e50:
+
+Define _LDOUBLE_BIT
+===================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: _LDOUBLE_BIT

@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1afb4d88975800ffd629200ff97f03b221:
+
+Define V_PATCH
+==============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: V_PATCH

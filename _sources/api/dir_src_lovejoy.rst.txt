@@ -15,10 +15,15 @@ Directory lovejoy
 Files
 -----
 
+- :ref:`file_src_lovejoy_common.c`
 - :ref:`file_src_lovejoy_common.h`
 - :ref:`file_src_lovejoy_display.c`
 - :ref:`file_src_lovejoy_display.h`
 - :ref:`file_src_lovejoy_lexer.c`
 - :ref:`file_src_lovejoy_lexer.h`
+- :ref:`file_src_lovejoy_operators.c`
+- :ref:`file_src_lovejoy_operators.h`
+- :ref:`file_src_lovejoy_utf.c`
+- :ref:`file_src_lovejoy_utf.h`
 
 

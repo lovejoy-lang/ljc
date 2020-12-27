@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a86d500a34c624c2cae56bc25a31b12f3:
+
+Define UNUSED
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: UNUSED

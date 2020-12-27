@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a0079cc4909964ed0d782c06b1753ce14:
+
+Define UNIT
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: UNIT

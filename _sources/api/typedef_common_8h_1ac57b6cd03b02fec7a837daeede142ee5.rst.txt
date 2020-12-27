@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1ac57b6cd03b02fec7a837daeede142ee5:
+
+Typedef umin
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: umin

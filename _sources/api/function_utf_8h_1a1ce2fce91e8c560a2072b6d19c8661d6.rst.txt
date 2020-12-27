@@ -1,0 +1,13 @@
+.. _exhale_function_utf_8h_1a1ce2fce91e8c560a2072b6d19c8661d6:
+
+Function hex_digit
+==================
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: hex_digit(byte)

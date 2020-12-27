@@ -1,0 +1,13 @@
+.. _exhale_typedef_operators_8h_1a5d4822fbb6b4c2de2037c752f97eeaa3:
+
+Typedef Operator
+================
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: Operator

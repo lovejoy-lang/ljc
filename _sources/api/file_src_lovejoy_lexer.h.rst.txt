@@ -70,9 +70,11 @@ Functions
 
 - :ref:`exhale_function_lexer_8h_1a92f8721ce47aed2e0b04b7bcf76c374a`
 
+- :ref:`exhale_function_lexer_8h_1a715df3ffac7ace7f8706f0525aec2f89`
+
 - :ref:`exhale_function_lexer_8h_1a6ad56898c0769190010f97dff4412a2b`
 
-- :ref:`exhale_function_lexer_8h_1a0a998696b835faa5ca9c13713f2c079c`
+- :ref:`exhale_function_lexer_8h_1aec2511a538cc7e8e94f1635273b8dfe5`
 
 - :ref:`exhale_function_lexer_8h_1a15ee16aa94427be108da355ed8ce3023`
 

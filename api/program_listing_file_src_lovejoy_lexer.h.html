@@ -81,7 +81,14 @@
 <span class="p">};</span>
 <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">Lexeme</span><span class="p">);</span>
 
-<span class="n">usize</span> <span class="nf">lexeme_span</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="p">);</span>
+
+<span class="kr">inline</span>
+<span class="n">usize</span> <span class="nf">lexeme_span</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span><span class="p">)</span>
+    <span class="p">{</span> <span class="k">return</span> <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">-</span> <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kr">inline</span>
+<span class="n">usize</span> <span class="nf">lexeme_col</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span><span class="p">)</span>
+    <span class="p">{</span> <span class="k">return</span> <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">start</span> <span class="o">-</span> <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">line</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
 
 <span class="n">byte</span> <span class="o">*</span><span class="nf">lexeme_substring</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="p">);</span>
 

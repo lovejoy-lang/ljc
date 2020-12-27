@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1aa070614a39de6dc833f50fc4a98eac2e:
+
+Define MAKE
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: MAKE

@@ -1,0 +1,13 @@
+.. _exhale_function_utf_8h_1aaa418820fe18d784b08d6bf035fa214c:
+
+Function utf_strlen
+===================
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: utf_strlen(string)

@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a050a2a4581f6ca223f835a980a25ee30:
+
+Typedef byte
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: byte

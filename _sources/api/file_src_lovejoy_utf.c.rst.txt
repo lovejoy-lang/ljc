@@ -1,0 +1,46 @@
+
+.. _file_src_lovejoy_utf.c:
+
+File utf.c
+==========
+
+|exhale_lsh| :ref:`Parent directory <dir_src_lovejoy>` (``src/lovejoy``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/lovejoy/utf.c``)
+----------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_lovejoy_utf.c.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``utf.h`` (:ref:`file_src_lovejoy_utf.h`)
+
+
+
+
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_utf_8c_1a590f35bf6b5f8509168755ece2108ffc`
+
+- :ref:`exhale_variable_utf_8c_1aa23dad4e213ffb0bca489c926656a57b`
+

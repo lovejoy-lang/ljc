@@ -1,0 +1,13 @@
+.. _exhale_function_utf_8h_1a98e35d6d9dcd2b642c854af8b6309e8d:
+
+Function is_locale_utf8
+=======================
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: is_locale_utf8(byte *)

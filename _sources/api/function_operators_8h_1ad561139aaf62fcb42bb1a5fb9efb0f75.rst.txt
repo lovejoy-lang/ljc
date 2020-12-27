@@ -1,0 +1,13 @@
+.. _exhale_function_operators_8h_1ad561139aaf62fcb42bb1a5fb9efb0f75:
+
+Function is_infix
+=================
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: is_infix(Operator *)

@@ -1,0 +1,60 @@
+
+.. _program_listing_file_src_lovejoy_operators.h:
+
+Program Listing for File operators.h
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_lovejoy_operators.h>` (``src/lovejoy/operators.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "common.h"
+   
+   enum Associativity {
+       ASSOC_LEFT,
+       ASSOC_RIGHT,
+       ASSOC_NEITHER
+   };
+   unqualify(enum, Associativity);
+   
+   enum Fixity {
+       PREFIX  = 1 << 0,
+       INFIX   = 1 << 1,
+       POSTFIX = 1 << 2
+   };
+   unqualify(enum, Fixity);
+   
+   struct Operator {
+       u16 precedence;
+       Associativity assoc;
+       Fixity fixity;
+       byte name[8];  
+       struct Operator *_next;  
+   };
+   unqualify(struct, Operator);
+   
+   struct OperatorTable {
+       Operator *operators;
+       usize count;
+   };
+   unqualify(struct, OperatorTable);
+   
+   OperatorTable DefaultOperators();
+   
+   u0 new_operator(OperatorTable *, byte *, u16, Associativity, Fixity);
+   
+   Operator *get_operator(OperatorTable *, byte *, Fixity);
+   
+   inline
+   bool is_prefix(Operator* op)
+   { return (op->fixity & PREFIX) != 0; }
+   
+   inline
+   bool is_infix(Operator* op)
+   { return (op->fixity & INFIX) != 0; }
+   
+   inline
+   bool is_postfix(Operator* op)
+   { return (op->fixity & POSTFIX) != 0; }

@@ -1,0 +1,13 @@
+.. _exhale_enum_operators_8h_1a4a574b64b7ce7bf6916f93fe687812e3:
+
+Enum Fixity
+===========
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: Fixity

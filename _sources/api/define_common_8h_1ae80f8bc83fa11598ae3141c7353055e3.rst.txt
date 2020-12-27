@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ae80f8bc83fa11598ae3141c7353055e3:
+
+Define newarray
+===============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: newarray

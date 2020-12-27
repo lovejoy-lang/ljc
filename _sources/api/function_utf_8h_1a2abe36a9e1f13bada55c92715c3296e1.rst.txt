@@ -1,0 +1,13 @@
+.. _exhale_function_utf_8h_1a2abe36a9e1f13bada55c92715c3296e1:
+
+Function utf_seqlen
+===================
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: utf_seqlen(string)

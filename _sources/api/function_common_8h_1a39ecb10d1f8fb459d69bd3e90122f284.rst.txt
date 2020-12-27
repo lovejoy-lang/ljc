@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a39ecb10d1f8fb459d69bd3e90122f284:
+
+Function emalloc
+================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: emalloc(usize, usize)

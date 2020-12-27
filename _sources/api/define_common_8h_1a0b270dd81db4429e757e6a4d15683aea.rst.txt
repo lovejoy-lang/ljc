@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a0b270dd81db4429e757e6a4d15683aea:
+
+Define SIZED
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SIZED

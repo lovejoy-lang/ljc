@@ -1,0 +1,27 @@
+
+.. _program_listing_file_src_lovejoy_operators.c:
+
+Program Listing for File operators.c
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_lovejoy_operators.c>` (``src/lovejoy/operators.c``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "operators.h"
+   
+   #ifndef IMPLEMENTATION
+   
+   OperatorTable DefaultOperators()
+   {
+       OperatorTable table = {
+           .operators = NULL,
+           .count = 0
+       };
+   
+       return table;
+   }
+   
+   #endif

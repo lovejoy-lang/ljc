@@ -1,0 +1,13 @@
+.. _exhale_function_operators_8h_1a34071735be65b1c86d6b69a7c1f3cee0:
+
+Function is_postfix
+===================
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: is_postfix(Operator *)

@@ -1,0 +1,13 @@
+.. _exhale_function_operators_8h_1a3eabf2b59e1df86f60b6d037a8873933:
+
+Function get_operator
+=====================
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: get_operator(OperatorTable *, byte *, Fixity)

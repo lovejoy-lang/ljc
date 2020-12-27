@@ -1,0 +1,13 @@
+.. _exhale_function_utf_8h_1a91bc79033e14ab8502918ffc0c058014:
+
+Function utf_strchr
+===================
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: utf_strchr(string, rune, usize *)

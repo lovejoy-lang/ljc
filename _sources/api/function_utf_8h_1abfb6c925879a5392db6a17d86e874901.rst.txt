@@ -1,0 +1,13 @@
+.. _exhale_function_utf_8h_1abfb6c925879a5392db6a17d86e874901:
+
+Function read_rune
+==================
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: read_rune(string, usize *)

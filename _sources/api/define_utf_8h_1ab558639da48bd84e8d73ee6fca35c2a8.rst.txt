@@ -1,0 +1,13 @@
+.. _exhale_define_utf_8h_1ab558639da48bd84e8d73ee6fca35c2a8:
+
+Define is_utf
+=============
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: is_utf

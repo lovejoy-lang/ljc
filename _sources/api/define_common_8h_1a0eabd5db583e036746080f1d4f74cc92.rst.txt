@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a0eabd5db583e036746080f1d4f74cc92:
+
+Define print
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: print

@@ -1,0 +1,91 @@
+
+.. _file_src_lovejoy_operators.h:
+
+File operators.h
+================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_lovejoy>` (``src/lovejoy``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/lovejoy/operators.h``)
+----------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_lovejoy_operators.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``common.h`` (:ref:`file_src_lovejoy_common.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_lovejoy_operators.c`
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structOperator`
+
+- :ref:`exhale_struct_structOperatorTable`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_operators_8h_1ae1883c43ead94e245aea106c87ddeea6`
+
+- :ref:`exhale_enum_operators_8h_1a4a574b64b7ce7bf6916f93fe687812e3`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_operators_8h_1a98330dedd3348d23ff3a3ab624206260`
+
+- :ref:`exhale_function_operators_8h_1a3eabf2b59e1df86f60b6d037a8873933`
+
+- :ref:`exhale_function_operators_8h_1ad561139aaf62fcb42bb1a5fb9efb0f75`
+
+- :ref:`exhale_function_operators_8h_1a34071735be65b1c86d6b69a7c1f3cee0`
+
+- :ref:`exhale_function_operators_8h_1aa8a55136e07c94eec79e3812ef5ff46e`
+
+- :ref:`exhale_function_operators_8h_1af24b30f3cc61a5bf957fff1920b34e1f`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_operators_8h_1a01bc414cc629cd2aa991f24c28a6d4b1`
+
+- :ref:`exhale_typedef_operators_8h_1a817aa6640fdf0f2b47af15f506d5d79f`
+
+- :ref:`exhale_typedef_operators_8h_1a5d4822fbb6b4c2de2037c752f97eeaa3`
+
+- :ref:`exhale_typedef_operators_8h_1a9b168c449262bb97481892c95840fe7e`
+

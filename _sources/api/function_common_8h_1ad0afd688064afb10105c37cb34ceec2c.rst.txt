@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1ad0afd688064afb10105c37cb34ceec2c:
+
+Function is_zero
+================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: is_zero(imax)

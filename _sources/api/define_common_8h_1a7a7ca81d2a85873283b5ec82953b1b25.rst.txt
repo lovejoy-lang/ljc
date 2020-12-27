@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a7a7ca81d2a85873283b5ec82953b1b25:
+
+Define nil
+==========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: nil

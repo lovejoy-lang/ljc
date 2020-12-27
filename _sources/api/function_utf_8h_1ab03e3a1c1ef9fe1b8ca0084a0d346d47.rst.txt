@@ -1,0 +1,13 @@
+.. _exhale_function_utf_8h_1ab03e3a1c1ef9fe1b8ca0084a0d346d47:
+
+Function char_num
+=================
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: char_num(string, usize)

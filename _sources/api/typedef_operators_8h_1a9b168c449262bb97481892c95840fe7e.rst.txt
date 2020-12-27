@@ -1,0 +1,13 @@
+.. _exhale_typedef_operators_8h_1a9b168c449262bb97481892c95840fe7e:
+
+Typedef OperatorTable
+=====================
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: OperatorTable

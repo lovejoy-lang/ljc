@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a084a1ac0c1c54d5de6521c96f9973deb:
+
+Typedef umax
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: umax

@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a78e8aea35d0fcdb0430d98dda1563128:
+
+Function is_zeroed
+==================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: is_zeroed(imax *, usize)

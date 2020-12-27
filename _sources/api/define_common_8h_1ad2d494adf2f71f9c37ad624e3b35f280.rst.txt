@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ad2d494adf2f71f9c37ad624e3b35f280:
+
+Define UNWRAP
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: UNWRAP

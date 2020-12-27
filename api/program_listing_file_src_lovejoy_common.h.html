@@ -45,6 +45,7 @@
 <span class="cp">#define COMMON_HEADER</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stdbool.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp"></span>
@@ -57,20 +58,35 @@
 <span class="cm">/* Version number */</span>
 <span class="cp">#define V_MAJOR 0</span>
 <span class="cp">#define V_MINOR 1</span>
-<span class="cp">#define V_TINY  0</span>
+<span class="cp">#define V_PATCH 0</span>
 
-<span class="cp">#define VERSION &quot;v&quot; STR(V_MAJOR) &quot;.&quot; STR(V_MINOR) &quot;.&quot; STR(V_TINY)</span>
+<span class="cp">#define VERSION &quot;v&quot; STR(V_MAJOR) &quot;.&quot; STR(V_MINOR) &quot;.&quot; STR(V_PATCH)</span>
 
 <span class="cm">/* Syntax helpers */</span>
+<span class="cp">#define loop while (1)</span>
 <span class="cp">#define unless(cond) if (!(cond))</span>
 <span class="cp">#define until(cond) while (!(cond))</span>
-<span class="cp">#define newtype(NT, T) typedef struct __##NT { T value; } NT</span>
+<span class="cp">#define newtype(NT, T) typedef struct _##NT { const T value; } NT</span>
+<span class="cp">#define newarray(NT, T) typedef struct _##NT { \</span>
+<span class="cp">    const usize len; \</span>
+<span class="cp">    T *const value; \</span>
+<span class="cp">} NT</span>
 <span class="cp">#define unqualify(D, T) typedef D T T</span>
+<span class="cp">#define nil NULL</span>
+
+<span class="cp">#define UNUSED(x) (void)(x)</span>
+
+<span class="cp">#define print(...) printf(__VA_ARGS__)</span>
+<span class="cp">#define println(lit, ...) printf(lit &quot;\n&quot;, __VA_ARGS__)</span>
+<span class="cp">#define eprintf(...) fprintf(stderr, __VA_ARGS__)</span>
+<span class="cp">#define eprint(...) eprintf(__VA_ARGS__)</span>
+<span class="cp">#define eprintln(lit, ...) fprintf(stderr, lit &quot;\n&quot;, __VA_ARGS__)</span>
 
 <span class="cm">/* Types */</span>
 <span class="n">newtype</span><span class="p">(</span><span class="n">atomic_t</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
 
 <span class="k">typedef</span> <span class="kt">void</span> <span class="n">u0</span><span class="p">;</span>
+<span class="cp">#define UNIT ;</span>
 
 <span class="cp">#define __UCHAR8__ char</span>
 
@@ -90,7 +106,14 @@
     <span class="cp">#define __UCHAR8__ __uint8_t;</span>
 <span class="cp">#endif</span>
 
-<span class="k">typedef</span> <span class="n">__UCHAR8__</span> <span class="n">byte</span><span class="p">;</span>
+<span class="cp">#ifndef IMPLEMENTATION</span>
+    <span class="k">typedef</span> <span class="n">__UCHAR8__</span> <span class="n">byte</span><span class="p">;</span>
+<span class="cp">#else</span>
+    <span class="k">typedef</span> <span class="n">__uint8_t</span> <span class="n">byte</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+<span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">umin</span><span class="p">;</span>
+<span class="k">typedef</span>   <span class="kt">signed</span> <span class="kt">char</span> <span class="n">imin</span><span class="p">;</span>
 
 <span class="k">typedef</span>  <span class="n">__int16_t</span> <span class="n">i16</span><span class="p">;</span>
 <span class="k">typedef</span> <span class="n">__uint16_t</span> <span class="n">u16</span><span class="p">;</span>
@@ -123,15 +146,53 @@
 <span class="k">typedef</span>  <span class="kt">intptr_t</span> <span class="n">iptr</span><span class="p">;</span>
 <span class="k">typedef</span> <span class="kt">uintptr_t</span> <span class="n">uptr</span><span class="p">;</span>
 
+<span class="k">typedef</span>  <span class="kt">intmax_t</span> <span class="n">imax</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">uintmax_t</span> <span class="n">umax</span><span class="p">;</span>
 
 <span class="cp">#ifdef __STDC_IEC_559__</span>
     <span class="k">typedef</span>  <span class="kt">float</span> <span class="n">f32</span><span class="p">;</span>
     <span class="k">typedef</span> <span class="kt">double</span> <span class="n">f64</span><span class="p">;</span>
 <span class="cp">#endif</span>
 
-<span class="k">typedef</span> <span class="n">__float80</span> <span class="n">f80</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">__float128</span> <span class="n">f128</span><span class="p">;</span>
+<span class="cp">#define _LDOUBLE_BIT (__SIZEOF_LONG_DOUBLE__ * CHAR_BIT)</span>
 
+<span class="cp">#if (_LDOUBLE_BIT == 80)</span>
+    <span class="k">typedef</span> <span class="kt">long</span> <span class="kt">double</span> <span class="n">f80</span><span class="p">;</span>
+<span class="cp">#elif (_LDOUBLE_BIT == 128)</span>
+    <span class="k">typedef</span> <span class="kt">long</span> <span class="kt">double</span> <span class="n">f128</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+<span class="n">newarray</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">byte</span><span class="p">);</span>
+<span class="n">newarray</span><span class="p">(</span><span class="n">runic</span><span class="p">,</span> <span class="n">rune</span><span class="p">);</span>
+
+<span class="cm">/* Common Functions */</span>
+<span class="k">extern</span> <span class="kt">bool</span> <span class="nf">is_zero</span><span class="p">(</span><span class="n">imax</span><span class="p">);</span>
+<span class="k">extern</span> <span class="kt">bool</span> <span class="nf">is_zerof</span><span class="p">(</span><span class="n">f64</span><span class="p">);</span>
+<span class="k">extern</span> <span class="kt">bool</span> <span class="nf">is_zeroed</span><span class="p">(</span><span class="n">imax</span> <span class="o">*</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">u0</span> <span class="nf">zero</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">u0</span> <span class="o">*</span><span class="nf">emalloc</span><span class="p">(</span><span class="n">usize</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">i32</span> <span class="nf">eputs</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">);</span>
+
+<span class="cm">/* Common Macros */</span>
+
+<span class="cp">#define UNWRAP(STRUCTURE) (STRUCTURE).value</span>
+<span class="cp">#define SIZED(TYPE, LITERAL) ((TYPE){ \</span>
+<span class="cp">    .len = sizeof(LITERAL), \</span>
+<span class="cp">    .value = (LITERAL) \</span>
+<span class="cp">})</span>
+
+<span class="cp">#define EMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })</span>
+<span class="cp">#define IS_EMPTY(ARR) ((ARR).len == 0)</span>
+
+<span class="cp">#define MAKE(TYPE, LEN) ((TYPE){ \</span>
+<span class="cp">    .len = (LEN), \</span>
+<span class="cp">    .value = emalloc(LEN, sizeof(TYPE)) \</span>
+<span class="cp">})</span>
+
+<span class="cp">#define SLICE(OBJ, START, END) ((typeof(OBJ)){ \</span>
+<span class="cp">    .len = (((isize)(END) &lt; 0) ? (OBJ).len : 0) + (END) - (START), \</span>
+<span class="cp">    .value = (OBJ).value + (START) \</span>
+<span class="cp">})</span>
 <span class="cm">/* NOTES: */</span>
 <span class="cm">/*</span>
 <span class="cm"> * Read this: https://www.cprogramming.com/tutorial/unicode.html</span>

@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a8c94ef350e036d9e67333a774ed143e1:
+
+Function zero
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: zero(u0 *, usize)

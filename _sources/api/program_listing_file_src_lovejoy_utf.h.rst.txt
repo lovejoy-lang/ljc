@@ -1,0 +1,65 @@
+
+.. _program_listing_file_src_lovejoy_utf.h:
+
+Program Listing for File utf.h
+==============================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_lovejoy_utf.h>` (``src/lovejoy/utf.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "common.h"
+   #include <string.h>
+   
+   #define is_utf(c) (((c) & 0xC0) != 0x80)
+   
+   inline string wrap_string(byte *cstring) {
+       string s = { .len = strlen(cstring), .value = cstring };
+       return s;
+   }
+   
+   /* Conversions */
+   
+   runic utf8_to_ucs4(runic dest, string src);
+   
+   string ucs4_to_utf8(string dest, runic src);
+   
+   string rune_to_utf8(string dest, rune src);
+   
+   /* Moving through stirngs */
+   
+   usize byte_offset(string, usize);
+   
+   usize char_num(string, usize);
+   
+   rune read_rune(string s, usize *i);
+   
+   u0 next_rune(string, usize);
+   
+   u0 prev_rune(string, usize);
+   
+   /* Unicode Escapes */
+   
+   usize read_escape(string src, rune *dest);
+   
+   string escape_rune(string dest, rune c);
+   
+   string utf_unescape(string dest, string src);
+   
+   string utf_escape(string dest, string src, bool escape_quotes);
+   
+   // Utility.
+   bool octal_digit(byte c);
+   bool hex_digit(byte c);
+   
+   /* UTF-8 oriented standard functions */
+   
+   string utf_strchr(string s, rune ch, usize *i);
+   
+   usize utf_strlen(string s);
+   
+   usize utf_seqlen(string);
+   
+   bool is_locale_utf8(byte *locale);

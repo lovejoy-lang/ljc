@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a33e91eed2d1c91d9564791e790d8e99c:
+
+Function is_zerof
+=================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: is_zerof(f64)

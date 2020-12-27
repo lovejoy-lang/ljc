@@ -1,0 +1,16 @@
+.. _exhale_struct_structOperator:
+
+Struct Operator
+===============
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: Operator
+   :members:
+   :protected-members:
+   :undoc-members:

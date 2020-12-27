@@ -1,0 +1,13 @@
+.. _exhale_function_operators_8h_1aa8a55136e07c94eec79e3812ef5ff46e:
+
+Function is_prefix
+==================
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: is_prefix(Operator *)

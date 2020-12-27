@@ -34,6 +34,8 @@ Includes
 --------
 
 
+- ``locale.h``
+
 - ``lovejoy/common.h`` (:ref:`file_src_lovejoy_common.h`)
 
 - ``lovejoy/display.h`` (:ref:`file_src_lovejoy_display.h`)

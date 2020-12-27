@@ -1,0 +1,16 @@
+.. _exhale_struct_struct__atomic__t:
+
+Struct _atomic_t
+================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: _atomic_t
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,13 @@
+.. _exhale_typedef_operators_8h_1a817aa6640fdf0f2b47af15f506d5d79f:
+
+Typedef Fixity
+==============
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: Fixity

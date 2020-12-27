@@ -50,7 +50,14 @@ Program Listing for File lexer.h
    };
    unqualify(struct, Lexeme);
    
-   usize lexeme_span(const Lexeme *);
+   
+   inline
+   usize lexeme_span(const Lexeme *lexeme)
+       { return lexeme->end - lexeme->start; }
+   
+   inline
+   usize lexeme_col(const Lexeme *lexeme)
+       { return lexeme->start - lexeme->line + 1; }
    
    byte *lexeme_substring(const Lexeme *);
    

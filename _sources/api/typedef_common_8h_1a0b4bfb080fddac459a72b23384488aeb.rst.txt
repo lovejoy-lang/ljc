@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a0b4bfb080fddac459a72b23384488aeb:
+
+Typedef string
+==============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: string

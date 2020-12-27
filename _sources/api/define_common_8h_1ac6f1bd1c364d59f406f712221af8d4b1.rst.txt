@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ac6f1bd1c364d59f406f712221af8d4b1:
+
+Define SLICE
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SLICE

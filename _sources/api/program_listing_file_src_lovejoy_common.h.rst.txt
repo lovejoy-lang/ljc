@@ -15,6 +15,7 @@ Program Listing for File common.h
    #define COMMON_HEADER
    
    #include <stdlib.h>
+   #include <stdio.h>
    #include <stdbool.h>
    #include <stdint.h>
    #include <stddef.h>
@@ -27,20 +28,35 @@ Program Listing for File common.h
    /* Version number */
    #define V_MAJOR 0
    #define V_MINOR 1
-   #define V_TINY  0
+   #define V_PATCH 0
    
-   #define VERSION "v" STR(V_MAJOR) "." STR(V_MINOR) "." STR(V_TINY)
+   #define VERSION "v" STR(V_MAJOR) "." STR(V_MINOR) "." STR(V_PATCH)
    
    /* Syntax helpers */
+   #define loop while (1)
    #define unless(cond) if (!(cond))
    #define until(cond) while (!(cond))
-   #define newtype(NT, T) typedef struct __##NT { T value; } NT
+   #define newtype(NT, T) typedef struct _##NT { const T value; } NT
+   #define newarray(NT, T) typedef struct _##NT { \
+       const usize len; \
+       T *const value; \
+   } NT
    #define unqualify(D, T) typedef D T T
+   #define nil NULL
+   
+   #define UNUSED(x) (void)(x)
+   
+   #define print(...) printf(__VA_ARGS__)
+   #define println(lit, ...) printf(lit "\n", __VA_ARGS__)
+   #define eprintf(...) fprintf(stderr, __VA_ARGS__)
+   #define eprint(...) eprintf(__VA_ARGS__)
+   #define eprintln(lit, ...) fprintf(stderr, lit "\n", __VA_ARGS__)
    
    /* Types */
    newtype(atomic_t, int);
    
    typedef void u0;
+   #define UNIT ;
    
    #define __UCHAR8__ char
    
@@ -60,7 +76,14 @@ Program Listing for File common.h
        #define __UCHAR8__ __uint8_t;
    #endif
    
-   typedef __UCHAR8__ byte;  
+   #ifndef IMPLEMENTATION
+       typedef __UCHAR8__ byte;
+   #else
+       typedef __uint8_t byte;  
+   #endif
+   
+   typedef unsigned char umin;
+   typedef   signed char imin;
    
    typedef  __int16_t i16;
    typedef __uint16_t u16;
@@ -93,15 +116,53 @@ Program Listing for File common.h
    typedef  intptr_t iptr;
    typedef uintptr_t uptr; 
    
+   typedef  intmax_t imax;
+   typedef uintmax_t umax;
    
    #ifdef __STDC_IEC_559__
        typedef  float f32;
        typedef double f64;
    #endif
    
-   typedef __float80 f80;
-   typedef __float128 f128;
+   #define _LDOUBLE_BIT (__SIZEOF_LONG_DOUBLE__ * CHAR_BIT)
    
+   #if (_LDOUBLE_BIT == 80)
+       typedef long double f80;
+   #elif (_LDOUBLE_BIT == 128)
+       typedef long double f128;
+   #endif
+   
+   newarray(string, byte);
+   newarray(runic, rune);
+   
+   /* Common Functions */
+   extern bool is_zero(imax);
+   extern bool is_zerof(f64);
+   extern bool is_zeroed(imax *, usize);
+   extern u0 zero(u0 *, usize);
+   extern u0 *emalloc(usize, usize);
+   extern i32 eputs(const byte *);
+   
+   /* Common Macros */
+   
+   #define UNWRAP(STRUCTURE) (STRUCTURE).value
+   #define SIZED(TYPE, LITERAL) ((TYPE){ \
+       .len = sizeof(LITERAL), \
+       .value = (LITERAL) \
+   })
+   
+   #define EMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })
+   #define IS_EMPTY(ARR) ((ARR).len == 0)
+   
+   #define MAKE(TYPE, LEN) ((TYPE){ \
+       .len = (LEN), \
+       .value = emalloc(LEN, sizeof(TYPE)) \
+   })
+   
+   #define SLICE(OBJ, START, END) ((typeof(OBJ)){ \
+       .len = (((isize)(END) < 0) ? (OBJ).len : 0) + (END) - (START), \
+       .value = (OBJ).value + (START) \
+   })
    /* NOTES: */
    /*
     * Read this: https://www.cprogramming.com/tutorial/unicode.html

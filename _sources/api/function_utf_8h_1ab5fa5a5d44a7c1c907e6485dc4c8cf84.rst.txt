@@ -1,0 +1,13 @@
+.. _exhale_function_utf_8h_1ab5fa5a5d44a7c1c907e6485dc4c8cf84:
+
+Function next_rune
+==================
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: next_rune(string, usize)

@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File utf.h &#8212; Lovejoy Compiler 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/onload.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="shortcut icon" href="../_static/lovejoy_icon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-utf-h">
+<span id="program-listing-file-src-lovejoy-utf-h"></span><h1>Program Listing for File utf.h<a class="headerlink" href="#program-listing-for-file-utf-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_lovejoy_utf.h.html#file-src-lovejoy-utf-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/lovejoy/utf.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;common.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#define is_utf(c) (((c) &amp; 0xC0) != 0x80)</span>
+
+<span class="kr">inline</span> <span class="n">string</span> <span class="nf">wrap_string</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">cstring</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="p">{</span> <span class="p">.</span><span class="n">len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">cstring</span><span class="p">),</span> <span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">cstring</span> <span class="p">};</span>
+    <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* Conversions */</span>
+
+<span class="n">runic</span> <span class="nf">utf8_to_ucs4</span><span class="p">(</span><span class="n">runic</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">);</span>
+
+<span class="n">string</span> <span class="nf">ucs4_to_utf8</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">runic</span> <span class="n">src</span><span class="p">);</span>
+
+<span class="n">string</span> <span class="nf">rune_to_utf8</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">rune</span> <span class="n">src</span><span class="p">);</span>
+
+<span class="cm">/* Moving through stirngs */</span>
+
+<span class="n">usize</span> <span class="nf">byte_offset</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+
+<span class="n">usize</span> <span class="nf">char_num</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+
+<span class="n">rune</span> <span class="nf">read_rune</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">usize</span> <span class="o">*</span><span class="n">i</span><span class="p">);</span>
+
+<span class="n">u0</span> <span class="nf">next_rune</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+
+<span class="n">u0</span> <span class="nf">prev_rune</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+
+<span class="cm">/* Unicode Escapes */</span>
+
+<span class="n">usize</span> <span class="nf">read_escape</span><span class="p">(</span><span class="n">string</span> <span class="n">src</span><span class="p">,</span> <span class="n">rune</span> <span class="o">*</span><span class="n">dest</span><span class="p">);</span>
+
+<span class="n">string</span> <span class="nf">escape_rune</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">rune</span> <span class="n">c</span><span class="p">);</span>
+
+<span class="n">string</span> <span class="nf">utf_unescape</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">);</span>
+
+<span class="n">string</span> <span class="nf">utf_escape</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">escape_quotes</span><span class="p">);</span>
+
+<span class="c1">// Utility.</span>
+<span class="kt">bool</span> <span class="nf">octal_digit</span><span class="p">(</span><span class="n">byte</span> <span class="n">c</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">hex_digit</span><span class="p">(</span><span class="n">byte</span> <span class="n">c</span><span class="p">);</span>
+
+<span class="cm">/* UTF-8 oriented standard functions */</span>
+
+<span class="n">string</span> <span class="nf">utf_strchr</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">rune</span> <span class="n">ch</span><span class="p">,</span> <span class="n">usize</span> <span class="o">*</span><span class="n">i</span><span class="p">);</span>
+
+<span class="n">usize</span> <span class="nf">utf_strlen</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">);</span>
+
+<span class="n">usize</span> <span class="nf">utf_seqlen</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+
+<span class="kt">bool</span> <span class="nf">is_locale_utf8</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">locale</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/lovejoy.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">Lovejoy Compiler</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=lovejoy-lang&repo=ljc&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="root.html">Lovejoy Compiler API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+    &#127279; Copyleft all wrongs reserved
+</div>
+
+  </body>
+</html>
