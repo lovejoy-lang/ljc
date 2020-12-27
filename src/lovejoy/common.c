@@ -34,6 +34,42 @@ u0 *emalloc(usize len, usize size)
 	return m;
 }
 
+usize push(u0 *array, const u0 *element, usize width)
+{
+	if (element == NULL) return 0;
+
+	newarray(ByteArray, umin);
+	ByteArray *dyn = (ByteArray *)array;
+	umin *elem = (umin *)element;
+
+	usize old_cap = dyn->cap;
+	usize new_cap = old_cap;
+	if (dyn->len < dyn->cap)
+		goto do_push;
+
+	// Otherwise, we need to reallocate for more space.
+	new_cap = (usize)(dyn->cap * REALLOC_FACTOR + 1);
+	dyn->value = (umin *)realloc(dyn->value, new_cap * width);
+	if (dyn->value == NULL) {
+		eprintln("Failed to realloc %lu bytes.", new_cap * width);
+		abort();
+	}
+	dyn->cap = new_cap;
+
+do_push:
+	memcpy(dyn->value + width * dyn->len++, elem, width);
+	return new_cap - old_cap;
+}
+
+u0 *pop(u0 *array, usize width)
+{
+	newarray(ByteArray, umin);
+	ByteArray *dyn = (ByteArray *)array;
+
+	return (u0 *)(dyn->value + --dyn->len * width);
+}
+
+
 i32 eputs(const byte *s)
 {
 	i32 err;

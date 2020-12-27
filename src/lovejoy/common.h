@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <limits.h>
+#include <string.h>
 
 /* Misc macros */
 #define STR_HELPER(x) #x
@@ -23,14 +24,21 @@
 
 #define VERSION "v" STR(V_MAJOR) "." STR(V_MINOR) "." STR(V_PATCH)
 
+#define REALLOC_FACTOR 1.5
+
 /* Syntax helpers */
 #define loop while (1)
 #define unless(cond) if (!(cond))
 #define until(cond) while (!(cond))
 #define newtype(NT, T) typedef struct _##NT { const T value; } NT
 #define newarray(NT, T) typedef struct _##NT { \
+	usize len; \
+	usize cap; \
+	T (*value);  \
+} NT
+#define newslice(NT, T) typedef struct _##NT { \
 	const usize len; \
-	T *const value; \
+	T (*const value); \
 } NT
 #define unqualify(D, T) typedef D T T
 #define nil NULL
@@ -38,10 +46,10 @@
 #define UNUSED(x) (void)(x)
 
 #define print(...) printf(__VA_ARGS__)
-#define println(lit, ...) printf(lit "\n", __VA_ARGS__)
+#define println(lit, ...) printf(lit "\n", ## __VA_ARGS__)
 #define eprintf(...) fprintf(stderr, __VA_ARGS__)
 #define eprint(...) eprintf(__VA_ARGS__)
-#define eprintln(lit, ...) fprintf(stderr, lit "\n", __VA_ARGS__)
+#define eprintln(lit, ...) fprintf(stderr, lit "\n", ## __VA_ARGS__)
 
 /* Types */
 /// Useful for resource counting etc.
@@ -76,7 +84,9 @@ typedef void u0;
 	typedef __uint8_t byte;  ///< Don't use `char' when you want `byte'.
 #endif
 
+/// Such that `sizeof(umin) == 1`.
 typedef unsigned char umin;
+/// Such that `sizeof(imin) == 1`.
 typedef   signed char imin;
 
 typedef  __int16_t i16;
@@ -129,9 +139,9 @@ typedef uintmax_t umax;
 #endif
 
 /// Immutable wrapper for UTF-8 encoded string (bytes are mutable).
-newarray(string, byte);
+newslice(string, byte);
 /// Imutable warpper for UCS-4/UTF-32 encoded runic string (runes are mutable).
-newarray(runic, rune);
+newslice(runic, rune);
 
 /* Common Functions */
 extern bool is_zero(imax);
@@ -139,6 +149,16 @@ extern bool is_zerof(f64);
 extern bool is_zeroed(imax *, usize);
 extern u0 zero(u0 *, usize);
 extern u0 *emalloc(usize, usize);
+/// Push element to array.
+/// @param[in,out] array Pointer to the dynamic array, cast to (u0 *).
+/// @param[in] element Pointer to element to be pushed,  cast to (u0 *).
+/// @param[in] width The `sizeof(T)` where `T` is the type of the element
+///                  that is being pushed.
+/// @returns How much capacity increased.
+extern usize push(u0 *array, const u0 *element, usize width);
+/// Pops/removes element from top of the stack.
+/// @returns Pointer to popped element.
+extern u0 *pop(u0 *array, usize width);
 extern i32 eputs(const byte *);
 
 /* Common Macros */
@@ -156,10 +176,17 @@ extern i32 eputs(const byte *);
 /// Is array empty?
 #define IS_EMPTY(ARR) ((ARR).len == 0)
 
-/// Heap allocates a constant sized type.
-#define MAKE(TYPE, LEN) ((TYPE){ \
+/// Heap allocates a variable sized array.
+#define AMAKE(TYPE, CAP) ((TYPE){ \
+	.len = 0, \
+	.cap = (CAP), \
+	.value = emalloc((CAP), sizeof(TYPE)) \
+})
+
+/// Heap allocates a constant sized slice type.
+#define SMAKE(TYPE, LEN) ((TYPE){ \
 	.len = (LEN), \
-	.value = emalloc(LEN, sizeof(TYPE)) \
+	.value = emalloc((LEN), sizeof(TYPE)) \
 })
 
 /// Take a slice/substring/view of sized type.
@@ -167,11 +194,22 @@ extern i32 eputs(const byte *);
 	.len = (((isize)(END) < 0) ? (OBJ).len : 0) + (END) - (START), \
 	.value = (OBJ).value + (START) \
 })
+
+/// For-each loop, e.g.
+/// ```c
+/// FOR_EACH(x, xs) {
+///     printf("%d\n", *x);
+/// }
+/// ```
+#define FOR_EACH(ELEM, ELEMS) \
+	for (typeof((ELEMS).value) ELEM = (ELEMS).value, _frst = ELEM; \
+		(usize)(ELEM - _frst) < (ELEMS).len; \
+		++ELEM)
+
 /* NOTES: */
 /*
  * Read this: https://www.cprogramming.com/tutorial/unicode.html
  * by Jeff Bezanson, about modern unicode in C.
  *
  */
-
 #endif
