@@ -64,6 +64,7 @@ div.topic {
 
 code, pre, .code, .pre {
 	font-family: var(--mono);
+	font-variant-ligatures: no-common-ligatures;
 }
 
 code {

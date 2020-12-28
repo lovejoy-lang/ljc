@@ -37,8 +37,8 @@
 	T (*value);  \
 } NT
 #define newslice(NT, T) typedef struct _##NT { \
-	const usize len; \
-	T (*const value); \
+	usize len; \
+	T (*value); \
 } NT
 #define unqualify(D, T) typedef D T T
 #define nil NULL
@@ -166,10 +166,10 @@ extern i32 eputs(const byte *);
 /// Unwraps pointer/value in sizing wrapper struct.
 #define UNWRAP(STRUCTURE) (STRUCTURE).value
 /// Initialise sizing wrapper with literal.
-#define SIZED(TYPE, LITERAL) ((TYPE){ \
-	.len = sizeof(LITERAL), \
-	.value = (LITERAL) \
-})
+#define INIT(TYPE, ...) { \
+	.len = sizeof((TYPE[])__VA_ARGS__), \
+	.value = (TYPE[])__VA_ARGS__ \
+}
 
 /// Empyt array of type.
 #define EMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })
@@ -184,10 +184,10 @@ extern i32 eputs(const byte *);
 })
 
 /// Heap allocates a constant sized slice type.
-#define SMAKE(TYPE, LEN) ((TYPE){ \
+#define SMAKE(TYPE, LEN) { \
 	.len = (LEN), \
 	.value = emalloc((LEN), sizeof(TYPE)) \
-})
+}
 
 /// Take a slice/substring/view of sized type.
 #define SLICE(OBJ, START, END) ((typeof(OBJ)){ \
@@ -195,12 +195,22 @@ extern i32 eputs(const byte *);
 	.value = (OBJ).value + (START) \
 })
 
-/// For-each loop, e.g.
+/// For-each loop, iterates across an array or slice.
+/// For example:
 /// ```c
+/// newarray(IntArray, int);
+/// IntArray xs = AMAKE(IntArray, 5);
+///
+/// int elem1 = 5;
+/// int elem2 = 3;
+/// push(&xs, &elem1, sizeof(int));
+/// push(&xs, &elem2, sizeof(int));
+///
 /// FOR_EACH(x, xs) {
 ///     printf("%d\n", *x);
 /// }
 /// ```
+/// Will print `5` then `3`.
 #define FOR_EACH(ELEM, ELEMS) \
 	for (typeof((ELEMS).value) ELEM = (ELEMS).value, _frst = ELEM; \
 		(usize)(ELEM - _frst) < (ELEMS).len; \

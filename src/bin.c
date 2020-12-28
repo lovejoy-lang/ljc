@@ -3,6 +3,7 @@
 //! This will *usually* be how most programs are compiled.
 
 #include <lovejoy/common.h>
+#include <lovejoy/utf.h>
 #include <lovejoy/lexer.h>
 #include <lovejoy/display.h>
 

@@ -5,6 +5,7 @@
 #define is_utf(c) (((c) & 0xC0) != 0x80)
 
 /// Wrap C-string to internal `string`.
+/// Length does _not_ count the null-terminator.
 /// @param[in] cstring Null terminated string to be wrapped
 /// @returns Wrapped UTF-8 string.
 inline string wrap_string(byte *cstring) {
@@ -15,12 +16,17 @@ inline string wrap_string(byte *cstring) {
 /* Conversions */
 
 /// Convert UTF-8 to UCS-4 (4-byte wide characters)
+/// No error checking is done, _must_ be valid UTF-8
+/// and `dest` must be large enough. If `dest.len >= src.len + 1`,
+/// then there will always be enough space.
 /// @param[out] dest Empty runic structure.
 /// @param[in] src UTF-8 encoded string.
 /// @returns Slice of converted runic `dest` with correct length.
 runic utf8_to_ucs4(runic dest, string src);
 
-/// Convert UCS-4 to UTF-8
+/// Convert UCS-4 to UTF-8, will try to NULL-terminate, if there is space.
+/// No error checking is done. `dest.len >= 4 * src.len + 4`
+/// To ensure a fit.  Ensure enough space in `dest` string.
 /// @param[out] dest Empty string structure.
 /// @param[in] src UCS-4/UTF-32 encoded string.
 /// @returns Slice of `dest` with converted UTF-8 bytes

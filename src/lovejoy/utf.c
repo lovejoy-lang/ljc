@@ -28,11 +28,11 @@ runic utf8_to_ucs4(runic dest, string src)
 	byte *src_end = src.value + src.len;
 	byte *sptr = src.value;
 
-	usize i = 0;
-	while (i < dest.len - 1) {
+	usize i;
+	for (i = 0; i < dest.len - 1; ++i) {
 		byte nb = trailing_bytes_for_UTF8[(usize)(*sptr)];
 		if (sptr + nb >= src_end)
-			goto done_utf8_to_ucs4;
+			break;
 
 		rune ch = 0;
 		switch (nb) {
@@ -42,12 +42,49 @@ runic utf8_to_ucs4(runic dest, string src)
 			case 0: ch += *sptr++;
 		}
 		ch -= offsets_from_UTF8[(usize)nb];
-		dest.value[i++] = ch;
+		dest.value[i] = ch;
 	}
 
-done_utf8_to_ucs4:
-	dest.value[i] = 0; // Null-terminate anyway, despite known length.
+	dest.value[i] = 0; // Always null-terminate, despite known length.
 	return SLICE(dest, 0, i);
+}
+
+string ucs4_to_utf8(string dest, runic src)
+{
+	byte *dest_end = dest.value + dest.len;
+	byte *dptr = dest.value;
+
+	for (usize i = 0; i < src.len; ++i) {
+		rune ch = src.value[i];
+
+		if (ch < 0x80) {
+			if (dptr >= dest_end)
+				break;
+			*dptr++ = (byte)ch;
+		} else if (ch < 0x800) {
+			if (dptr >= dest_end - 1)
+				break;
+			*dptr++ = (ch >> 6) | 0xC0;
+			*dptr++ = (ch & 0x3F) | 0x80;
+		} else if (ch < 0x10000) {
+			if (dptr >= dest_end - 2)
+				break;
+			*dptr++ = (ch >> 12) | 0xE0;
+			*dptr++ = ((ch >> 6) & 0x3F) | 0x80;
+			*dptr++ = (ch & 0x3F) | 0x80;
+		} else if (ch < 0x110000) {
+			if (dptr >= dest_end - 3)
+				break;
+			*dptr++ = (ch >> 18) | 0xF0;
+			*dptr++ = ((ch >> 12) & 0x3F) | 0x80;
+			*dptr++ = ((ch >> 6) & 0x3F) | 0x80;
+			*dptr++ = (ch & 0x3F) | 0x80;
+		}
+	}
+
+	if (dptr < dest_end)
+		*dptr = '\0';
+	return SLICE(dest, 0, dptr - dest.value);
 }
 
 #endif
