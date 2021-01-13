@@ -147,15 +147,19 @@ newslice(runic, rune);
 extern bool is_zero(imax);
 extern bool is_zerof(f64);
 extern bool is_zeroed(imax *, usize);
-extern u0 zero(u0 *, usize);
+/// Zero a block of memory.
+/// @param[out] blk Pointer to start of block.
+/// @param[in] width How many bytes to zero.
+/// e.g., for an array `width = lenght * sizeof(elem)`.
+extern u0 zero(u0 *blk, usize width);
 extern u0 *emalloc(usize, usize);
 /// Push element to array.
-/// @param[in,out] array Pointer to the dynamic array, cast to (u0 *).
+/// @param[in,out] arr Pointer to the dynamic array, cast to (u0 *).
 /// @param[in] element Pointer to element to be pushed,  cast to (u0 *).
 /// @param[in] width The `sizeof(T)` where `T` is the type of the element
 ///                  that is being pushed.
 /// @returns How much capacity increased.
-extern usize push(u0 *array, const u0 *element, usize width);
+extern usize push(u0 *arr, const u0 *element, usize width);
 /// Pops/removes element from top of the stack.
 /// @returns Pointer to popped element.
 extern u0 *pop(u0 *array, usize width);
@@ -170,8 +174,13 @@ extern i32 eputs(const byte *);
 	.len = sizeof((TYPE[])__VA_ARGS__), \
 	.value = (TYPE[])__VA_ARGS__ \
 }
+/// Initialise sizing wrapper with of string literal.
+#define STRING(...) { \
+	.len = sizeof((byte[]){ __VA_ARGS__ }) - 1, \
+	.value = (byte[]){ __VA_ARGS__ } \
+}
 
-/// Empyt array of type.
+/// Empyt array of certain type.
 #define EMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })
 /// Is array empty?
 #define IS_EMPTY(ARR) ((ARR).len == 0)
@@ -215,6 +224,8 @@ extern i32 eputs(const byte *);
 	for (typeof((ELEMS).value) ELEM = (ELEMS).value, _frst = ELEM; \
 		(usize)(ELEM - _frst) < (ELEMS).len; \
 		++ELEM)
+
+#define foreach FOR_EACH
 
 /* NOTES: */
 /*

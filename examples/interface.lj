@@ -10,17 +10,22 @@ print_something(showable: Show) = {
 	print_string(show(showable))
 }
 
-main() = {
+main(_) := {
 	number: i32 = 3
 	print_something(number)
 }
 
 
 -- Number is the type of anything that
--- implements basic (closed) arithmetic.
-Number := inerface($A) {
+-- implements basic arithmetic.
+Number := interface($A) {
+	Equality
 	(+)(A, A): A
 	(-)(A): A
 	(*)(A, A): A
-	recip(A): A
+	recip(A): $B
+}
+
+Equality := interface($A) {
+	(==)(A, A): bool
 }

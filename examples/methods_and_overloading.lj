@@ -19,11 +19,17 @@ add(self: Vec2D, other: Vec2D): Vec2D
 add(self: Vec3D, other: Vec3D): Vec3D
 	= Vec3D(self.x + other.x, self.y + other.y, self.z + other.z)
 
--*
- * ptr[]  signifies a fat pointer,
- * *ptr   signifies a thin regualr pointer,
- *  ptr?  signigies a nullable pointer.
- *-
+-* Reminder: How to denote pointers *-
+-*-
+ * ptr : &[T]  signifies a fat pointer to many T,
+ * ptr : &T    signifies a thin regualr pointer to T,
+ * ptr : T?    signifies a nullable pointer to T.
+-*-
+-*-
+ * ptr[] : T  signifies a fat pointer to many T,
+ * *ptr  : T  signifies a thin regualr pointer to T,
+ *  ptr? : T  signifies a nullable pointer to T.
+-*-
 main(argv[][]: byte): u0 = {
 	puts("Hello, World.")
 

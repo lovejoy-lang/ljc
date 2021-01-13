@@ -15,7 +15,7 @@ See [LANGUAGE_SPEC_DRAFT.md](./LANGUAGE_SPEC_DRAFT.md)
 ## Compiler Usage
 
 In the root of this repository, run `make` to build `ljc`,
-```cosole
+```console
 $ make
 ```
 then use the generated binary,
@@ -23,6 +23,12 @@ then use the generated binary,
 $ ./ljc my-source.lj -o my-binary
 ```
 
+## Tests
+
+```console
+$ make test
+$ ./ljc_test
+```
 
 ## Pipeline
 - Parse with incremental lexing.

@@ -11,6 +11,9 @@ docs/api
 *.d
 
 # Object files
+obj/
+objs/
+o/
 *.o
 *.ko
 *.obj

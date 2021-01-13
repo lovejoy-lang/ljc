@@ -1,0 +1,46 @@
+-- `where`, `<:` and `Number` constraint syntax not final.
+Coordinate3D := interface($A) where A <: Number {
+	x: A   -- Interface for types that have fields
+	y: A   -- `x`, `y` and `z`, that are also all numbers.
+	z: A
+}
+
+-- Not the best way to do something like this,
+-- just for demonsration purposes.
+
+Vec := data($A <: Number) {
+	Vec3D(x: A, y: A, z: A): Self(A)
+}
+
+Pos := Vec(i32)
+Vel := Vec(f64)
+
+Addition := interface {
+	(+)($A, A): A
+}
+
+Multiplication := interface {
+	(*)($A, A): A
+}
+
+dot(u: $C, v: C) where C <: Coordinate3D(Addition & Multiplication) := {
+	return u.x * v.x + u.y * v.y + u.z * v.z
+}
+-- ^^ There's no need (in this example) to specify all these constraints,
+--    the compiler will enforce such constraints automatically, by analysing
+--    the function body, and observing the use of (*) and (+) on the
+--    variables, and update the constraints on the type variables accordingly.
+--    In this example, it has just been made explicit.
+
+-- Alternative, much better style:
+dot(u: $C <: Coordinate3D($A), v: C): A
+	= u.x * v.x + u.y * v.y + u.z * v.z
+
+main(_) := {
+	pos: Pos = Vec3D(3, 5, 1)
+	vel: Vel = Vec3D(4.2, 9.6, 1.7)  -- `$A` would become `f64 | i32`
+
+	d := dot(pos, vel)
+
+	exit(0)
+}

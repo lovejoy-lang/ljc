@@ -8,12 +8,13 @@
 /// Length does _not_ count the null-terminator.
 /// @param[in] cstring Null terminated string to be wrapped
 /// @returns Wrapped UTF-8 string.
-inline string wrap_string(byte *cstring) {
+inline string wrap_string(byte *cstring)
+{
 	string s = { .len = strlen(cstring), .value = cstring };
 	return s;
 }
 
-/* Conversions */
+/* Conversions. */
 
 /// Convert UTF-8 to UCS-4 (4-byte wide characters)
 /// No error checking is done, _must_ be valid UTF-8
@@ -34,17 +35,22 @@ runic utf8_to_ucs4(runic dest, string src);
 string ucs4_to_utf8(string dest, runic src);
 
 /// Single UCS-4 rune to UTF-8 string.
-/// @param[out] dest Empty string structure to hole UTF-8 bytes.
+/// `dest` should allocate 4 bytes, or 5 if it is desired to NULL-terminate.
+/// @param[out] dest Empty string structure to hold UTF-8 bytes.
 /// @param[in] src Single UCS-4 character / rune.
 /// @returns Slice of `dest` with correct length.
-string rune_to_utf8(string dest, rune src);
+string rune_to_utf8(string dest, rune ch);
 
-/* Moving through stirngs */
+/* Moving through stirngs. */
 
 /// Character number to byte offset.
+/// Given the n-th character/rune in a string, how many
+/// bytes is that from the start of a UTF-8 string.
 usize byte_offset(string, usize);
 
 /// Byte offset to character number.
+/// Given a byte-offset from the start of a UTF-8 string,
+/// return how many characters/runes precede it.
 usize char_num(string, usize);
 
 /// Step through a string, one rune/character at a time.
@@ -57,12 +63,12 @@ usize char_num(string, usize);
 rune read_rune(string s, usize *i);
 
 /// Update byte-index to move next rune, skipping it.
-u0 next_rune(string, usize);
+u0 next_rune(string, usize *);
 
 /// Update byte-index to move to previous rune.
-u0 prev_rune(string, usize);
+u0 prev_rune(string, usize *);
 
-/* Unicode Escapes */
+/* Unicode Escapes. */
 
 /// Take an unescaped UTF-8 string, where the start of the string is
 /// pointing to the character right after the backslash. If this character
@@ -72,19 +78,22 @@ u0 prev_rune(string, usize);
 /// @param[in] src String pointing to char after backslash.
 /// @param[out] dest Pointer to location where resulting rune is to be stored.
 /// @returns How many characters read as part of parsing (including `u`/`U`).
-///          Returns `0` if invalid escape, e.g. no `u` or `U`, or invalid hex.
+///          Returns `0` if escape is invalid.
 usize read_escape(string src, rune *dest);
 
 /// Given a rune, convert it to an ASCII escape sequence.
+/// @param[out] dest Empty string, should be large enough for minimum
+///                  4 bytes, plus 1 byte for the null-terminator.
+/// @param[in] ch The UCS-4 rune to convert from.
 /// @returns Slice of `dest` with correct length.
-string escape_rune(string dest, rune c);
+string escape_rune(string dest, rune ch);
 
 /// Convert a string containing ASCII escape sequences to
 /// a proper UTF-8 string.
 /// @param[out] dest Empty string structure.
 /// @param[in] src String containg escapes.
 /// @returns Slice of `dest` with correct length.
-string utf_unescape(string dest, string src);
+string utf8_unescape(string dest, string src);
 
 /// Convert a string containing UTF-8 to ASCII with
 /// escape sequences.
@@ -93,13 +102,9 @@ string utf_unescape(string dest, string src);
 /// @param[in] escape_quotes If true, quotation-marks will have
 ///                          backslashes prepended too.
 /// @returns Slice of `dest` string with correct length.
-string utf_escape(string dest, string src, bool escape_quotes);
+string utf8_escape(string dest, string src, bool escape_quotes);
 
-// Utility.
-bool octal_digit(byte c);
-bool hex_digit(byte c);
-
-/* UTF-8 oriented standard functions */
+/* UTF-8 oriented standard function replacements. */
 
 /// Find first occurrence of character `ch` in string `c`.
 /// @param[in] s String to search through.
@@ -120,3 +125,7 @@ usize utf_seqlen(string);
 /// Give the C-string returned by `setlocale`, determine
 /// whether the current locale speaks UTF-8.
 bool is_locale_utf8(byte *locale);
+
+/* Utility. */
+bool octal_digit(byte c);
+bool hex_digit(byte c);

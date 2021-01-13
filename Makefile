@@ -6,21 +6,34 @@ INCLUDES := -Isrc
 OPTIONS := -funsigned-char
 CFLAGS += $(WARN) $(OPTIONS) $(OPT) $(INCLUDES)
 TARGET ?= ljc
-MAIN := bin.o
-OBJS := common.o utf.o operators.o lexer.o display.o
+CDIR ?= src/lovejoy
+ODIR ?= o
+OBJS := $(patsubst $(CDIR)/%.c,$(ODIR)/%.o,$(wildcard $(CDIR)/*.c))
+MAIN := $(ODIR)/bin.o
+TESTS_MAIN := $(ODIR)/tests.o
 
 ifeq ($(PREFIX),)
 	PREFIX := /usr/local
 endif
 
-all: clean $(TARGET)
+all: pre-build $(TARGET)
 	@printf "\nBuild success: \`$(TARGET)\`.\n"
 
-test: clean $(OBJS) tests.o
-	$(CC) $(OPT) -o $(TARGET)_test $(OBJS) tests.o $(LINKS)
+clean:
+	@echo "Cleaning last build."
+	rm -f ./$(TARGET) ./$(TARGET)_test
+	rm -fr ./$(ODIR)/
+
+pre-build: clean
+	@echo "Making object directory."
+	@mkdir $(ODIR)
+
+test: pre-build $(ODIR)/tests.o
+	$(CC) $(OPT) -o $(TARGET)_test $(OBJS) $(TESTS_MAIN) $(LINKS)
 	@printf "\nBuild for tests succeeded: \`$(TARGET)_test\`.\n"
 
-$(TARGET): $(OBJS) $(MAIN)
+$(TARGET): $(MAIN)
+	@echo "Building target."
 	$(CC) $(OPT) -o $(TARGET) $(OBJS) $(MAIN) $(LINKS)
 
 install: $(TARGET)
@@ -28,29 +41,18 @@ install: $(TARGET)
 	install -d $(PREFIX)/bin
 	install -m 755 $(TARGET) $(PREFIX)/bin
 
-bin.o: common.o lexer.o display.o
-	$(CC) $(CFLAGS) -c src/bin.c $(LINKS)
+$(MAIN): $(OBJS)
+	@echo "Building main."
+	$(CC) $(CFLAGS) -c src/bin.c -o $@ $(LINKS)
 
-tests.o: common.o lexer.o display.o utf.o
-	$(CC) $(CFLAGS) -c src/tests.c $(LINKS)
+$(ODIR)/tests.o: $(OBJS)
+	@echo "Building tests."
+	$(CC) $(CFLAGS) -c src/tests.c -o $@ $(LINKS)
 
-common.o:
-	$(CC) $(CFLAGS) -c src/lovejoy/common.c $(LINKS)
+$(ODIR)/%.o: $(CDIR)/%.c
+	@echo "Building object file: $< -> $@."
+	@$(CC) $(CFLAGS) -c $< -o $@ $(LINKS)
 
-utf.o: common.o
-	$(CC) $(CFLAGS) -c src/lovejoy/utf.c $(LINKS)
 
-lexer.o:
-	$(CC) $(CFLAGS) -c src/lovejoy/lexer.c $(LINKS)
 
-display.o:
-	$(CC) $(CFLAGS) -c src/lovejoy/display.c $(LINKS)
-
-operators.o:
-	$(CC) $(CFLAGS) -c src/lovejoy/operators.c $(LINKS)
-
-clean:
-	@echo "Cleaning build."
-	rm -f $(TARGET) $(OBJS) $(MAIN)
-
-.PHONY: all clean install
+.PHONY: all test pre-build clean install
