@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ac90f5cb021d2f43396315350ff07f71a:
+
+Define newslice
+===============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: newslice

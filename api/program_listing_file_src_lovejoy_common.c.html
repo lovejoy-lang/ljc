@@ -15,7 +15,6 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/onload.js"></script>
     <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
@@ -42,6 +41,7 @@
 <span id="program-listing-file-src-lovejoy-common-c"></span><h1>Program Listing for File common.c<a class="headerlink" href="#program-listing-for-file-common-c" title="Permalink to this headline">¶</a></h1>
 <p>↰ <a class="reference internal" href="file_src_lovejoy_common.c.html#file-src-lovejoy-common-c"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/lovejoy/common.c</span></code>)</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;common.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;assert.h&quot;</span><span class="cp"></span>
 
 <span class="cp">#ifndef IMPLEMENTATION</span>
 
@@ -57,25 +57,63 @@
     <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">u0</span> <span class="nf">zero</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">blk</span><span class="p">,</span> <span class="n">usize</span> <span class="n">len</span><span class="p">)</span>
+<span class="n">u0</span> <span class="nf">zero</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">blk</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">blk</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">blk</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">width</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">UNIT</span><span class="p">;</span>
     <span class="n">umin</span> <span class="o">*</span><span class="n">_blk</span> <span class="o">=</span> <span class="n">blk</span><span class="p">;</span>
-    <span class="n">until</span> <span class="p">(</span><span class="n">len</span><span class="o">--</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">until</span> <span class="p">(</span><span class="n">width</span><span class="o">--</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
         <span class="o">*</span><span class="n">_blk</span><span class="o">++</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">UNIT</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="n">u0</span> <span class="o">*</span><span class="nf">emalloc</span><span class="p">(</span><span class="n">usize</span> <span class="n">len</span><span class="p">,</span> <span class="n">usize</span> <span class="n">size</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">u0</span> <span class="o">*</span><span class="n">m</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">len</span> <span class="o">*</span> <span class="n">size</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">eprintf</span><span class="p">(</span><span class="s">&quot;Could not allocate %lu bytes.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">len</span> <span class="o">*</span> <span class="n">size</span><span class="p">);</span>
+    <span class="n">usize</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">len</span> <span class="o">*</span> <span class="n">size</span><span class="p">;</span>
+    <span class="n">u0</span> <span class="o">*</span><span class="n">m</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">bytes</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">eprintf</span><span class="p">(</span><span class="s">&quot;Could not allocate %lu bytes.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">bytes</span><span class="p">);</span>
         <span class="n">abort</span><span class="p">();</span>
     <span class="p">}</span>
+    <span class="n">zero</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">bytes</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">m</span><span class="p">;</span>
 <span class="p">}</span>
+
+<span class="n">usize</span> <span class="nf">push</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="k">const</span> <span class="n">u0</span> <span class="o">*</span><span class="n">element</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">element</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">newarray</span><span class="p">(</span><span class="n">ByteArray</span><span class="p">,</span> <span class="n">umin</span><span class="p">);</span>
+    <span class="n">ByteArray</span> <span class="o">*</span><span class="n">dyn</span> <span class="o">=</span> <span class="p">(</span><span class="n">ByteArray</span> <span class="o">*</span><span class="p">)</span><span class="n">arr</span><span class="p">;</span>
+    <span class="n">umin</span> <span class="o">*</span><span class="n">elem</span> <span class="o">=</span> <span class="p">(</span><span class="n">umin</span> <span class="o">*</span><span class="p">)</span><span class="n">element</span><span class="p">;</span>
+
+    <span class="n">usize</span> <span class="n">old_cap</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">-&gt;</span><span class="n">cap</span><span class="p">;</span>
+    <span class="n">usize</span> <span class="n">new_cap</span> <span class="o">=</span> <span class="n">old_cap</span><span class="p">;</span>
+
+    <span class="n">unless</span> <span class="p">(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&lt;</span> <span class="n">dyn</span><span class="o">-&gt;</span><span class="n">cap</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">new_cap</span> <span class="o">=</span> <span class="p">(</span><span class="n">usize</span><span class="p">)(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">cap</span> <span class="o">*</span> <span class="n">REALLOC_FACTOR</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="n">dyn</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">umin</span> <span class="o">*</span><span class="p">)</span><span class="n">realloc</span><span class="p">(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">,</span> <span class="n">new_cap</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">eprintln</span><span class="p">(</span><span class="s">&quot;Failed to realloc %lu bytes.&quot;</span><span class="p">,</span> <span class="n">new_cap</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
+            <span class="n">abort</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">dyn</span><span class="o">-&gt;</span><span class="n">cap</span> <span class="o">=</span> <span class="n">new_cap</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="n">dyn</span><span class="o">-&gt;</span><span class="n">len</span><span class="o">++</span><span class="p">,</span> <span class="n">elem</span><span class="p">,</span> <span class="n">width</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">new_cap</span> <span class="o">-</span> <span class="n">old_cap</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">u0</span> <span class="o">*</span><span class="nf">pop</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">newarray</span><span class="p">(</span><span class="n">ByteArray</span><span class="p">,</span> <span class="n">umin</span><span class="p">);</span>
+    <span class="n">ByteArray</span> <span class="o">*</span><span class="n">dyn</span> <span class="o">=</span> <span class="p">(</span><span class="n">ByteArray</span> <span class="o">*</span><span class="p">)</span><span class="n">array</span><span class="p">;</span>
+
+    <span class="n">assert</span><span class="p">(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="p">)(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">+</span> <span class="o">--</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
+<span class="p">}</span>
+
 
 <span class="n">i32</span> <span class="nf">eputs</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span>
 <span class="p">{</span>

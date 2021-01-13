@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a725b8c0c5ab59fc3f47e4cf7331a86aa:
+
+Define AMAKE
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: AMAKE

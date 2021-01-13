@@ -43,6 +43,8 @@ Included By
 
 - :ref:`file_src_lovejoy_display.c`
 
+- :ref:`file_src_tests.c`
+
 
 
 

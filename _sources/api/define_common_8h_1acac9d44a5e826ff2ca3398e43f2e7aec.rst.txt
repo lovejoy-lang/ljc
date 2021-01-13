@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1acac9d44a5e826ff2ca3398e43f2e7aec:
+
+Define SMAKE
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SMAKE

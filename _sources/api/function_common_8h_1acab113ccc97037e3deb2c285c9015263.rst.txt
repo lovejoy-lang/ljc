@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1acab113ccc97037e3deb2c285c9015263:
+
+Function pop
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: pop(u0 *, usize)

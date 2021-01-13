@@ -70,6 +70,11 @@ Files
 .. toctree::
    :maxdepth: 5
 
+   file_src_tests.c.rst
+
+.. toctree::
+   :maxdepth: 5
+
    file_src_lovejoy_utf.c.rst
 
 .. toctree::

@@ -15,7 +15,6 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/onload.js"></script>
     <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
@@ -41,7 +40,18 @@
   <div class="section" id="program-listing-for-file-common-h">
 <span id="program-listing-file-src-lovejoy-common-h"></span><h1>Program Listing for File common.h<a class="headerlink" href="#program-listing-for-file-common-h" title="Permalink to this headline">¶</a></h1>
 <p>↰ <a class="reference internal" href="file_src_lovejoy_common.h.html#file-src-lovejoy-common-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/lovejoy/common.h</span></code>)</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef COMMON_HEADER</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">IntArray</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">AMAKE</span><span class="p">(</span><span class="n">IntArray</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="n">elem1</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">elem2</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="n">push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">xs</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">elem1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">xs</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">elem2</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+
+<span class="n">FOR_EACH</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#ifndef COMMON_HEADER</span>
 <span class="cp">#define COMMON_HEADER</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
@@ -50,6 +60,7 @@
 <span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;limits.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
 
 <span class="cm">/* Misc macros */</span>
 <span class="cp">#define STR_HELPER(x) #x</span>
@@ -62,14 +73,21 @@
 
 <span class="cp">#define VERSION &quot;v&quot; STR(V_MAJOR) &quot;.&quot; STR(V_MINOR) &quot;.&quot; STR(V_PATCH)</span>
 
+<span class="cp">#define REALLOC_FACTOR 1.5</span>
+
 <span class="cm">/* Syntax helpers */</span>
 <span class="cp">#define loop while (1)</span>
 <span class="cp">#define unless(cond) if (!(cond))</span>
 <span class="cp">#define until(cond) while (!(cond))</span>
 <span class="cp">#define newtype(NT, T) typedef struct _##NT { const T value; } NT</span>
 <span class="cp">#define newarray(NT, T) typedef struct _##NT { \</span>
-<span class="cp">    const usize len; \</span>
-<span class="cp">    T *const value; \</span>
+<span class="cp">    usize len; \</span>
+<span class="cp">    usize cap; \</span>
+<span class="cp">    T (*value);  \</span>
+<span class="cp">} NT</span>
+<span class="cp">#define newslice(NT, T) typedef struct _##NT { \</span>
+<span class="cp">    usize len; \</span>
+<span class="cp">    T (*value); \</span>
 <span class="cp">} NT</span>
 <span class="cp">#define unqualify(D, T) typedef D T T</span>
 <span class="cp">#define nil NULL</span>
@@ -77,10 +95,10 @@
 <span class="cp">#define UNUSED(x) (void)(x)</span>
 
 <span class="cp">#define print(...) printf(__VA_ARGS__)</span>
-<span class="cp">#define println(lit, ...) printf(lit &quot;\n&quot;, __VA_ARGS__)</span>
+<span class="cp">#define println(lit, ...) printf(lit &quot;\n&quot;, ## __VA_ARGS__)</span>
 <span class="cp">#define eprintf(...) fprintf(stderr, __VA_ARGS__)</span>
 <span class="cp">#define eprint(...) eprintf(__VA_ARGS__)</span>
-<span class="cp">#define eprintln(lit, ...) fprintf(stderr, lit &quot;\n&quot;, __VA_ARGS__)</span>
+<span class="cp">#define eprintln(lit, ...) fprintf(stderr, lit &quot;\n&quot;, ## __VA_ARGS__)</span>
 
 <span class="cm">/* Types */</span>
 <span class="n">newtype</span><span class="p">(</span><span class="n">atomic_t</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
@@ -162,44 +180,63 @@
     <span class="k">typedef</span> <span class="kt">long</span> <span class="kt">double</span> <span class="n">f128</span><span class="p">;</span>
 <span class="cp">#endif</span>
 
-<span class="n">newarray</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">byte</span><span class="p">);</span>
-<span class="n">newarray</span><span class="p">(</span><span class="n">runic</span><span class="p">,</span> <span class="n">rune</span><span class="p">);</span>
+<span class="n">newslice</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">byte</span><span class="p">);</span>
+<span class="n">newslice</span><span class="p">(</span><span class="n">runic</span><span class="p">,</span> <span class="n">rune</span><span class="p">);</span>
 
 <span class="cm">/* Common Functions */</span>
 <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">is_zero</span><span class="p">(</span><span class="n">imax</span><span class="p">);</span>
 <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">is_zerof</span><span class="p">(</span><span class="n">f64</span><span class="p">);</span>
 <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">is_zeroed</span><span class="p">(</span><span class="n">imax</span> <span class="o">*</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
-<span class="k">extern</span> <span class="n">u0</span> <span class="nf">zero</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">u0</span> <span class="nf">zero</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">blk</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">u0</span> <span class="o">*</span><span class="nf">emalloc</span><span class="p">(</span><span class="n">usize</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">usize</span> <span class="nf">push</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="k">const</span> <span class="n">u0</span> <span class="o">*</span><span class="n">element</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">u0</span> <span class="o">*</span><span class="nf">pop</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">i32</span> <span class="nf">eputs</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">);</span>
 
 <span class="cm">/* Common Macros */</span>
 
 <span class="cp">#define UNWRAP(STRUCTURE) (STRUCTURE).value</span>
-<span class="cp">#define SIZED(TYPE, LITERAL) ((TYPE){ \</span>
-<span class="cp">    .len = sizeof(LITERAL), \</span>
-<span class="cp">    .value = (LITERAL) \</span>
-<span class="cp">})</span>
+<span class="cp">#define INIT(TYPE, ...) { \</span>
+<span class="cp">    .len = sizeof((TYPE[])__VA_ARGS__), \</span>
+<span class="cp">    .value = (TYPE[])__VA_ARGS__ \</span>
+<span class="cp">}</span>
+<span class="cp">#define STRING(...) { \</span>
+<span class="cp">    .len = sizeof((byte[]){ __VA_ARGS__ }) - 1, \</span>
+<span class="cp">    .value = (byte[]){ __VA_ARGS__ } \</span>
+<span class="cp">}</span>
 
 <span class="cp">#define EMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })</span>
 <span class="cp">#define IS_EMPTY(ARR) ((ARR).len == 0)</span>
 
-<span class="cp">#define MAKE(TYPE, LEN) ((TYPE){ \</span>
-<span class="cp">    .len = (LEN), \</span>
-<span class="cp">    .value = emalloc(LEN, sizeof(TYPE)) \</span>
+<span class="cp">#define AMAKE(TYPE, CAP) ((TYPE){ \</span>
+<span class="cp">    .len = 0, \</span>
+<span class="cp">    .cap = (CAP), \</span>
+<span class="cp">    .value = emalloc((CAP), sizeof(TYPE)) \</span>
 <span class="cp">})</span>
+
+<span class="cp">#define SMAKE(TYPE, LEN) { \</span>
+<span class="cp">    .len = (LEN), \</span>
+<span class="cp">    .value = emalloc((LEN), sizeof(TYPE)) \</span>
+<span class="cp">}</span>
 
 <span class="cp">#define SLICE(OBJ, START, END) ((typeof(OBJ)){ \</span>
 <span class="cp">    .len = (((isize)(END) &lt; 0) ? (OBJ).len : 0) + (END) - (START), \</span>
 <span class="cp">    .value = (OBJ).value + (START) \</span>
 <span class="cp">})</span>
+
+<span class="cp">#define FOR_EACH(ELEM, ELEMS) \</span>
+<span class="cp">    for (typeof((ELEMS).value) ELEM = (ELEMS).value, _frst = ELEM; \</span>
+<span class="cp">        (usize)(ELEM - _frst) &lt; (ELEMS).len; \</span>
+<span class="cp">        ++ELEM)</span>
+
+<span class="cp">#define foreach FOR_EACH</span>
+
 <span class="cm">/* NOTES: */</span>
 <span class="cm">/*</span>
 <span class="cm"> * Read this: https://www.cprogramming.com/tutorial/unicode.html</span>
 <span class="cm"> * by Jeff Bezanson, about modern unicode in C.</span>
 <span class="cm"> *</span>
 <span class="cm"> */</span>
-
 <span class="cp">#endif</span>
 </pre></div>
 </div>

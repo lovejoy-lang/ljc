@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File tests.c &#8212; Lovejoy Compiler 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/onload.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="shortcut icon" href="../_static/lovejoy_icon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-tests-c">
+<span id="program-listing-file-src-tests-c"></span><h1>Program Listing for File tests.c<a class="headerlink" href="#program-listing-for-file-tests-c" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_tests.c.html#file-src-tests-c"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/tests.c</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;lovejoy/common.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;lovejoy/utf.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;lovejoy/lexer.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;lovejoy/display.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;locale.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#define TEST(DOES) do { \</span>
+<span class="cp">    println(&quot;\n[###] Test Case: %s&quot;, DOES); \</span>
+<span class="cp">    println(  &quot;      ↓↓↓↓ ↓↓↓↓&quot;); \</span>
+<span class="cp">} while (false); if (true)</span>
+
+<span class="n">u0</span> <span class="nf">utf8_ucs4_conversions</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">cstring</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// UTF-8 string.</span>
+    <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="n">wrap_string</span><span class="p">(</span><span class="n">cstring</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;s = </span><span class="se">\&quot;</span><span class="s">%s</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">UNWRAP</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+    <span class="n">FOR_EACH</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="n">println</span><span class="p">(</span><span class="s">&quot;byte: 0x%X&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">c</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;s.len = %zu&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">.</span><span class="n">len</span><span class="p">);</span>
+    <span class="c1">// Convert to UCS-4.</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;[***] Convert to UCS-4.&quot;</span><span class="p">);</span>
+    <span class="n">runic</span> <span class="n">ucs4</span> <span class="o">=</span> <span class="n">SMAKE</span><span class="p">(</span><span class="n">rune</span><span class="p">,</span> <span class="n">s</span><span class="p">.</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">ucs4</span> <span class="o">=</span> <span class="n">utf8_to_ucs4</span><span class="p">(</span><span class="n">ucs4</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;ucs4 = </span><span class="se">\&quot;</span><span class="s">%ls</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="kt">wchar_t</span> <span class="o">*</span><span class="p">)</span><span class="n">UNWRAP</span><span class="p">(</span><span class="n">ucs4</span><span class="p">));</span>
+    <span class="n">FOR_EACH</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">ucs4</span><span class="p">)</span> <span class="n">println</span><span class="p">(</span><span class="s">&quot;rune: U+%08X = &#39;%lc&#39;&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="o">*</span><span class="n">c</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;ucs4.len = %zu&quot;</span><span class="p">,</span> <span class="n">ucs4</span><span class="p">.</span><span class="n">len</span><span class="p">);</span>
+    <span class="c1">// And back again.</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;[***] Convert to UTF-8.&quot;</span><span class="p">);</span>
+    <span class="n">string</span> <span class="n">utf8</span> <span class="o">=</span> <span class="n">SMAKE</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">ucs4</span><span class="p">.</span><span class="n">len</span> <span class="o">+</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="n">utf8</span> <span class="o">=</span> <span class="n">ucs4_to_utf8</span><span class="p">(</span><span class="n">utf8</span><span class="p">,</span> <span class="n">ucs4</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;utf8 = </span><span class="se">\&quot;</span><span class="s">%s</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">UNWRAP</span><span class="p">(</span><span class="n">utf8</span><span class="p">));</span>
+    <span class="n">FOR_EACH</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">utf8</span><span class="p">)</span> <span class="n">println</span><span class="p">(</span><span class="s">&quot;byte: 0x%X&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">c</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;utf8.len = %zu&quot;</span><span class="p">,</span> <span class="n">utf8</span><span class="p">.</span><span class="n">len</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="cp">#ifndef IMPLEMENTATION</span>
+
+<span class="n">i32</span> <span class="nf">main</span><span class="p">(</span><span class="n">i32</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">UNUSED</span><span class="p">(</span><span class="n">argc</span><span class="p">);</span> <span class="n">UNUSED</span><span class="p">(</span><span class="n">argv</span><span class="p">);</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">locale</span><span class="p">;</span> <span class="n">UNUSED</span><span class="p">(</span><span class="n">locale</span><span class="p">);</span>
+    <span class="n">locale</span> <span class="o">=</span> <span class="n">setlocale</span><span class="p">(</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;Locale is UTF-8?  %s.&quot;</span><span class="p">,</span>
+        <span class="n">is_locale_utf8</span><span class="p">(</span><span class="n">locale</span><span class="p">)</span> <span class="o">?</span> <span class="s">&quot;true&quot;</span> <span class="o">:</span> <span class="s">&quot;false&quot;</span><span class="p">);</span>
+
+
+    <span class="cm">/* UTF-8 &lt;--&gt; UCS-4, conversions. */</span>
+    <span class="n">TEST</span><span class="p">(</span><span class="s">&quot;Converts between UTF-8 and UCS-4.&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;=== Chinese Characters ===&quot;</span><span class="p">);</span>
+        <span class="n">utf8_ucs4_conversions</span><span class="p">(</span><span class="s">&quot;你好&quot;</span><span class="p">);</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">=== Latin-1/ASCII Characters ===&quot;</span><span class="p">);</span>
+        <span class="n">utf8_ucs4_conversions</span><span class="p">(</span><span class="s">&quot;AaBb&quot;</span><span class="p">);</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">=== Look-alike Characters ===&quot;</span><span class="p">);</span>
+        <span class="n">utf8_ucs4_conversions</span><span class="p">(</span><span class="s">&quot;maña&quot;</span><span class="p">);</span>  <span class="c1">// U+00F1 = ñ.</span>
+        <span class="n">utf8_ucs4_conversions</span><span class="p">(</span><span class="s">&quot;maña&quot;</span><span class="p">);</span>  <span class="c1">// n + U+0303 = ñ.</span>
+        <span class="c1">// The second string has one extra &#39;code-point&#39;, but both</span>
+        <span class="c1">// have the exact same number of human distinguishable &#39;graphemes&#39;.</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* UTF-8 Escapes */</span>
+    <span class="n">TEST</span><span class="p">(</span><span class="s">&quot;Unescaped ASCII/UTF-8 strings to UTF-8&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;=== Unescaping Strings ===&quot;</span><span class="p">);</span>
+        <span class="n">string</span> <span class="n">unescaped</span> <span class="o">=</span> <span class="n">SMAKE</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="mi">128</span><span class="p">);</span>
+        <span class="n">string</span> <span class="n">escaped</span> <span class="o">=</span> <span class="n">STRING</span><span class="p">(</span><span class="s">&quot;Hello, </span><span class="se">\\</span><span class="s">U1F30E.&quot;</span><span class="p">);</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;escaped.len = %zu&quot;</span><span class="p">,</span> <span class="n">escaped</span><span class="p">.</span><span class="n">len</span><span class="p">);</span>
+        <span class="n">unescaped</span> <span class="o">=</span> <span class="n">utf8_unescape</span><span class="p">(</span><span class="n">unescaped</span><span class="p">,</span> <span class="n">escaped</span><span class="p">);</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;unescaped.len = %zu&quot;</span><span class="p">,</span> <span class="n">unescaped</span><span class="p">.</span><span class="n">len</span><span class="p">);</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">%s</span><span class="se">\&quot;</span><span class="s"> --&gt; </span><span class="se">\&quot;</span><span class="s">%s</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">escaped</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">unescaped</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">TEST</span><span class="p">(</span><span class="s">&quot;Escaped UTF-8 strings to escaped ASCII&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;=== Escaped Strings ===&quot;</span><span class="p">);</span>
+        <span class="n">string</span> <span class="n">escaped</span> <span class="o">=</span> <span class="n">SMAKE</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="mi">128</span><span class="p">);</span>
+        <span class="n">string</span> <span class="n">unescaped</span> <span class="o">=</span> <span class="n">STRING</span><span class="p">(</span><span class="s">&quot;Hello, 🌎.&quot;</span><span class="p">);</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;unescaped.len = %zu&quot;</span><span class="p">,</span> <span class="n">unescaped</span><span class="p">.</span><span class="n">len</span><span class="p">);</span>
+        <span class="n">escaped</span> <span class="o">=</span> <span class="n">utf8_escape</span><span class="p">(</span><span class="n">escaped</span><span class="p">,</span> <span class="n">unescaped</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;escaped.len = %zu&quot;</span><span class="p">,</span> <span class="n">escaped</span><span class="p">.</span><span class="n">len</span><span class="p">);</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">%s</span><span class="se">\&quot;</span><span class="s"> --&gt; </span><span class="se">\&quot;</span><span class="s">%s</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">unescaped</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">escaped</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/lovejoy.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">Lovejoy Compiler</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=lovejoy-lang&repo=ljc&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="root.html">Lovejoy Compiler API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+    &#127279; Copyleft all wrongs reserved
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1aefcff8112da2f0836592c2dcb0f99dce:
+
+Define REALLOC_FACTOR
+=====================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: REALLOC_FACTOR

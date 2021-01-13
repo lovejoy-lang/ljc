@@ -17,5 +17,6 @@ Files
 -----
 
 - :ref:`file_src_bin.c`
+- :ref:`file_src_tests.c`
 
 

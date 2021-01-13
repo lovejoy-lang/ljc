@@ -15,20 +15,21 @@ Program Listing for File utf.h
    
    #define is_utf(c) (((c) & 0xC0) != 0x80)
    
-   inline string wrap_string(byte *cstring) {
+   inline string wrap_string(byte *cstring)
+   {
        string s = { .len = strlen(cstring), .value = cstring };
        return s;
    }
    
-   /* Conversions */
+   /* Conversions. */
    
    runic utf8_to_ucs4(runic dest, string src);
    
    string ucs4_to_utf8(string dest, runic src);
    
-   string rune_to_utf8(string dest, rune src);
+   string rune_to_utf8(string dest, rune ch);
    
-   /* Moving through stirngs */
+   /* Moving through stirngs. */
    
    usize byte_offset(string, usize);
    
@@ -36,25 +37,21 @@ Program Listing for File utf.h
    
    rune read_rune(string s, usize *i);
    
-   u0 next_rune(string, usize);
+   u0 next_rune(string, usize *);
    
-   u0 prev_rune(string, usize);
+   u0 prev_rune(string, usize *);
    
-   /* Unicode Escapes */
+   /* Unicode Escapes. */
    
    usize read_escape(string src, rune *dest);
    
-   string escape_rune(string dest, rune c);
+   string escape_rune(string dest, rune ch);
    
-   string utf_unescape(string dest, string src);
+   string utf8_unescape(string dest, string src);
    
-   string utf_escape(string dest, string src, bool escape_quotes);
+   string utf8_escape(string dest, string src, bool escape_quotes);
    
-   // Utility.
-   bool octal_digit(byte c);
-   bool hex_digit(byte c);
-   
-   /* UTF-8 oriented standard functions */
+   /* UTF-8 oriented standard function replacements. */
    
    string utf_strchr(string s, rune ch, usize *i);
    
@@ -63,3 +60,7 @@ Program Listing for File utf.h
    usize utf_seqlen(string);
    
    bool is_locale_utf8(byte *locale);
+   
+   /* Utility. */
+   bool octal_digit(byte c);
+   bool hex_digit(byte c);

@@ -15,7 +15,6 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/onload.js"></script>
     <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
@@ -43,12 +42,12 @@
 <p>↰ <a class="reference internal" href="file_src_lovejoy_utf.c.html#file-src-lovejoy-utf-c"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/lovejoy/utf.c</span></code>)</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;utf.h&quot;</span><span class="cp"></span>
 
-<span class="k">static</span> <span class="k">const</span> <span class="n">rune</span> <span class="n">offsets_from_UTF8</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="k">static</span> <span class="k">const</span> <span class="n">rune</span> <span class="n">OffsetsFromUTF8</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
     <span class="mh">0x00000000UL</span><span class="p">,</span> <span class="mh">0x00003080UL</span><span class="p">,</span> <span class="mh">0x000E2080UL</span><span class="p">,</span>
     <span class="mh">0x03C82080UL</span><span class="p">,</span> <span class="mh">0xFA082080UL</span><span class="p">,</span> <span class="mh">0x82082080UL</span>
 <span class="p">};</span>
 
-<span class="k">static</span> <span class="k">const</span> <span class="n">byte</span> <span class="n">trailing_bytes_for_UTF8</span><span class="p">[</span><span class="mi">256</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="k">static</span> <span class="k">const</span> <span class="n">byte</span> <span class="n">TrailingBytesForUTF8</span><span class="p">[</span><span class="mi">256</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
     <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>
     <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>
     <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span>
@@ -61,9 +60,11 @@
 
 <span class="cp">#ifndef IMPLEMENTATION</span>
 
+<span class="cm">/* Conversions. */</span>
+
 <span class="n">usize</span> <span class="nf">utf_seqlen</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="k">return</span> <span class="n">trailing_bytes_for_UTF8</span><span class="p">[(</span><span class="n">usize</span><span class="p">)(</span><span class="o">*</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">TrailingBytesForUTF8</span><span class="p">[(</span><span class="n">usize</span><span class="p">)(</span><span class="o">*</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">)]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="n">runic</span> <span class="nf">utf8_to_ucs4</span><span class="p">(</span><span class="n">runic</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">)</span>
@@ -71,11 +72,11 @@
     <span class="n">byte</span> <span class="o">*</span><span class="n">src_end</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">src</span><span class="p">.</span><span class="n">len</span><span class="p">;</span>
     <span class="n">byte</span> <span class="o">*</span><span class="n">sptr</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
 
-    <span class="n">usize</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">byte</span> <span class="n">nb</span> <span class="o">=</span> <span class="n">trailing_bytes_for_UTF8</span><span class="p">[(</span><span class="n">usize</span><span class="p">)(</span><span class="o">*</span><span class="n">sptr</span><span class="p">)];</span>
+    <span class="n">usize</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">byte</span> <span class="n">nb</span> <span class="o">=</span> <span class="n">TrailingBytesForUTF8</span><span class="p">[(</span><span class="n">usize</span><span class="p">)(</span><span class="o">*</span><span class="n">sptr</span><span class="p">)];</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">sptr</span> <span class="o">+</span> <span class="n">nb</span> <span class="o">&gt;=</span> <span class="n">src_end</span><span class="p">)</span>
-            <span class="k">goto</span> <span class="n">done_utf8_to_ucs4</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
 
         <span class="n">rune</span> <span class="n">ch</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
         <span class="k">switch</span> <span class="p">(</span><span class="n">nb</span><span class="p">)</span> <span class="p">{</span>
@@ -84,13 +85,326 @@
             <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="n">ch</span> <span class="o">+=</span> <span class="o">*</span><span class="n">sptr</span><span class="o">++</span><span class="p">;</span> <span class="n">ch</span> <span class="o">&lt;&lt;=</span> <span class="mi">6</span><span class="p">;</span> <span class="cm">/* fallthrough */</span>
             <span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="n">ch</span> <span class="o">+=</span> <span class="o">*</span><span class="n">sptr</span><span class="o">++</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="n">ch</span> <span class="o">-=</span> <span class="n">offsets_from_UTF8</span><span class="p">[(</span><span class="n">usize</span><span class="p">)</span><span class="n">nb</span><span class="p">];</span>
-        <span class="n">dest</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">ch</span><span class="p">;</span>
+        <span class="n">ch</span> <span class="o">-=</span> <span class="n">OffsetsFromUTF8</span><span class="p">[(</span><span class="n">usize</span><span class="p">)</span><span class="n">nb</span><span class="p">];</span>
+        <span class="n">dest</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ch</span><span class="p">;</span>
     <span class="p">}</span>
 
-<span class="nl">done_utf8_to_ucs4</span><span class="p">:</span>
-    <span class="n">dest</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Null-terminate anyway, despite known length.</span>
+    <span class="n">dest</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Always null-terminate, despite known length.</span>
     <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="nf">ucs4_to_utf8</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">runic</span> <span class="n">src</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">dest_end</span> <span class="o">=</span> <span class="n">dest</span><span class="p">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span><span class="p">;</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">dptr</span> <span class="o">=</span> <span class="n">dest</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">usize</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">rune</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&lt;</span> <span class="mh">0x80</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">dptr</span> <span class="o">&gt;=</span> <span class="n">dest_end</span><span class="p">)</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">dptr</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">byte</span><span class="p">)</span><span class="n">ch</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&lt;</span> <span class="mh">0x800</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">dptr</span> <span class="o">&gt;=</span> <span class="n">dest_end</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">dptr</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0xC0</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">dptr</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&lt;</span> <span class="mh">0x10000</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">dptr</span> <span class="o">&gt;=</span> <span class="n">dest_end</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">dptr</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0xE0</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">dptr</span><span class="o">++</span> <span class="o">=</span> <span class="p">((</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">dptr</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&lt;</span> <span class="mh">0x110000</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">dptr</span> <span class="o">&gt;=</span> <span class="n">dest_end</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">dptr</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">18</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0xF0</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">dptr</span><span class="o">++</span> <span class="o">=</span> <span class="p">((</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">dptr</span><span class="o">++</span> <span class="o">=</span> <span class="p">((</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">dptr</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">dptr</span> <span class="o">&lt;</span> <span class="n">dest_end</span><span class="p">)</span>
+        <span class="o">*</span><span class="n">dptr</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dptr</span> <span class="o">-</span> <span class="n">dest</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="nf">rune_to_utf8</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">rune</span> <span class="n">ch</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="k">const</span> <span class="n">dptr</span> <span class="o">=</span> <span class="n">dest</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">zero</span><span class="p">(</span><span class="n">dptr</span><span class="p">,</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&lt;</span> <span class="mh">0x80</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">dptr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">byte</span><span class="p">)</span><span class="n">ch</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&lt;</span> <span class="mh">0x800</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">dptr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0xC0</span><span class="p">;</span>
+        <span class="n">dptr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&lt;</span> <span class="mh">0x10000</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">dptr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0xE0</span><span class="p">;</span>
+        <span class="n">dptr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+        <span class="n">dptr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&lt;</span> <span class="mh">0x110000</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">dptr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">18</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0xF0</span><span class="p">;</span>
+        <span class="n">dptr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+        <span class="n">dptr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+        <span class="n">dptr</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&amp;</span> <span class="mh">0x3F</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* Moving through stirngs. */</span>
+
+<span class="n">usize</span> <span class="nf">byte_offset</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">usize</span> <span class="n">cn</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">usize</span> <span class="n">offs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">cn</span><span class="o">--</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">offs</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">len</span><span class="p">)</span>
+        <span class="n">UNUSED</span><span class="p">(</span><span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="o">++</span><span class="n">offs</span><span class="p">])</span> <span class="o">||</span> <span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="o">++</span><span class="n">offs</span><span class="p">])</span>
+            <span class="o">||</span> <span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="o">++</span><span class="n">offs</span><span class="p">])</span> <span class="o">||</span> <span class="o">++</span><span class="n">offs</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">offs</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">usize</span> <span class="nf">char_num</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">usize</span> <span class="n">offset</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">usize</span> <span class="n">cn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">offs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">offs</span> <span class="o">&lt;</span> <span class="n">offset</span> <span class="o">&amp;&amp;</span> <span class="n">offs</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">UNUSED</span><span class="p">(</span><span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="o">++</span><span class="n">offs</span><span class="p">])</span> <span class="o">||</span> <span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="o">++</span><span class="n">offs</span><span class="p">])</span>
+            <span class="o">||</span> <span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="o">++</span><span class="n">offs</span><span class="p">])</span> <span class="o">||</span> <span class="o">++</span><span class="n">offs</span><span class="p">);</span>
+        <span class="o">++</span><span class="n">cn</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">cn</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">rune</span> <span class="nf">read_rune</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">usize</span> <span class="o">*</span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">s</span><span class="p">.</span><span class="n">len</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">rune</span> <span class="n">ch</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">usize</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="n">ch</span> <span class="o">&lt;&lt;=</span> <span class="mi">6</span><span class="p">;</span>
+        <span class="n">ch</span> <span class="o">+=</span> <span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">[(</span><span class="o">*</span><span class="n">i</span><span class="p">)</span><span class="o">++</span><span class="p">];</span>
+        <span class="o">++</span><span class="n">len</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="o">*</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">len</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="o">*</span><span class="n">i</span><span class="p">]));</span>
+    <span class="n">ch</span> <span class="o">-=</span> <span class="n">OffsetsFromUTF8</span><span class="p">[</span><span class="n">len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+
+    <span class="k">return</span> <span class="n">ch</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">u0</span> <span class="nf">next_rune</span><span class="p">(</span><span class="n">string</span> <span class="n">str</span><span class="p">,</span> <span class="n">usize</span> <span class="o">*</span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="n">str</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">UNUSED</span><span class="p">(</span><span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">++</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">)])</span> <span class="o">||</span> <span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">++</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">)])</span>
+        <span class="o">||</span> <span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">++</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">)])</span> <span class="o">||</span> <span class="o">++</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">u0</span> <span class="nf">prev_rune</span><span class="p">(</span><span class="n">string</span> <span class="n">str</span><span class="p">,</span> <span class="n">usize</span> <span class="o">*</span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="n">str</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">UNUSED</span><span class="p">(</span><span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">--</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">)])</span> <span class="o">||</span> <span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">--</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">)])</span>
+        <span class="o">||</span> <span class="n">is_utf</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">--</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">)])</span> <span class="o">||</span> <span class="o">--</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="cm">/* Unicode Escapes. */</span>
+
+<span class="n">usize</span> <span class="nf">read_escape</span><span class="p">(</span><span class="n">string</span> <span class="n">src</span><span class="p">,</span> <span class="n">rune</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">rune</span> <span class="n">ch</span><span class="p">;</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">sptr</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">byte</span> <span class="n">digs</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\0\0\0\0\0\0\0\0</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">usize</span> <span class="n">dno</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="n">ch</span> <span class="o">=</span> <span class="p">(</span><span class="n">rune</span><span class="p">)</span><span class="n">sptr</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>  <span class="c1">// Take the literal character.</span>
+
+    <span class="k">switch</span> <span class="p">(</span><span class="n">sptr</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="sc">&#39;n&#39;</span><span class="o">:</span> <span class="p">{</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">U</span><span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">case</span> <span class="sc">&#39;t&#39;</span><span class="o">:</span> <span class="p">{</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">U</span><span class="sc">&#39;\t&#39;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">case</span> <span class="sc">&#39;r&#39;</span><span class="o">:</span> <span class="p">{</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">U</span><span class="sc">&#39;\r&#39;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">case</span> <span class="sc">&#39;b&#39;</span><span class="o">:</span> <span class="p">{</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">U</span><span class="sc">&#39;\b&#39;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">case</span> <span class="sc">&#39;f&#39;</span><span class="o">:</span> <span class="p">{</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">U</span><span class="sc">&#39;\f&#39;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">case</span> <span class="sc">&#39;v&#39;</span><span class="o">:</span> <span class="p">{</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">U</span><span class="sc">&#39;\v&#39;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">case</span> <span class="sc">&#39;a&#39;</span><span class="o">:</span> <span class="p">{</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">U</span><span class="sc">&#39;\a&#39;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">case</span> <span class="sc">&#39;x&#39;</span><span class="o">:</span>  <span class="c1">// e.g. \x41 = &#39;A&#39;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">hex_digit</span><span class="p">(</span><span class="n">sptr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="n">dno</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">digs</span><span class="p">[</span><span class="n">dno</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sptr</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">];</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="sc">&#39;u&#39;</span><span class="o">:</span>  <span class="c1">// e.g. \u6CB3 = &#39;河&#39;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">hex_digit</span><span class="p">(</span><span class="n">sptr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="n">dno</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span>
+            <span class="n">digs</span><span class="p">[</span><span class="n">dno</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sptr</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">];</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="sc">&#39;U&#39;</span><span class="o">:</span>  <span class="c1">// e.g. \U0001F920 = &#39;🤠&#39;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">hex_digit</span><span class="p">(</span><span class="n">sptr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="n">dno</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">)</span>
+            <span class="n">digs</span><span class="p">[</span><span class="n">dno</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sptr</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">];</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">dno</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">ch</span> <span class="o">=</span> <span class="n">strtol</span><span class="p">(</span><span class="n">digs</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+
+    <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">ch</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="nf">escape_rune</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">rune</span> <span class="n">ch</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">buf</span> <span class="o">=</span> <span class="n">dest</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">usize</span> <span class="n">len</span> <span class="o">=</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span><span class="p">;</span>
+
+    <span class="k">switch</span> <span class="p">(</span><span class="n">ch</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">U</span><span class="sc">&#39;\n&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">n&quot;</span><span class="p">));</span>
+    <span class="k">case</span> <span class="n">U</span><span class="sc">&#39;\t&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">t&quot;</span><span class="p">));</span>
+    <span class="k">case</span> <span class="n">U</span><span class="sc">&#39;\r&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">r&quot;</span><span class="p">));</span>
+    <span class="k">case</span> <span class="n">U</span><span class="sc">&#39;\b&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">b&quot;</span><span class="p">));</span>
+    <span class="k">case</span> <span class="n">U</span><span class="sc">&#39;\f&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">f&quot;</span><span class="p">));</span>
+    <span class="k">case</span> <span class="n">U</span><span class="sc">&#39;\v&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">v&quot;</span><span class="p">));</span>
+    <span class="k">case</span> <span class="n">U</span><span class="sc">&#39;\a&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">a&quot;</span><span class="p">));</span>
+    <span class="k">case</span> <span class="n">U</span><span class="sc">&#39;\\&#39;</span><span class="o">:</span> <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\\\</span><span class="s">&quot;</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&lt;</span> <span class="mi">32</span> <span class="o">||</span> <span class="n">ch</span> <span class="o">==</span> <span class="mh">0x7F</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">x%hhX&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">u8</span><span class="p">)</span><span class="n">ch</span><span class="p">));</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;</span> <span class="mh">0xFFFF</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">U%X&quot;</span><span class="p">,</span>  <span class="p">(</span><span class="n">u32</span><span class="p">)</span><span class="n">ch</span><span class="p">));</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&gt;=</span> <span class="mh">0x80</span> <span class="o">&amp;&amp;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="mh">0xFFFF</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">u%hX&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">u16</span><span class="p">)</span><span class="n">ch</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="s">&quot;%c&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">byte</span><span class="p">)</span><span class="n">ch</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="nf">utf8_unescape</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">rune</span> <span class="n">ch</span><span class="p">;</span>
+    <span class="n">byte</span> <span class="n">buf</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="n">string</span> <span class="n">temp</span> <span class="o">=</span> <span class="p">{</span> <span class="p">.</span><span class="n">len</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">buf</span> <span class="p">};</span>
+    <span class="n">usize</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">amt</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">len</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;\\&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+            <span class="n">amt</span> <span class="o">=</span> <span class="n">read_escape</span><span class="p">(</span><span class="n">SLICE</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">ch</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">ch</span> <span class="o">=</span> <span class="p">(</span><span class="n">rune</span><span class="p">)(</span><span class="n">src</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+            <span class="n">amt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">i</span> <span class="o">+=</span> <span class="n">amt</span><span class="p">;</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">rune_to_utf8</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
+        <span class="n">amt</span> <span class="o">=</span> <span class="n">temp</span><span class="p">.</span><span class="n">len</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">amt</span> <span class="o">&gt;</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span> <span class="o">-</span> <span class="n">c</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">dest</span><span class="p">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">c</span><span class="p">,</span> <span class="n">temp</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">amt</span><span class="p">);</span>
+        <span class="n">c</span> <span class="o">+=</span> <span class="n">amt</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">&lt;</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span><span class="p">)</span>  <span class="c1">// Try to NULL-terminate.</span>
+        <span class="n">dest</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="n">string</span> <span class="nf">utf8_escape</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">escape_quotes</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">buf</span> <span class="o">=</span> <span class="n">dest</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">usize</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">c</span> <span class="o">&lt;</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">string</span> <span class="n">slice</span> <span class="o">=</span> <span class="p">{</span> <span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">buf</span><span class="p">,</span> <span class="p">.</span><span class="n">len</span> <span class="o">=</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span> <span class="o">-</span> <span class="n">c</span> <span class="p">};</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">escape_quotes</span> <span class="o">&amp;&amp;</span> <span class="n">src</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;&quot;&#39;</span><span class="p">)</span>
+            <span class="n">slice</span> <span class="o">=</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">slice</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">slice</span><span class="p">.</span><span class="n">len</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\\&quot;</span><span class="s">&quot;</span><span class="p">));</span>
+        <span class="k">else</span>
+            <span class="n">slice</span> <span class="o">=</span> <span class="n">escape_rune</span><span class="p">(</span><span class="n">slice</span><span class="p">,</span> <span class="n">read_rune</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">));</span>
+
+        <span class="n">c</span>   <span class="o">+=</span> <span class="n">slice</span><span class="p">.</span><span class="n">len</span><span class="p">;</span>
+        <span class="n">buf</span> <span class="o">+=</span> <span class="n">slice</span><span class="p">.</span><span class="n">len</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">&lt;</span> <span class="n">dest</span><span class="p">.</span><span class="n">len</span><span class="p">)</span>
+        <span class="o">*</span><span class="n">buf</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* Standard function replacements. */</span>
+
+<span class="n">string</span> <span class="nf">utf_strchr</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">rune</span> <span class="n">ch</span><span class="p">,</span> <span class="n">usize</span> <span class="o">*</span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">usize</span> <span class="n">offs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">last_offs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">rune</span> <span class="n">c</span><span class="p">;</span>
+
+    <span class="o">*</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">until</span> <span class="p">(</span><span class="n">offs</span> <span class="o">&gt;=</span> <span class="n">s</span><span class="p">.</span><span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">read_rune</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">offs</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="n">ch</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">last_offs</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+
+        <span class="n">last_offs</span> <span class="o">=</span> <span class="n">offs</span><span class="p">;</span>
+        <span class="o">++</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">EMPTY</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">usize</span> <span class="nf">utf_strlen</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">usize</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">until</span> <span class="p">(</span><span class="n">read_rune</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="o">++</span><span class="n">count</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">bool</span> <span class="nf">is_locale_utf8</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">locale</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="n">byte</span><span class="o">*</span> <span class="n">cp</span> <span class="o">=</span> <span class="n">locale</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(;</span> <span class="o">*</span><span class="n">cp</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">cp</span> <span class="o">!=</span> <span class="sc">&#39;@&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">cp</span> <span class="o">!=</span> <span class="sc">&#39;+&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">cp</span> <span class="o">!=</span> <span class="sc">&#39;,&#39;</span><span class="p">;</span> <span class="n">cp</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">cp</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">const</span> <span class="n">byte</span><span class="o">*</span> <span class="n">encoding</span> <span class="o">=</span> <span class="o">++</span><span class="n">cp</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(;</span> <span class="o">*</span><span class="n">cp</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">cp</span> <span class="o">!=</span> <span class="sc">&#39;@&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">cp</span> <span class="o">!=</span> <span class="sc">&#39;+&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">cp</span> <span class="o">!=</span> <span class="sc">&#39;,&#39;</span><span class="p">;</span> <span class="n">cp</span><span class="o">++</span><span class="p">)</span>
+                <span class="p">;</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">cp</span><span class="o">-</span><span class="n">encoding</span> <span class="o">==</span> <span class="mi">5</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">strncmp</span><span class="p">(</span><span class="n">encoding</span><span class="p">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+                <span class="o">||</span> <span class="p">(</span><span class="n">cp</span><span class="o">-</span><span class="n">encoding</span> <span class="o">==</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">strncmp</span><span class="p">(</span><span class="n">encoding</span><span class="p">,</span> <span class="s">&quot;utf8&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)))</span>
+                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>  <span class="c1">// It&#39;s UTF-8.</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>  <span class="c1">// :(</span>
+<span class="p">}</span>
+
+<span class="cm">/* Utility. */</span>
+
+<span class="kt">bool</span> <span class="nf">octal_digit</span><span class="p">(</span><span class="n">byte</span> <span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="sc">&#39;0&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;7&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">hex_digit</span><span class="p">(</span><span class="n">byte</span> <span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="sc">&#39;0&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span><span class="p">)</span>
+         <span class="o">||</span> <span class="p">(</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="sc">&#39;A&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;F&#39;</span><span class="p">)</span>
+         <span class="o">||</span> <span class="p">(</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="sc">&#39;a&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;f&#39;</span><span class="p">));</span>
 <span class="p">}</span>
 
 <span class="cp">#endif</span>

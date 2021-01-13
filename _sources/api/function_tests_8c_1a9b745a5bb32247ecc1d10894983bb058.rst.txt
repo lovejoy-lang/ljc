@@ -1,0 +1,13 @@
+.. _exhale_function_tests_8c_1a9b745a5bb32247ecc1d10894983bb058:
+
+Function utf8_ucs4_conversions
+==============================
+
+- Defined in :ref:`file_src_tests.c`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: utf8_ucs4_conversions(byte *)

@@ -15,7 +15,6 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/onload.js"></script>
     <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
@@ -23,7 +22,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Function read_rune" href="function_utf_8h_1abfb6c925879a5392db6a17d86e874901.html" />
-    <link rel="prev" title="Function prev_rune" href="function_utf_8h_1a9ca444a3c4c352b9e746babe2b6c8904.html" />
+    <link rel="prev" title="Function push" href="function_common_8h_1a9a1399f98631609423ac3f1818d81d0b.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -51,7 +50,7 @@
 <dt id="_CPPv411read_escape6stringP4rune">
 <span id="_CPPv311read_escape6stringP4rune"></span><span id="_CPPv211read_escape6stringP4rune"></span><span id="read_escape__string.runeP"></span><span class="target" id="utf_8h_1a8de2cba52c735262a9a3439dc9ea7556"></span><a class="reference internal" href="typedef_common_8h_1a5148c9c1252e19e12def2814f71690e3.html#_CPPv45usize" title="usize">usize</a> <code class="sig-name descname">read_escape</code><span class="sig-paren">(</span><a class="reference internal" href="typedef_common_8h_1a0b4bfb080fddac459a72b23384488aeb.html#_CPPv46string" title="string">string</a> <em>src</em>, <a class="reference internal" href="typedef_common_8h_1a46dcd17713e61f23856c4df33f3bbd4e.html#_CPPv44rune" title="rune">rune</a> *<em>dest</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411read_escape6stringP4rune" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Take an unescaped UTF-8 string, where the start of the string is pointing to the character right after the backslash. If this character is a <code class="docutils literal notranslate"><span class="pre">U</span></code>, then max eight (8) hexadecimal digits are expected to succeed it, otherwise a <code class="docutils literal notranslate"><span class="pre">u</span></code> is expected, where max four (4) hexdecimal digits are to succeed it. The resulting rune is stored in <code class="docutils literal notranslate"><span class="pre">dest</span></code>. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>How many characters read as part of parsing (including <code class="docutils literal notranslate"><span class="pre">u</span></code>/<code class="docutils literal notranslate"><span class="pre">U</span></code>). Returns <code class="docutils literal notranslate"><span class="pre">0</span></code> if invalid escape, e.g. no <code class="docutils literal notranslate"><span class="pre">u</span></code> or <code class="docutils literal notranslate"><span class="pre">U</span></code>, or invalid hex. </p>
+<dt><strong>Return</strong></dt><dd><p>How many characters read as part of parsing (including <code class="docutils literal notranslate"><span class="pre">u</span></code>/<code class="docutils literal notranslate"><span class="pre">U</span></code>). Returns <code class="docutils literal notranslate"><span class="pre">0</span></code> if escape is invalid. </p>
 </dd>
 <dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">src</span></code>: String pointing to char after backslash. </p></li>
@@ -102,7 +101,7 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="root.html">Lovejoy Compiler API</a><ul>
-      <li>Previous: <a href="function_utf_8h_1a9ca444a3c4c352b9e746babe2b6c8904.html" title="previous chapter">Function prev_rune</a></li>
+      <li>Previous: <a href="function_common_8h_1a9a1399f98631609423ac3f1818d81d0b.html" title="previous chapter">Function push</a></li>
       <li>Next: <a href="function_utf_8h_1abfb6c925879a5392db6a17d86e874901.html" title="next chapter">Function read_rune</a></li>
   </ul></li>
   </ul></li>

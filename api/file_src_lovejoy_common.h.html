@@ -15,7 +15,6 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/onload.js"></script>
     <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
@@ -75,6 +74,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">stdint.h</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">stdio.h</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">stdlib.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string.h</span></code></p></li>
 </ul>
 </div>
 <div class="section" id="included-by">
@@ -86,6 +86,7 @@
 <li><p><a class="reference internal" href="file_src_lovejoy_lexer.h.html#file-src-lovejoy-lexer-h"><span class="std std-ref">File lexer.h</span></a></p></li>
 <li><p><a class="reference internal" href="file_src_lovejoy_operators.h.html#file-src-lovejoy-operators-h"><span class="std std-ref">File operators.h</span></a></p></li>
 <li><p><a class="reference internal" href="file_src_lovejoy_utf.h.html#file-src-lovejoy-utf-h"><span class="std std-ref">File utf.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_src_tests.c.html#file-src-tests-c"><span class="std std-ref">File tests.c</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="classes">
@@ -104,7 +105,9 @@
 <li><p><a class="reference internal" href="function_common_8h_1ad0afd688064afb10105c37cb34ceec2c.html#exhale-function-common-8h-1ad0afd688064afb10105c37cb34ceec2c"><span class="std std-ref">Function is_zero</span></a></p></li>
 <li><p><a class="reference internal" href="function_common_8h_1a78e8aea35d0fcdb0430d98dda1563128.html#exhale-function-common-8h-1a78e8aea35d0fcdb0430d98dda1563128"><span class="std std-ref">Function is_zeroed</span></a></p></li>
 <li><p><a class="reference internal" href="function_common_8h_1a33e91eed2d1c91d9564791e790d8e99c.html#exhale-function-common-8h-1a33e91eed2d1c91d9564791e790d8e99c"><span class="std std-ref">Function is_zerof</span></a></p></li>
-<li><p><a class="reference internal" href="function_common_8h_1a8c94ef350e036d9e67333a774ed143e1.html#exhale-function-common-8h-1a8c94ef350e036d9e67333a774ed143e1"><span class="std std-ref">Function zero</span></a></p></li>
+<li><p><a class="reference internal" href="function_common_8h_1acab113ccc97037e3deb2c285c9015263.html#exhale-function-common-8h-1acab113ccc97037e3deb2c285c9015263"><span class="std std-ref">Function pop</span></a></p></li>
+<li><p><a class="reference internal" href="function_common_8h_1a9a1399f98631609423ac3f1818d81d0b.html#exhale-function-common-8h-1a9a1399f98631609423ac3f1818d81d0b"><span class="std std-ref">Function push</span></a></p></li>
+<li><p><a class="reference internal" href="function_common_8h_1a74157f97be132e59a2d575c718563b58.html#exhale-function-common-8h-1a74157f97be132e59a2d575c718563b58"><span class="std std-ref">Function zero</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="defines">
@@ -113,22 +116,28 @@
 <li><p><a class="reference internal" href="define_common_8h_1a56fb1fb2cb4eb61002a8b03f90dc28ab.html#exhale-define-common-8h-1a56fb1fb2cb4eb61002a8b03f90dc28ab"><span class="std std-ref">Define __UCHAR8__</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a56fb1fb2cb4eb61002a8b03f90dc28ab.html#exhale-define-common-8h-1a56fb1fb2cb4eb61002a8b03f90dc28ab"><span class="std std-ref">Define __UCHAR8__</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1ab4e32de48427d6ed061f6b8a7d3d8e50.html#exhale-define-common-8h-1ab4e32de48427d6ed061f6b8a7d3d8e50"><span class="std std-ref">Define _LDOUBLE_BIT</span></a></p></li>
+<li><p><a class="reference internal" href="define_common_8h_1a725b8c0c5ab59fc3f47e4cf7331a86aa.html#exhale-define-common-8h-1a725b8c0c5ab59fc3f47e4cf7331a86aa"><span class="std std-ref">Define AMAKE</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1afacba651c786dab4d0b3ee9f83e19bfe.html#exhale-define-common-8h-1afacba651c786dab4d0b3ee9f83e19bfe"><span class="std std-ref">Define EMPTY</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a6d926245f69a2380e2dd72a1b68d6673.html#exhale-define-common-8h-1a6d926245f69a2380e2dd72a1b68d6673"><span class="std std-ref">Define eprint</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a82f06ace20f96f70bc165247e69fac57.html#exhale-define-common-8h-1a82f06ace20f96f70bc165247e69fac57"><span class="std std-ref">Define eprintf</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a6e0592eab64a2c924ed74164f35d23c3.html#exhale-define-common-8h-1a6e0592eab64a2c924ed74164f35d23c3"><span class="std std-ref">Define eprintln</span></a></p></li>
+<li><p><a class="reference internal" href="define_common_8h_1a5a260a12c80da1bf5c3be0d60547bd61.html#exhale-define-common-8h-1a5a260a12c80da1bf5c3be0d60547bd61"><span class="std std-ref">Define FOR_EACH</span></a></p></li>
+<li><p><a class="reference internal" href="define_common_8h_1a85d9ac269eba33293361f4ed7c2a697b.html#exhale-define-common-8h-1a85d9ac269eba33293361f4ed7c2a697b"><span class="std std-ref">Define foreach</span></a></p></li>
+<li><p><a class="reference internal" href="define_common_8h_1a480adb546a1c3d0a5f3d2111a4a155d3.html#exhale-define-common-8h-1a480adb546a1c3d0a5f3d2111a4a155d3"><span class="std std-ref">Define INIT</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a9e7b9195bea1bf48fd5539ac7e3f9e75.html#exhale-define-common-8h-1a9e7b9195bea1bf48fd5539ac7e3f9e75"><span class="std std-ref">Define IS_EMPTY</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a8093cf142de43413a3649101cf95152c.html#exhale-define-common-8h-1a8093cf142de43413a3649101cf95152c"><span class="std std-ref">Define loop</span></a></p></li>
-<li><p><a class="reference internal" href="define_common_8h_1aa070614a39de6dc833f50fc4a98eac2e.html#exhale-define-common-8h-1aa070614a39de6dc833f50fc4a98eac2e"><span class="std std-ref">Define MAKE</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1ae80f8bc83fa11598ae3141c7353055e3.html#exhale-define-common-8h-1ae80f8bc83fa11598ae3141c7353055e3"><span class="std std-ref">Define newarray</span></a></p></li>
+<li><p><a class="reference internal" href="define_common_8h_1ac90f5cb021d2f43396315350ff07f71a.html#exhale-define-common-8h-1ac90f5cb021d2f43396315350ff07f71a"><span class="std std-ref">Define newslice</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a781c2bad5a2975bbee603b5c82f1ba1d.html#exhale-define-common-8h-1a781c2bad5a2975bbee603b5c82f1ba1d"><span class="std std-ref">Define newtype</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a7a7ca81d2a85873283b5ec82953b1b25.html#exhale-define-common-8h-1a7a7ca81d2a85873283b5ec82953b1b25"><span class="std std-ref">Define nil</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a0eabd5db583e036746080f1d4f74cc92.html#exhale-define-common-8h-1a0eabd5db583e036746080f1d4f74cc92"><span class="std std-ref">Define print</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a5bfcc0bf1f7dfd1a266e23dc54e405bf.html#exhale-define-common-8h-1a5bfcc0bf1f7dfd1a266e23dc54e405bf"><span class="std std-ref">Define println</span></a></p></li>
-<li><p><a class="reference internal" href="define_common_8h_1a0b270dd81db4429e757e6a4d15683aea.html#exhale-define-common-8h-1a0b270dd81db4429e757e6a4d15683aea"><span class="std std-ref">Define SIZED</span></a></p></li>
+<li><p><a class="reference internal" href="define_common_8h_1aefcff8112da2f0836592c2dcb0f99dce.html#exhale-define-common-8h-1aefcff8112da2f0836592c2dcb0f99dce"><span class="std std-ref">Define REALLOC_FACTOR</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1ac6f1bd1c364d59f406f712221af8d4b1.html#exhale-define-common-8h-1ac6f1bd1c364d59f406f712221af8d4b1"><span class="std std-ref">Define SLICE</span></a></p></li>
+<li><p><a class="reference internal" href="define_common_8h_1acac9d44a5e826ff2ca3398e43f2e7aec.html#exhale-define-common-8h-1acac9d44a5e826ff2ca3398e43f2e7aec"><span class="std std-ref">Define SMAKE</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a18d295a837ac71add5578860b55e5502.html#exhale-define-common-8h-1a18d295a837ac71add5578860b55e5502"><span class="std std-ref">Define STR</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a890d84b9b5d0b0aede9eea1092a7a10a.html#exhale-define-common-8h-1a890d84b9b5d0b0aede9eea1092a7a10a"><span class="std std-ref">Define STR_HELPER</span></a></p></li>
+<li><p><a class="reference internal" href="define_common_8h_1ae97d04d513ff6d64d2ad19389ddf5081.html#exhale-define-common-8h-1ae97d04d513ff6d64d2ad19389ddf5081"><span class="std std-ref">Define STRING</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a0079cc4909964ed0d782c06b1753ce14.html#exhale-define-common-8h-1a0079cc4909964ed0d782c06b1753ce14"><span class="std std-ref">Define UNIT</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1aa5e465ec2c32c12aa542e1c6a8ef6557.html#exhale-define-common-8h-1aa5e465ec2c32c12aa542e1c6a8ef6557"><span class="std std-ref">Define unless</span></a></p></li>
 <li><p><a class="reference internal" href="define_common_8h_1a5cb1bd2c5ce49510372265835944d758.html#exhale-define-common-8h-1a5cb1bd2c5ce49510372265835944d758"><span class="std std-ref">Define unqualify</span></a></p></li>

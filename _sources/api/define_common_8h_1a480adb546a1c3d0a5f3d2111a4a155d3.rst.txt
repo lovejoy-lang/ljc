@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a480adb546a1c3d0a5f3d2111a4a155d3:
+
+Define INIT
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: INIT

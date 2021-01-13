@@ -40,7 +40,7 @@ Variables
 ---------
 
 
-- :ref:`exhale_variable_utf_8c_1a590f35bf6b5f8509168755ece2108ffc`
+- :ref:`exhale_variable_utf_8c_1a461883fa93e53dce7f114db467e63a82`
 
-- :ref:`exhale_variable_utf_8c_1aa23dad4e213ffb0bca489c926656a57b`
+- :ref:`exhale_variable_utf_8c_1aafadee011b842904b81c531148da6d98`
 

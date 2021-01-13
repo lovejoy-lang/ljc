@@ -10,6 +10,16 @@ Program Listing for File common.h
 
 .. code-block:: cpp
 
+   IntArray xs = AMAKE(IntArray, 5);
+   
+   int elem1 = 5;
+   int elem2 = 3;
+   push(&xs, &elem1, sizeof(int));
+   push(&xs, &elem2, sizeof(int));
+   
+   FOR_EACH(x, xs) {
+       printf("%d\n", *x);
+   }
    
    #ifndef COMMON_HEADER
    #define COMMON_HEADER
@@ -20,6 +30,7 @@ Program Listing for File common.h
    #include <stdint.h>
    #include <stddef.h>
    #include <limits.h>
+   #include <string.h>
    
    /* Misc macros */
    #define STR_HELPER(x) #x
@@ -32,14 +43,21 @@ Program Listing for File common.h
    
    #define VERSION "v" STR(V_MAJOR) "." STR(V_MINOR) "." STR(V_PATCH)
    
+   #define REALLOC_FACTOR 1.5
+   
    /* Syntax helpers */
    #define loop while (1)
    #define unless(cond) if (!(cond))
    #define until(cond) while (!(cond))
    #define newtype(NT, T) typedef struct _##NT { const T value; } NT
    #define newarray(NT, T) typedef struct _##NT { \
-       const usize len; \
-       T *const value; \
+       usize len; \
+       usize cap; \
+       T (*value);  \
+   } NT
+   #define newslice(NT, T) typedef struct _##NT { \
+       usize len; \
+       T (*value); \
    } NT
    #define unqualify(D, T) typedef D T T
    #define nil NULL
@@ -47,10 +65,10 @@ Program Listing for File common.h
    #define UNUSED(x) (void)(x)
    
    #define print(...) printf(__VA_ARGS__)
-   #define println(lit, ...) printf(lit "\n", __VA_ARGS__)
+   #define println(lit, ...) printf(lit "\n", ## __VA_ARGS__)
    #define eprintf(...) fprintf(stderr, __VA_ARGS__)
    #define eprint(...) eprintf(__VA_ARGS__)
-   #define eprintln(lit, ...) fprintf(stderr, lit "\n", __VA_ARGS__)
+   #define eprintln(lit, ...) fprintf(stderr, lit "\n", ## __VA_ARGS__)
    
    /* Types */
    newtype(atomic_t, int);
@@ -132,42 +150,61 @@ Program Listing for File common.h
        typedef long double f128;
    #endif
    
-   newarray(string, byte);
-   newarray(runic, rune);
+   newslice(string, byte);
+   newslice(runic, rune);
    
    /* Common Functions */
    extern bool is_zero(imax);
    extern bool is_zerof(f64);
    extern bool is_zeroed(imax *, usize);
-   extern u0 zero(u0 *, usize);
+   extern u0 zero(u0 *blk, usize width);
    extern u0 *emalloc(usize, usize);
+   extern usize push(u0 *arr, const u0 *element, usize width);
+   extern u0 *pop(u0 *array, usize width);
    extern i32 eputs(const byte *);
    
    /* Common Macros */
    
    #define UNWRAP(STRUCTURE) (STRUCTURE).value
-   #define SIZED(TYPE, LITERAL) ((TYPE){ \
-       .len = sizeof(LITERAL), \
-       .value = (LITERAL) \
-   })
+   #define INIT(TYPE, ...) { \
+       .len = sizeof((TYPE[])__VA_ARGS__), \
+       .value = (TYPE[])__VA_ARGS__ \
+   }
+   #define STRING(...) { \
+       .len = sizeof((byte[]){ __VA_ARGS__ }) - 1, \
+       .value = (byte[]){ __VA_ARGS__ } \
+   }
    
    #define EMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })
    #define IS_EMPTY(ARR) ((ARR).len == 0)
    
-   #define MAKE(TYPE, LEN) ((TYPE){ \
-       .len = (LEN), \
-       .value = emalloc(LEN, sizeof(TYPE)) \
+   #define AMAKE(TYPE, CAP) ((TYPE){ \
+       .len = 0, \
+       .cap = (CAP), \
+       .value = emalloc((CAP), sizeof(TYPE)) \
    })
+   
+   #define SMAKE(TYPE, LEN) { \
+       .len = (LEN), \
+       .value = emalloc((LEN), sizeof(TYPE)) \
+   }
    
    #define SLICE(OBJ, START, END) ((typeof(OBJ)){ \
        .len = (((isize)(END) < 0) ? (OBJ).len : 0) + (END) - (START), \
        .value = (OBJ).value + (START) \
    })
+   
+   #define FOR_EACH(ELEM, ELEMS) \
+       for (typeof((ELEMS).value) ELEM = (ELEMS).value, _frst = ELEM; \
+           (usize)(ELEM - _frst) < (ELEMS).len; \
+           ++ELEM)
+   
+   #define foreach FOR_EACH
+   
    /* NOTES: */
    /*
     * Read this: https://www.cprogramming.com/tutorial/unicode.html
     * by Jeff Bezanson, about modern unicode in C.
     *
     */
-   
    #endif

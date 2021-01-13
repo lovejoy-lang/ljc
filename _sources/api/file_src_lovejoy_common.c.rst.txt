@@ -29,6 +29,8 @@ Includes
 --------
 
 
+- ``assert.h``
+
 - ``common.h`` (:ref:`file_src_lovejoy_common.h`)
 
 

@@ -39,7 +39,11 @@ Included By
 -----------
 
 
+- :ref:`file_src_bin.c`
+
 - :ref:`file_src_lovejoy_utf.c`
+
+- :ref:`file_src_tests.c`
 
 
 
@@ -52,37 +56,37 @@ Functions
 
 - :ref:`exhale_function_utf_8h_1ab03e3a1c1ef9fe1b8ca0084a0d346d47`
 
-- :ref:`exhale_function_utf_8h_1a58b0e461943c90053accfd568070eda4`
+- :ref:`exhale_function_utf_8h_1a28c2e39b3271953bf3bf749bb16870c9`
 
 - :ref:`exhale_function_utf_8h_1a1ce2fce91e8c560a2072b6d19c8661d6`
 
 - :ref:`exhale_function_utf_8h_1a98e35d6d9dcd2b642c854af8b6309e8d`
 
-- :ref:`exhale_function_utf_8h_1ab5fa5a5d44a7c1c907e6485dc4c8cf84`
+- :ref:`exhale_function_utf_8h_1a76e28dc838394971976da2893d43caf9`
 
 - :ref:`exhale_function_utf_8h_1aa43d016da30e3aa36fbd4c3f6d2cc630`
 
-- :ref:`exhale_function_utf_8h_1a9ca444a3c4c352b9e746babe2b6c8904`
+- :ref:`exhale_function_utf_8h_1a69b5e4314f1a39735431488fc40fcb37`
 
 - :ref:`exhale_function_utf_8h_1a8de2cba52c735262a9a3439dc9ea7556`
 
 - :ref:`exhale_function_utf_8h_1abfb6c925879a5392db6a17d86e874901`
 
-- :ref:`exhale_function_utf_8h_1a05f88d5d7839076dc23922cc069c1685`
+- :ref:`exhale_function_utf_8h_1a04b6c9ed69a5052da6ca788c76d4d4f5`
 
 - :ref:`exhale_function_utf_8h_1a5ca4a2c5dffb625694dddda825022256`
 
+- :ref:`exhale_function_utf_8h_1ae1e0b3990ee44d184d29eecd6ff5d8b3`
+
 - :ref:`exhale_function_utf_8h_1a55a6f12bcf3949b3f551d8cc68860fc8`
 
-- :ref:`exhale_function_utf_8h_1a48b90793c0ff6f098fa7b4f17cbcf797`
+- :ref:`exhale_function_utf_8h_1a6063c976ed0bdd8e09579916075c2ee1`
 
 - :ref:`exhale_function_utf_8h_1a2abe36a9e1f13bada55c92715c3296e1`
 
 - :ref:`exhale_function_utf_8h_1a91bc79033e14ab8502918ffc0c058014`
 
 - :ref:`exhale_function_utf_8h_1aaa418820fe18d784b08d6bf035fa214c`
-
-- :ref:`exhale_function_utf_8h_1ac1f503f66b37dd2b5f1305efc8e213a1`
 
 - :ref:`exhale_function_utf_8h_1aae6680122e83f80b239619fd1428ca65`
 

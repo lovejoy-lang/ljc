@@ -15,15 +15,14 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/onload.js"></script>
     <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     <link rel="shortcut icon" href="../_static/lovejoy_icon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Function utf_escape" href="function_utf_8h_1a48b90793c0ff6f098fa7b4f17cbcf797.html" />
-    <link rel="prev" title="Function ucs4_to_utf8" href="function_utf_8h_1a5ca4a2c5dffb625694dddda825022256.html" />
+    <link rel="next" title="Function utf8_ucs4_conversions" href="function_tests_8c_1a9b745a5bb32247ecc1d10894983bb058.html" />
+    <link rel="prev" title="Function utf8_escape" href="function_utf_8h_1ae1e0b3990ee44d184d29eecd6ff5d8b3.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -50,7 +49,7 @@
 <dl class="cpp function">
 <dt id="_CPPv412utf8_to_ucs45runic6string">
 <span id="_CPPv312utf8_to_ucs45runic6string"></span><span id="_CPPv212utf8_to_ucs45runic6string"></span><span id="utf8_to_ucs4__runic.string"></span><span class="target" id="utf_8h_1a55a6f12bcf3949b3f551d8cc68860fc8"></span><a class="reference internal" href="typedef_common_8h_1a6f4c871fa6a8a7ccb67a673f823adc88.html#_CPPv45runic" title="runic">runic</a> <code class="sig-name descname">utf8_to_ucs4</code><span class="sig-paren">(</span><a class="reference internal" href="typedef_common_8h_1a6f4c871fa6a8a7ccb67a673f823adc88.html#_CPPv45runic" title="runic">runic</a> <em>dest</em>, <a class="reference internal" href="typedef_common_8h_1a0b4bfb080fddac459a72b23384488aeb.html#_CPPv46string" title="string">string</a> <em>src</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412utf8_to_ucs45runic6string" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Convert UTF-8 to UCS-4 (4-byte wide characters) <dl class="simple">
+<dd><p>Convert UTF-8 to UCS-4 (4-byte wide characters) No error checking is done, <em>must</em> be valid UTF-8 and <code class="docutils literal notranslate"><span class="pre">dest</span></code> must be large enough. If <code class="docutils literal notranslate"><span class="pre">dest.len</span> <span class="pre">&gt;=</span> <span class="pre">src.len</span> <span class="pre">+</span> <span class="pre">1</span></code>, then there will always be enough space. <dl class="simple">
 <dt><strong>Return</strong></dt><dd><p>Slice of converted runic <code class="docutils literal notranslate"><span class="pre">dest</span></code> with correct length. </p>
 </dd>
 <dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
@@ -102,8 +101,8 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="root.html">Lovejoy Compiler API</a><ul>
-      <li>Previous: <a href="function_utf_8h_1a5ca4a2c5dffb625694dddda825022256.html" title="previous chapter">Function ucs4_to_utf8</a></li>
-      <li>Next: <a href="function_utf_8h_1a48b90793c0ff6f098fa7b4f17cbcf797.html" title="next chapter">Function utf_escape</a></li>
+      <li>Previous: <a href="function_utf_8h_1ae1e0b3990ee44d184d29eecd6ff5d8b3.html" title="previous chapter">Function utf8_escape</a></li>
+      <li>Next: <a href="function_tests_8c_1a9b745a5bb32247ecc1d10894983bb058.html" title="next chapter">Function utf8_ucs4_conversions</a></li>
   </ul></li>
   </ul></li>
 </ul>

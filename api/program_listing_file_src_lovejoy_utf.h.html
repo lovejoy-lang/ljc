@@ -15,7 +15,6 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/onload.js"></script>
     <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
@@ -46,20 +45,21 @@
 
 <span class="cp">#define is_utf(c) (((c) &amp; 0xC0) != 0x80)</span>
 
-<span class="kr">inline</span> <span class="n">string</span> <span class="nf">wrap_string</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">cstring</span><span class="p">)</span> <span class="p">{</span>
+<span class="kr">inline</span> <span class="n">string</span> <span class="nf">wrap_string</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">cstring</span><span class="p">)</span>
+<span class="p">{</span>
     <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="p">{</span> <span class="p">.</span><span class="n">len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">cstring</span><span class="p">),</span> <span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">cstring</span> <span class="p">};</span>
     <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="cm">/* Conversions */</span>
+<span class="cm">/* Conversions. */</span>
 
 <span class="n">runic</span> <span class="nf">utf8_to_ucs4</span><span class="p">(</span><span class="n">runic</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">);</span>
 
 <span class="n">string</span> <span class="nf">ucs4_to_utf8</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">runic</span> <span class="n">src</span><span class="p">);</span>
 
-<span class="n">string</span> <span class="nf">rune_to_utf8</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">rune</span> <span class="n">src</span><span class="p">);</span>
+<span class="n">string</span> <span class="nf">rune_to_utf8</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">rune</span> <span class="n">ch</span><span class="p">);</span>
 
-<span class="cm">/* Moving through stirngs */</span>
+<span class="cm">/* Moving through stirngs. */</span>
 
 <span class="n">usize</span> <span class="nf">byte_offset</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
 
@@ -67,25 +67,21 @@
 
 <span class="n">rune</span> <span class="nf">read_rune</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">usize</span> <span class="o">*</span><span class="n">i</span><span class="p">);</span>
 
-<span class="n">u0</span> <span class="nf">next_rune</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+<span class="n">u0</span> <span class="nf">next_rune</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">usize</span> <span class="o">*</span><span class="p">);</span>
 
-<span class="n">u0</span> <span class="nf">prev_rune</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
+<span class="n">u0</span> <span class="nf">prev_rune</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">usize</span> <span class="o">*</span><span class="p">);</span>
 
-<span class="cm">/* Unicode Escapes */</span>
+<span class="cm">/* Unicode Escapes. */</span>
 
 <span class="n">usize</span> <span class="nf">read_escape</span><span class="p">(</span><span class="n">string</span> <span class="n">src</span><span class="p">,</span> <span class="n">rune</span> <span class="o">*</span><span class="n">dest</span><span class="p">);</span>
 
-<span class="n">string</span> <span class="nf">escape_rune</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">rune</span> <span class="n">c</span><span class="p">);</span>
+<span class="n">string</span> <span class="nf">escape_rune</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">rune</span> <span class="n">ch</span><span class="p">);</span>
 
-<span class="n">string</span> <span class="nf">utf_unescape</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">);</span>
+<span class="n">string</span> <span class="nf">utf8_unescape</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">);</span>
 
-<span class="n">string</span> <span class="nf">utf_escape</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">escape_quotes</span><span class="p">);</span>
+<span class="n">string</span> <span class="nf">utf8_escape</span><span class="p">(</span><span class="n">string</span> <span class="n">dest</span><span class="p">,</span> <span class="n">string</span> <span class="n">src</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">escape_quotes</span><span class="p">);</span>
 
-<span class="c1">// Utility.</span>
-<span class="kt">bool</span> <span class="nf">octal_digit</span><span class="p">(</span><span class="n">byte</span> <span class="n">c</span><span class="p">);</span>
-<span class="kt">bool</span> <span class="nf">hex_digit</span><span class="p">(</span><span class="n">byte</span> <span class="n">c</span><span class="p">);</span>
-
-<span class="cm">/* UTF-8 oriented standard functions */</span>
+<span class="cm">/* UTF-8 oriented standard function replacements. */</span>
 
 <span class="n">string</span> <span class="nf">utf_strchr</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">rune</span> <span class="n">ch</span><span class="p">,</span> <span class="n">usize</span> <span class="o">*</span><span class="n">i</span><span class="p">);</span>
 
@@ -94,6 +90,10 @@
 <span class="n">usize</span> <span class="nf">utf_seqlen</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
 
 <span class="kt">bool</span> <span class="nf">is_locale_utf8</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">locale</span><span class="p">);</span>
+
+<span class="cm">/* Utility. */</span>
+<span class="kt">bool</span> <span class="nf">octal_digit</span><span class="p">(</span><span class="n">byte</span> <span class="n">c</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="nf">hex_digit</span><span class="p">(</span><span class="n">byte</span> <span class="n">c</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>

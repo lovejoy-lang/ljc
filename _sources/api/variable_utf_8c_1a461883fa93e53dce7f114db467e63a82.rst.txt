@@ -1,0 +1,13 @@
+.. _exhale_variable_utf_8c_1a461883fa93e53dce7f114db467e63a82:
+
+Variable OffsetsFromUTF8
+========================
+
+- Defined in :ref:`file_src_lovejoy_utf.c`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: OffsetsFromUTF8

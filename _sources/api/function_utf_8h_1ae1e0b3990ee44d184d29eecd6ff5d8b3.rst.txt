@@ -1,0 +1,13 @@
+.. _exhale_function_utf_8h_1ae1e0b3990ee44d184d29eecd6ff5d8b3:
+
+Function utf8_escape
+====================
+
+- Defined in :ref:`file_src_lovejoy_utf.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: utf8_escape(string, string, bool)
