@@ -46,7 +46,7 @@ Maybe := data($A) {
 
 -- Make Maybe a Functor.
 map(self: Maybe($A), f: A -> $B): Maybe(B) = {
-	return match self {
+	return case self {
 		None => None
 		Some(a) => Some(f(a))
 	}
@@ -62,7 +62,7 @@ wrap(self: $A): Maybe(A) = {
 -- (provided you have stated the type to be `Maybe(...)`).
 
 lift(self: Maybe($A), other: Maybe($B), f: (A, B) -> $C): Maybe(C) = {
-	match self, other {
+	case self, other {
 		Some(a), Some(b) => Some(f(a, b))
 		None, _ => None
 		_, None => None
@@ -72,7 +72,7 @@ lift(self: Maybe($A), other: Maybe($B), f: (A, B) -> $C): Maybe(C) = {
 -- Make Maybe an Alternative
 empty: Maybe($A) = Nothing
 either(self: Maybe($A), other: Maybe(A)): Maybe(A) = {
-	return match self, other {
+	return case self, other {
 		None, r => r
 		l,    _ => l
 	}
@@ -80,7 +80,7 @@ either(self: Maybe($A), other: Maybe(A)): Maybe(A) = {
 
 -- Make Maybe a Moand.
 bind(self: Maybe($A), f: A -> Maybe($B)): Maybe(B) = {
-	return match self {
+	return case self {
 		None => None
 		Some(a) => f(a)
 	}

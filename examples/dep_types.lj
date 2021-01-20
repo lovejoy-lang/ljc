@@ -1,0 +1,17 @@
+Cell := data(len: usize, T: Type) {
+	Nil: Self(0, T)
+	Cons(T, Self(len, T)): Self(len + 1, T)
+}
+
+to_string(cell: Cell($N, $T)): string = case cell {
+	Nil => "NIL"
+	Cons(head, tail) => "(%head -> %tail)"
+}
+
+main(_) := {
+	single: Cell(1, u64) = Cons(18, Nil)
+	cell: Cell(3, u64) = Cons(19, single)
+
+	io::puts(cell)
+	-- (19 -> (18 -> NIL))
+}

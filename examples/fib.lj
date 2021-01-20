@@ -1,0 +1,17 @@
+import io
+
+fib(n: u32): u32 = case {
+	0 | 1 => 1
+	_ => fib(n - 2) + fib(n - 1)
+}
+
+-- Alt.
+fib := (n: u32): u32 ->
+	1 if n < 2 else fib(n - 2) + fib(n - 1)
+
+main(_) := {
+	f = fib(9)
+	io::puts("fib(9) = %{f}")
+
+	exit(0)
+}

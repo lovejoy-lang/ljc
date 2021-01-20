@@ -28,7 +28,7 @@ p = Point3D(7, 8, 9)  -- Can be either at runtime
 
 p.x  -- Exits on both, fine
 p.y  -- Still fine
-p.z  -- Error!  Unknown whether point is 2D or 3D, have to do a `match`.
+p.z  -- Error!  Unknown whether point is 2D or 3D, have to do a `case`.
 
 
 -- Enum: enumarable types, again, no special synatx
@@ -58,8 +58,8 @@ d = North(0)  -- Same direction, but degrees are measuring from north.
 d.degrees == 0
 
 -- Define equality operation on Direction
-degrees_from_north(self: Direcrtion): u16 =
-	self.direction + match self {
+degrees_from_north(self: Direcrtion): u16
+	= self.direction + case self {
 		North(_) => 0
 		East(_)  => 90
 		South(_) => 180
@@ -84,7 +84,7 @@ SafeList := data($A, $B) {
 }
 
 head(list: SafeList($A, NonEmpty)): A = {
-	return match list {
+	return case list {
 		Cons(a, _) => a
 	}
 }
@@ -96,7 +96,7 @@ Natural := data {
 }
 
 (+)(n: Natural, m: Natural): Natural = {
-	match n {
+	case n {
 		Zero => m
 		Succ(&l) => Succ(l + m)
 	}
@@ -118,7 +118,7 @@ Expr := data($A) {
 	Equ(Self(Equality), Self(Equality)): Self(bool)
 }
 
-evaluate(Expr($A)): A = match {
+evaluate(Expr($A)): A = case {
 	Number(n) => n
 	Bool(b) => b
 	Add(e1, e2) => evaluate(e1) + evaluate(e2)

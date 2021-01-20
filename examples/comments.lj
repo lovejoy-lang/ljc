@@ -8,4 +8,9 @@ b = 4
 in between here
 will be ignored *-
 
+-*-
+ * Make it look pretty,
+ * will you?
+-*-
+
 c = 6

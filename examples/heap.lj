@@ -27,7 +27,7 @@ concat(allocater: &Allocator, a: &[$A], b: &[A]): Try(&[A], AllocErr) = {
 
 main(argv[][]: u8) := {
 	c := concat("foo", "bar")
-	match c {
+	case c {
 		Okay(s) => assert(s == "foobar")
 		Fail(e) => println("Failed to concat: " ++ e.message)
 	}

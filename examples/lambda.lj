@@ -25,7 +25,7 @@ named_function := (a: i32, b: f64): u8 -> c + 1
 -- See the Hindley–Milner type system.
 
 -- The use of {..} should not be *required* anywhere,
--- it's just a grouping syntax.
+-- it's just a grouping (and scoping) syntax.
 -- e.g.
 y = if (x > 2) { 10 } else { 11 }
 y = if x > 2 { 10 } else { 11 }
@@ -38,5 +38,5 @@ y = if x > 2
  *-
 
 -- e.g. higher order functions
-[1, 2, 3, 4].map((e: i32) -> { e + 1 })
+[1, 2, 3, 4].map((e: i32) -> e + 1)
 [1, 2, 3, 4].map({ %1 + 1 })  -- unamed/implicit paramter.

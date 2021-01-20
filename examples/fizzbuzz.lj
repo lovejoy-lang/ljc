@@ -1,0 +1,25 @@
+import io
+
+fizzbuzz(n: u32): string = {
+	s = if n % 3 == 0 "Fizz"
+	  + if n % 5 == 0 "Buzz"
+
+	return unless s.is_empy s
+	         else n.to_string
+}
+
+-- Alt.
+fizzbuzz := (n: u32) -> case (n % 3, n % 5) {
+	(0, 0) => "FizzBuzz"
+	(0, _) => "Fizz"
+	(_, 0) => "Buzz"
+	(_, _) => from(n)
+}
+
+main(_) := {
+	fizzed[100]: string = map(fizzbuzz, [1:100])
+	for fizzed
+		io::puts("%n --> %{it.value}")
+
+	exit(0)
+}
