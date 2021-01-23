@@ -1,0 +1,9 @@
+-- The most minimal (but explicit) program, i.e., does nothing.
+
+main(argv[]: string): ! = exit(0)
+
+-- With implicit types:
+-*-
+ * main(_) := exit(0)
+-*-
+

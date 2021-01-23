@@ -1,0 +1,29 @@
+-- '#' operator means 'run function at compile time',
+-- making it like a macro, but macros are much more versatile
+-- in syntax than ACE-functions, i.e. `if`.
+
+-- This is how the relevant data-types are defined:
+-*-
+ *	derive(transparent)
+ *	Precedence := data { Precedence(u16): Self }
+ *
+ *	Associativity := data {
+ *		Left    : Self
+ *		Right   : Self
+ *		Neither : Self
+ *	}
+-*-
+
+#infix("\\", prec = 40, assoc = Neither)
+
+-- Define `\` as  the 'divides' operator.
+(\)(lhs: $N <: Integer, rhs: N): bool = {
+	return lhs % rhs == 0
+}
+
+fizzbuzz(n: u64): string = unless s.is_empty s else n.to_string
+	with s = "" ++ if n \ 3 "Fizz" ++ if n \ 5 "Buzz"
+
+main(_) := exit(0) with io::puts(fizzbuzz(15))
+
+

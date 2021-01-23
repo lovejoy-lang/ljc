@@ -8,9 +8,9 @@
 /// Length does _not_ count the null-terminator.
 /// @param[in] cstring Null terminated string to be wrapped
 /// @returns Wrapped UTF-8 string.
-inline string wrap_string(byte *cstring)
+inline string wrap_string(const byte *cstring)
 {
-	string s = { .len = strlen(cstring), .value = cstring };
+	string s = { .len = strlen(cstring), .value = (byte *)cstring };
 	return s;
 }
 
@@ -37,7 +37,7 @@ string ucs4_to_utf8(string dest, runic src);
 /// Single UCS-4 rune to UTF-8 string.
 /// `dest` should allocate 4 bytes, or 5 if it is desired to NULL-terminate.
 /// @param[out] dest Empty string structure to hold UTF-8 bytes.
-/// @param[in] src Single UCS-4 character / rune.
+/// @param[in] ch Single UCS-4 character / rune.
 /// @returns Slice of `dest` with correct length.
 string rune_to_utf8(string dest, rune ch);
 
@@ -111,7 +111,7 @@ string utf8_escape(string dest, string src, bool escape_quotes);
 /// @param[in] ch Rune/character to find.
 /// @param[out] i Pointer to be set to index of character in string.
 /// @returns Slice of `s` string, starting at first occurence.
-///          Points to NULL with zero (0) length if no such
+///          Points to nil with zero (0) length if no such
 ///          character is found.
 string utf_strchr(string s, rune ch, usize *i);
 

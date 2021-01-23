@@ -1,10 +1,11 @@
 import io
 
 fizzbuzz(n: u32): string = {
-	s = if n % 3 == 0 "Fizz"
-	  + if n % 5 == 0 "Buzz"
+	s := if n % 3 == 0 "Fizz"
+	  ++ if n % 5 == 0 "Buzz"
+	  ++ ""
 
-	return unless s.is_empy s
+	return unless s.is_empty() s
 	         else n.to_string
 }
 

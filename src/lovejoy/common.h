@@ -12,6 +12,7 @@
 #include <stddef.h>
 #include <limits.h>
 #include <string.h>
+#include <assert.h>
 
 /* Misc macros */
 #define STR_HELPER(x) #x
@@ -30,7 +31,7 @@
 #define loop while (1)
 #define unless(cond) if (!(cond))
 #define until(cond) while (!(cond))
-#define newtype(NT, T) typedef struct _##NT { const T value; } NT
+#define newtype(NT, T) typedef struct _##NT { T value; } NT
 #define newarray(NT, T) typedef struct _##NT { \
 	usize len; \
 	usize cap; \
@@ -164,6 +165,8 @@ extern usize push(u0 *arr, const u0 *element, usize width);
 /// @returns Pointer to popped element.
 extern u0 *pop(u0 *array, usize width);
 extern i32 eputs(const byte *);
+/// Compare two strings for equality.
+extern bool string_eq(string, string);
 
 /* Common Macros */
 
@@ -180,8 +183,11 @@ extern i32 eputs(const byte *);
 	.value = (byte[]){ __VA_ARGS__ } \
 }
 
-/// Empyt array of certain type.
-#define EMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })
+/// Empty slice of certain type.
+#define SEMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })
+/// Empty array of certain type.
+#define AEMPTY(TYPE) ((TYPE){ .len = 0, .cap = 0, .value = NULL })
+
 /// Is array empty?
 #define IS_EMPTY(ARR) ((ARR).len == 0)
 
@@ -203,6 +209,12 @@ extern i32 eputs(const byte *);
 	.len = (((isize)(END) < 0) ? (OBJ).len : 0) + (END) - (START), \
 	.value = (OBJ).value + (START) \
 })
+
+/// Works like `SLICE`, but on a pointer instead of an array.
+#define VIEW(PTR, START, END) { \
+	.len = (END) - (START), \
+	.value = (PTR) + (START) \
+}
 
 /// For-each loop, iterates across an array or slice.
 /// For example:

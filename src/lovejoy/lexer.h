@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include "operators.h"
 
 /// Token Type (TT), classifies each lexeme.
 enum TokenType {
@@ -23,13 +24,15 @@ unqualify(enum, TokenType);
 /// Lexer environment.
 struct LexerContext {
 	const byte *filename;
+	const OperatorTable operator_table;  ///< Lexer will not add operators.
 	const byte *lineptr;  ///< Start of current line pointer.
 	usize lineno;
 	TokenType last_token_type;
 };
 unqualify(struct, LexerContext);
 
-extern LexerContext NewLexer;
+/// Most basic/initialized lexer context.
+LexerContext NewLexer();
 
 /// Lexeme, a substring of the source.
 struct Lexeme {
@@ -54,7 +57,7 @@ usize lexeme_col(const Lexeme *lexeme)
 
 /// Get stand-alone substring of lexeme.
 /// @note Allocates memory.
-byte *lexeme_substring(const Lexeme *);
+string lexeme_substring(const Lexeme *);
 
 /// Type of token character probably belongs to.
 TokenType character_type(byte);
@@ -69,6 +72,7 @@ Lexeme *lex(LexerContext *, const byte *source);
 
 /// N-token look-ahead.
 /// @param count How many tokens too skip ahead to.
+/// @param source Source code, offset by end of current token.
 /// @note Allocates memory.
 Lexeme *peek(LexerContext *, u16 count, const byte *source);
 

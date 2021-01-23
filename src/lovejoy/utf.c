@@ -212,7 +212,7 @@ usize read_escape(string src, rune *dest)
 	}
 
 	if (dno > 0)
-		ch = strtol(digs, NULL, 16);
+		ch = strtol(digs, nil, 16);
 
 	*dest = ch;
 	return i;
@@ -318,7 +318,7 @@ string utf_strchr(string s, rune ch, usize *i)
 		++(*i);
 	}
 
-	return EMPTY(string);
+	return SEMPTY(string);
 }
 
 usize utf_strlen(string s)

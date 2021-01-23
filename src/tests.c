@@ -41,6 +41,8 @@ u0 utf8_ucs4_conversions(byte *cstring)
 
 #ifndef IMPLEMENTATION
 
+newtype(Natural, u64);  // New-type idiom.
+
 i32 main(i32 argc, const byte **argv)
 {
 	UNUSED(argc); UNUSED(argv);
@@ -49,6 +51,8 @@ i32 main(i32 argc, const byte **argv)
 	println("Locale is UTF-8?  %s.",
 		is_locale_utf8(locale) ? "true" : "false");
 
+	Natural n = { 7 };  // How to use newtypes.
+	n.value = 4;  UNUSED(n);
 
 	/* UTF-8 <--> UCS-4, conversions. */
 	TEST("Converts between UTF-8 and UCS-4.") {

@@ -1,22 +1,30 @@
 #include "lexer.h"
 #include <string.h>
+#include <lovejoy/utf.h>
 
 #ifndef IMPLEMENTATION
 
-LexerContext NewLexer = {
-	.filename = "<stdin>",
-	.lineptr = NULL,
-	.lineno = 1,
-	.last_token_type = TT_NONE
-};
+LexerContext NewLexer()
+{
+	const OperatorTable table = DefaultOperators();
+	LexerContext ctx = {
+		.filename = "<stdin>",
+		.operator_table = table,
+		.lineptr = nil,
+		.lineno = 1,
+		.last_token_type = TT_NONE
+	};
 
-byte *lexeme_substring(const Lexeme *lexeme)
+	return ctx;
+}
+
+string lexeme_substring(const Lexeme *lexeme)
 {
 	usize span = lexeme_span(lexeme);
-	byte *ss = (byte *)malloc((span + 1) * sizeof(byte));
+	byte *ss = emalloc(span + 1, sizeof(byte));
 	strncpy(ss, lexeme->start, span);
-	ss[span + 1] = '\0';
-	return ss;
+	ss[span] = '\0';
+	return wrap_string(ss);
 }
 
 u0 lexeme_free(Lexeme *lexeme)
@@ -28,10 +36,10 @@ Lexeme *peek(LexerContext *ctx, u16 count, const byte *source)
 {
 	LexerContext tmp_ctx = *ctx;
 
-	Lexeme *peeked = NULL;
+	Lexeme *peeked = nil;
 	for (u16 i = 0; i < count; ++i) {
 		peeked = lex(&tmp_ctx, source);
-		if (peeked == NULL) return NULL;
+		if (peeked == nil) return nil;
 		source = peeked->end;
 		if (i != count - 1)  // While not at last iteration:
 			lexeme_free(peeked);
@@ -65,15 +73,16 @@ TokenType character_type(byte chr)
 	if (chr >= '0' && chr <= '9')
 		return TT_NUMBER;
 
-	if (chr == '"')  return TT_STRING;
-	if (chr == 0x27) return TT_CHAR;
-
-	if (chr == '(') return TT_LPAREN;
-	if (chr == ')') return TT_RPAREN;
-	if (chr == '{') return TT_LCURLY;
-	if (chr == '}') return TT_RCURLY;
-	if (chr == '[') return TT_LBRACKET;
-	if (chr == ']') return TT_RBRACKET;
+	switch (chr) {
+	case '"':  return TT_STRING;
+	case 0x27: return TT_CHAR;
+	case '(':  return TT_LPAREN;
+	case ')':  return TT_RPAREN;
+	case '{':  return TT_LCURLY;
+	case '}':  return TT_RCURLY;
+	case '[':  return TT_LBRACKET;
+	case ']':  return TT_RBRACKET;
+	}
 
 	if ((chr >= 0x01 && chr <= 0x1f)
 	 || (chr >= 0x7f && chr <= 0x9f))
@@ -104,15 +113,15 @@ static const byte *skip_whitespace(const byte *source)
 
 Lexeme *lex(LexerContext *ctx, const byte *source)
 {
-	if (ctx->lineptr == NULL)
+	if (ctx->lineptr == nil)
 		ctx->lineptr = source;
-	if (*source == '\0') return NULL;
+	if (*source == '\0') return nil;
 
 	source = skip_whitespace(source);
-	if (*source == '\0') return NULL;
+	if (*source == '\0') return nil;
 
-	// Look for comments
-	if (*source == '-') {
+	// Look for comments.
+	if (*source == '-') {  // All comments start with '-', (-{-,*}).
 		if (*(source + 1) == '-') {  // EOL comment.
 			++source;
 			until (*source++ == '\0' || *source == '\n');
@@ -131,7 +140,7 @@ Lexeme *lex(LexerContext *ctx, const byte *source)
 	}
 
 	source = skip_whitespace(source);
-	if (*source == '\0') return NULL;
+	if (*source == '\0') return nil;
 
 	// Collect multiple terminators together.
 	bool is_terminal = false;
@@ -151,7 +160,7 @@ Lexeme *lex(LexerContext *ctx, const byte *source)
 
 make_token:;
 	TokenType tt = character_type(*source);
-	if (tt == TT_NONE) return NULL;
+	if (tt == TT_NONE) return nil;
 	// Stop the lexer from returning many consecutive
 	// terminator tokens.
 	if (tt == TT_TERM && ctx->last_token_type == TT_TERM)
@@ -168,14 +177,20 @@ make_token:;
 		goto return_token;
 	}
 	if (tt == TT_STRING) {
-		// TODO: String parsing w/ escapes...
-		// Maybe use repeated character parsing.
-		token->end = source + 1;
+		// Find the EOS.
+		usize i = 1;
+		until (source[i++] == '"') {
+			if (source[i - 1] == '\\' && source[i] == '"')
+				++i;
+		}
+		token->end = source + i;
 		goto return_token;
 	}
 	if (tt == TT_CHAR) {
-		// TODO.
-		token->end = source + 1;
+		// A 'char' is one rune.
+		usize width = 0;
+		next_rune(wrap_string(source), &width);
+		token->end = source + width;
 		goto return_token;
 	}
 
@@ -203,20 +218,36 @@ make_token:;
 		token->end = source;
 		goto return_token;
 	case TT_IDENT:
-		while (tt == TT_NUMBER || tt == TT_IDENT)
-			tt = character_type(*(++source));
-
-		token->end = source;
-		goto return_token;
-	case TT_OPERATOR:
-		// TODO: Check which operators exists, and try and
+	case TT_OPERATOR:;  // Check for known operators:
+		// Check which operators exists, and try and
 		// match against the longest operators first.
 		// e.g.  2+-3 becomes 2 + (-3), but if an operator '+-' exists,
 		// then it becomes 2 +- 3.
-		token->end = source + 1;
-		goto return_token;
+		OperatorTable operators = ctx->operator_table;
+		foreach (op, operators) {
+			string op_substr = VIEW((byte *)source, 0, op->name.len);
+			if (string_eq(op->name, op_substr)) {
+				token->end = source + op_substr.len;
+				goto return_token;
+			} // Otherwise continue searching.
+		}
+		// No operator was found...
+		if (tt == TT_IDENT) {  // Hence, it's just a regular identifier.
+			while (tt == TT_NUMBER || tt == TT_IDENT)
+				tt = character_type(*(++source));  // Consolidate characters.
+
+			token->end = source;
+			goto return_token;
+		}
+
+		// Otherwise, if we have an operator symbol, but it was not covered by
+		// the previous check for known operators, then it does not exist.
+		// Hence, we throw an error.
+		// TODO: Throw proper lexer error.
+		eprintln("Error: Operator does not exist.");
+		return nil;
 	default:
-		return NULL;
+		return nil;
 	}
 
 return_token:;

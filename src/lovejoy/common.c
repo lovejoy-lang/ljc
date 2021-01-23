@@ -17,7 +17,7 @@ bool is_zeroed(imax *ns, usize len)
 
 u0 zero(u0 *blk, usize width)
 {
-	if (blk == NULL || width == 0)
+	if (blk == nil || width == 0)
 		return UNIT;
 	umin *_blk = blk;
 	until (width-- == 0)
@@ -30,7 +30,7 @@ u0 *emalloc(usize len, usize size)
 	usize bytes = len * size;
 	u0 *m = malloc(bytes);
 	if (m == nil) {
-		eprintf("Could not allocate %lu bytes.\n", bytes);
+		eprintln("Could not allocate %lu bytes.", bytes);
 		abort();
 	}
 	zero(m, bytes);
@@ -72,6 +72,17 @@ u0 *pop(u0 *array, usize width)
 	return (u0 *)(dyn->value + --dyn->len * width);
 }
 
+bool string_eq(string self, string other)
+{
+	unless (self.len == other.len)
+		return false;
+
+	usize i = 0;
+	foreach (c, self)
+		if (*c != UNWRAP(other)[i++])
+			return false;
+	return true;
+}
 
 i32 eputs(const byte *s)
 {

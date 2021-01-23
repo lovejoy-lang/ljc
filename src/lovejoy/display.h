@@ -5,8 +5,8 @@
 
 /// String representation of a token type.
 /// @note Allocates memory.
-byte *display_tt(TokenType);
+string display_tt(TokenType);
 
 /// String representation of a lexeme.
 /// @note Allocates memory.
-byte *display_lexeme(const Lexeme *);
+string display_lexeme(const Lexeme *);

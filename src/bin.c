@@ -33,7 +33,7 @@ i32 main(i32 argc, const byte **argv)
 			eprintf("Source file: %s\n", argv[i]);
 
 			FILE *f = fopen(argv[i], "rb");
-			if (f == NULL)  return 1;
+			if (f == nil)  return 1;
 
 			byte *source;
 			usize source_len;
@@ -59,27 +59,27 @@ byte *compile_source(const byte *name, const byte *source)
 {
 	eprintln("Compiling: `%s'.", name);
 
-	LexerContext lexer_ctx = NewLexer;
+	LexerContext lexer_ctx = NewLexer();
 	lexer_ctx.filename = name;
 
-	Lexeme *lexeme = NULL;
-	while (NULL != (lexeme = lex(&lexer_ctx, source))) {
+	Lexeme *lexeme = nil;
+	until (nil == (lexeme = lex(&lexer_ctx, source))) {
 		source = lexeme->end;
 
 		// Print fo debugging
-		byte *lexeme_repr = display_lexeme(lexeme);
-		eprintln("lexem[%02lu:%02lu] -> %s",
+		string lexeme_repr = display_lexeme(lexeme);
+		eprintln("(lexem %02lu:%02lu %s)",
 			lexeme->lineno,
 			lexeme_col(lexeme),
-			lexeme_repr);
+			UNWRAP(lexeme_repr));
 
-		free(lexeme_repr);
+		free(UNWRAP(lexeme_repr));
 		lexeme_free(lexeme);
 	}
 	eputs("EOT - End of Token Stream");
 
 	// Not producing executables yet.
-	return NULL;
+	return nil;
 }
 
 #endif

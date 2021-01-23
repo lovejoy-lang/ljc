@@ -30,7 +30,7 @@ add(self: Vec3D, other: Vec3D): Vec3D
  * *ptr  : T  signifies a thin regualr pointer to T,
  *  ptr? : T  signifies a nullable pointer to T.
 -*-
-main(argv[][]: byte): u0 = {
+main(argv[]: string): ! = {
 	puts("Hello, World.")
 
 	u_1 = Vec2D(x = 4, y = 5)
