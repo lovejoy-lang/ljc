@@ -36,7 +36,7 @@ end_command := @printf "$(r)"
 all: pre-build $(TARGET)
 	$(eval T := $(TIME))
 	@printf "$(bold)\nBuild success:$(r) \`$(TARGET)\`.\n"
-	@printf "$(bold)Took:$(r) %lg ms.\n" "$(T)"
+	@printf "$(bold)Took:$(r) %g ms.\n" "$(T)"
 
 clean:
 	@echo "[~] Cleaning last build."
@@ -63,7 +63,7 @@ test: clean pre-build $(ODIR)/tests.o
 	$(CC) $(OPT) -o $(TARGET)_test $(OBJS) $(TESTS_MAIN) $(LINKS)
 	$(end_command)
 	@printf "$(bold)\nBuild for tests succeeded:$(r) \`$(TARGET)_test\`.\n"
-	@printf "$(bold)Took:$(r) %lg ms.\n" "$(T)"
+	@printf "$(bold)Took:$(r) %g ms.\n" "$(T)"
 
 $(TARGET): $(MAIN)
 	@echo "$(bold)Building target.$(r)"
@@ -98,6 +98,6 @@ $(ODIR)/%.o: $(CDIR)/%.c $(DDIR)/%.d
 
 $(DEPS):
 
-include $(DEPS)
+include $(wildcard $(DEPS))
 
 .PHONY: all test pre-build clean install
