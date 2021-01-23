@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ae465a9a748a637d325f13e727c8d9d18:
+
+Define SEMPTY
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SEMPTY

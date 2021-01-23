@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1accb2f1b328ae7b5ac4bd0714f1465dfd:
+
+Define AEMPTY
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: AEMPTY

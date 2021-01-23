@@ -45,9 +45,9 @@
 
 <span class="cp">#define is_utf(c) (((c) &amp; 0xC0) != 0x80)</span>
 
-<span class="kr">inline</span> <span class="n">string</span> <span class="nf">wrap_string</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">cstring</span><span class="p">)</span>
+<span class="kr">inline</span> <span class="n">string</span> <span class="nf">wrap_string</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">cstring</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="p">{</span> <span class="p">.</span><span class="n">len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">cstring</span><span class="p">),</span> <span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">cstring</span> <span class="p">};</span>
+    <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="p">{</span> <span class="p">.</span><span class="n">len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">cstring</span><span class="p">),</span> <span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">)</span><span class="n">cstring</span> <span class="p">};</span>
     <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
 <span class="p">}</span>
 

@@ -15,7 +15,7 @@ Program Listing for File operators.h
    enum Associativity {
        ASSOC_LEFT,
        ASSOC_RIGHT,
-       ASSOC_NEITHER
+       ASSOC_NEITHER  
    };
    unqualify(enum, Associativity);
    
@@ -28,24 +28,19 @@ Program Listing for File operators.h
    
    struct Operator {
        u16 precedence;
-       Associativity assoc;
+       Associativity associativity;
        Fixity fixity;
-       byte name[8];  
-       struct Operator *_next;  
+       string name;  
    };
    unqualify(struct, Operator);
    
-   struct OperatorTable {
-       Operator *operators;
-       usize count;
-   };
-   unqualify(struct, OperatorTable);
+   newarray(OperatorTable, Operator);
    
    OperatorTable DefaultOperators();
    
-   u0 new_operator(OperatorTable *, byte *, u16, Associativity, Fixity);
+   u0 new_operator(OperatorTable *, string, u16, Associativity, Fixity);
    
-   Operator *get_operator(OperatorTable *, byte *, Fixity);
+   Operator *get_operator(OperatorTable, string, Fixity);
    
    inline
    bool is_prefix(Operator* op)

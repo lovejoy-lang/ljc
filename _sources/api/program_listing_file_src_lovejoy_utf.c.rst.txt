@@ -224,7 +224,7 @@ Program Listing for File utf.c
        }
    
        if (dno > 0)
-           ch = strtol(digs, NULL, 16);
+           ch = strtol(digs, nil, 16);
    
        *dest = ch;
        return i;
@@ -330,7 +330,7 @@ Program Listing for File utf.c
            ++(*i);
        }
    
-       return EMPTY(string);
+       return SEMPTY(string);
    }
    
    usize utf_strlen(string s)

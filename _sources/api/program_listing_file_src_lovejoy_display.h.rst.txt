@@ -15,6 +15,6 @@ Program Listing for File display.h
    #include "common.h"
    #include "lexer.h"
    
-   byte *display_tt(TokenType);
+   string display_tt(TokenType);
    
-   byte *display_lexeme(const Lexeme *);
+   string display_lexeme(const Lexeme *);

@@ -37,6 +37,8 @@ Included By
 -----------
 
 
+- :ref:`file_src_lovejoy_lexer.h`
+
 - :ref:`file_src_lovejoy_operators.c`
 
 
@@ -46,9 +48,9 @@ Classes
 -------
 
 
-- :ref:`exhale_struct_structOperator`
+- :ref:`exhale_struct_struct__OperatorTable`
 
-- :ref:`exhale_struct_structOperatorTable`
+- :ref:`exhale_struct_structOperator`
 
 
 Enums
@@ -66,7 +68,7 @@ Functions
 
 - :ref:`exhale_function_operators_8h_1a98330dedd3348d23ff3a3ab624206260`
 
-- :ref:`exhale_function_operators_8h_1a3eabf2b59e1df86f60b6d037a8873933`
+- :ref:`exhale_function_operators_8h_1a1660bdfdd316aae83ae0231a45a58603`
 
 - :ref:`exhale_function_operators_8h_1ad561139aaf62fcb42bb1a5fb9efb0f75`
 
@@ -74,7 +76,7 @@ Functions
 
 - :ref:`exhale_function_operators_8h_1aa8a55136e07c94eec79e3812ef5ff46e`
 
-- :ref:`exhale_function_operators_8h_1af24b30f3cc61a5bf957fff1920b34e1f`
+- :ref:`exhale_function_operators_8h_1ae74009478be0522ac0a8d03fbf78919c`
 
 
 Typedefs
@@ -87,5 +89,5 @@ Typedefs
 
 - :ref:`exhale_typedef_operators_8h_1a5d4822fbb6b4c2de2037c752f97eeaa3`
 
-- :ref:`exhale_typedef_operators_8h_1a9b168c449262bb97481892c95840fe7e`
+- :ref:`exhale_typedef_operators_8h_1ac0f6232fc48681a9327420365fa7e38b`
 

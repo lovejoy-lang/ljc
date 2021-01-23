@@ -14,6 +14,11 @@ Classes and Structs
 .. toctree::
    :maxdepth: 5
 
+   struct__OperatorTable.rst
+
+.. toctree::
+   :maxdepth: 5
+
    struct__runic.rst
 
 .. toctree::
@@ -35,11 +40,6 @@ Classes and Structs
    :maxdepth: 5
 
    structOperator.rst
-
-.. toctree::
-   :maxdepth: 5
-
-   structOperatorTable.rst
 
 Enums
 *****
@@ -92,12 +92,12 @@ Functions
 .. toctree::
    :maxdepth: 5
 
-   function_display_8h_1a238ecf01b9d2c9d164f51c4e77882f31.rst
+   function_display_8h_1a3d959f016f7a854e3a8a7759265987f0.rst
 
 .. toctree::
    :maxdepth: 5
 
-   function_display_8h_1a511609e110fe077f3a248d84359a1efd.rst
+   function_display_8h_1ad9ff7462f5d93277587a46e8525cf840.rst
 
 .. toctree::
    :maxdepth: 5
@@ -117,7 +117,7 @@ Functions
 .. toctree::
    :maxdepth: 5
 
-   function_operators_8h_1a3eabf2b59e1df86f60b6d037a8873933.rst
+   function_operators_8h_1a1660bdfdd316aae83ae0231a45a58603.rst
 
 .. toctree::
    :maxdepth: 5
@@ -182,7 +182,7 @@ Functions
 .. toctree::
    :maxdepth: 5
 
-   function_lexer_8h_1a15ee16aa94427be108da355ed8ce3023.rst
+   function_lexer_8h_1a70ef41d0a32e4bc43e80d09373a3b70b.rst
 
 .. toctree::
    :maxdepth: 5
@@ -192,7 +192,12 @@ Functions
 .. toctree::
    :maxdepth: 5
 
-   function_operators_8h_1af24b30f3cc61a5bf957fff1920b34e1f.rst
+   function_operators_8h_1ae74009478be0522ac0a8d03fbf78919c.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   function_lexer_8h_1a4df15deb53b6818a85f0e65155aa5f77.rst
 
 .. toctree::
    :maxdepth: 5
@@ -242,6 +247,11 @@ Functions
 .. toctree::
    :maxdepth: 5
 
+   function_common_8h_1a158859a563fda07a5577dd97082edb5c.rst
+
+.. toctree::
+   :maxdepth: 5
+
    function_utf_8h_1a5ca4a2c5dffb625694dddda825022256.rst
 
 .. toctree::
@@ -282,7 +292,7 @@ Functions
 .. toctree::
    :maxdepth: 5
 
-   function_utf_8h_1aae6680122e83f80b239619fd1428ca65.rst
+   function_utf_8h_1a5bb949e908411d9b15bf2e0e3d4bc9da.rst
 
 .. toctree::
    :maxdepth: 5
@@ -292,11 +302,6 @@ Functions
 Variables
 *********
 
-
-.. toctree::
-   :maxdepth: 5
-
-   variable_lexer_8h_1a6919137ba7e375ce8d62b7c48b1b3ff1.rst
 
 .. toctree::
    :maxdepth: 5
@@ -330,12 +335,12 @@ Defines
 .. toctree::
    :maxdepth: 5
 
-   define_common_8h_1a725b8c0c5ab59fc3f47e4cf7331a86aa.rst
+   define_common_8h_1accb2f1b328ae7b5ac4bd0714f1465dfd.rst
 
 .. toctree::
    :maxdepth: 5
 
-   define_common_8h_1afacba651c786dab4d0b3ee9f83e19bfe.rst
+   define_common_8h_1a725b8c0c5ab59fc3f47e4cf7331a86aa.rst
 
 .. toctree::
    :maxdepth: 5
@@ -420,6 +425,11 @@ Defines
 .. toctree::
    :maxdepth: 5
 
+   define_common_8h_1ae465a9a748a637d325f13e727c8d9d18.rst
+
+.. toctree::
+   :maxdepth: 5
+
    define_common_8h_1ac6f1bd1c364d59f406f712221af8d4b1.rst
 
 .. toctree::
@@ -496,6 +506,11 @@ Defines
    :maxdepth: 5
 
    define_common_8h_1a1c6d5de492ac61ad29aec7aa9a436bbf.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   define_common_8h_1a6b8d6a1f4a1e8dbffc4e5843ed278288.rst
 
 Typedefs
 ********
@@ -579,7 +594,7 @@ Typedefs
 .. toctree::
    :maxdepth: 5
 
-   typedef_operators_8h_1a9b168c449262bb97481892c95840fe7e.rst
+   typedef_operators_8h_1ac0f6232fc48681a9327420365fa7e38b.rst
 
 .. toctree::
    :maxdepth: 5

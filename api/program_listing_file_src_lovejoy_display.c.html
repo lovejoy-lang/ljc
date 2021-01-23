@@ -42,57 +42,51 @@
 <p>↰ <a class="reference internal" href="file_src_lovejoy_display.c.html#file-src-lovejoy-display-c"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/lovejoy/display.c</span></code>)</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;display.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;lovejoy/utf.h&gt;</span><span class="cp"></span>
 
 <span class="cp">#ifndef IMPLEMENTATION</span>
 
-<span class="n">byte</span> <span class="o">*</span><span class="nf">display_tt</span><span class="p">(</span><span class="n">TokenType</span> <span class="n">tt</span><span class="p">)</span>
+
+<span class="n">string</span> <span class="nf">display_tt</span><span class="p">(</span><span class="n">TokenType</span> <span class="n">tt</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">byte</span> <span class="o">*</span><span class="n">repr</span> <span class="o">=</span> <span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+    <span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">repr</span><span class="p">;</span>
     <span class="k">switch</span> <span class="p">(</span><span class="n">tt</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="nl">TT_NUMBER</span><span class="p">:</span>   <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>        <span class="s">&quot;number&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_STRING</span><span class="p">:</span>   <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>        <span class="s">&quot;string&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_CHAR</span><span class="p">:</span>     <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>     <span class="s">&quot;character&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_OPERATOR</span><span class="p">:</span> <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>      <span class="s">&quot;operator&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_IDENT</span><span class="p">:</span>    <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>    <span class="s">&quot;identifier&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_LPAREN</span><span class="p">:</span>   <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>    <span class="s">&quot;left-paren&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_RPAREN</span><span class="p">:</span>   <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>   <span class="s">&quot;right-paren&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_LBRACKET</span><span class="p">:</span> <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>  <span class="s">&quot;left-bracket&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_RBRACKET</span><span class="p">:</span> <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span> <span class="s">&quot;right-bracket&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_LCURLY</span><span class="p">:</span>   <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>    <span class="s">&quot;left-brace&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_RCURLY</span><span class="p">:</span>   <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>   <span class="s">&quot;right-brace&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_TERM</span><span class="p">:</span>     <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>    <span class="s">&quot;terminator&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="nl">TT_NONE</span><span class="p">:</span>     <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>    <span class="s">&quot;none-token&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
-        <span class="k">default</span><span class="o">:</span>          <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span>   <span class="s">&quot;false-token&quot;</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_NUMBER</span><span class="p">:</span>   <span class="n">repr</span> <span class="o">=</span>        <span class="s">&quot;number&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_STRING</span><span class="p">:</span>   <span class="n">repr</span> <span class="o">=</span>        <span class="s">&quot;string&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_CHAR</span><span class="p">:</span>     <span class="n">repr</span> <span class="o">=</span>     <span class="s">&quot;character&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_OPERATOR</span><span class="p">:</span> <span class="n">repr</span> <span class="o">=</span>      <span class="s">&quot;operator&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_IDENT</span><span class="p">:</span>    <span class="n">repr</span> <span class="o">=</span>    <span class="s">&quot;identifier&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_LPAREN</span><span class="p">:</span>   <span class="n">repr</span> <span class="o">=</span>    <span class="s">&quot;left-paren&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_RPAREN</span><span class="p">:</span>   <span class="n">repr</span> <span class="o">=</span>   <span class="s">&quot;right-paren&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_LBRACKET</span><span class="p">:</span> <span class="n">repr</span> <span class="o">=</span>  <span class="s">&quot;left-bracket&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_RBRACKET</span><span class="p">:</span> <span class="n">repr</span> <span class="o">=</span> <span class="s">&quot;right-bracket&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_LCURLY</span><span class="p">:</span>   <span class="n">repr</span> <span class="o">=</span>    <span class="s">&quot;left-brace&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_RCURLY</span><span class="p">:</span>   <span class="n">repr</span> <span class="o">=</span>   <span class="s">&quot;right-brace&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_TERM</span><span class="p">:</span>     <span class="n">repr</span> <span class="o">=</span>    <span class="s">&quot;terminator&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nl">TT_NONE</span><span class="p">:</span>     <span class="n">repr</span> <span class="o">=</span>    <span class="s">&quot;none-token&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>          <span class="n">repr</span> <span class="o">=</span>   <span class="s">&quot;false-token&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="n">repr</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">wrap_string</span><span class="p">(</span><span class="n">repr</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">byte</span> <span class="o">*</span><span class="nf">display_lexeme</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span><span class="p">)</span>
+<span class="n">string</span> <span class="nf">display_lexeme</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">usize</span> <span class="n">span</span> <span class="o">=</span> <span class="n">lexeme_span</span><span class="p">(</span><span class="n">lexeme</span><span class="p">);</span>
-    <span class="n">byte</span> <span class="o">*</span><span class="n">tt</span> <span class="o">=</span> <span class="n">display_tt</span><span class="p">(</span><span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">);</span>
-    <span class="n">usize</span> <span class="n">tt_len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">tt</span><span class="p">);</span>
-
-    <span class="n">byte</span> <span class="o">*</span><span class="n">repr</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">((</span><span class="n">span</span> <span class="o">+</span> <span class="n">tt_len</span> <span class="o">+</span> <span class="mi">8</span><span class="p">)</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
-    <span class="n">byte</span> <span class="o">*</span><span class="n">start</span> <span class="o">=</span> <span class="n">repr</span><span class="p">;</span>
-
-    <span class="o">*</span><span class="n">repr</span><span class="o">++</span> <span class="o">=</span> <span class="sc">&#39;(&#39;</span><span class="p">;</span>
-    <span class="o">*</span><span class="n">repr</span><span class="o">++</span> <span class="o">=</span> <span class="sc">&#39;:&#39;</span><span class="p">;</span>
-    <span class="n">strcpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span> <span class="n">tt</span><span class="p">);</span>
-    <span class="n">free</span><span class="p">(</span><span class="n">tt</span><span class="p">);</span>
-    <span class="n">repr</span> <span class="o">+=</span> <span class="n">tt_len</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">tt</span> <span class="o">=</span> <span class="n">display_tt</span><span class="p">(</span><span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">);</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">repr</span><span class="p">;</span>
+    <span class="n">usize</span> <span class="n">len</span><span class="p">;</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">!=</span> <span class="n">TT_TERM</span><span class="p">)</span> <span class="p">{</span>
-        <span class="o">*</span><span class="n">repr</span><span class="o">++</span> <span class="o">=</span> <span class="sc">&#39; &#39;</span><span class="p">;</span>
-        <span class="o">*</span><span class="n">repr</span><span class="o">++</span> <span class="o">=</span> <span class="sc">&#39;\&#39;&#39;</span><span class="p">;</span>
-        <span class="n">strncpy</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span> <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">,</span> <span class="n">span</span><span class="p">);</span>
-        <span class="n">repr</span> <span class="o">+=</span> <span class="n">span</span><span class="p">;</span>
-        <span class="o">*</span><span class="n">repr</span><span class="o">++</span> <span class="o">=</span> <span class="sc">&#39;\&#39;&#39;</span><span class="p">;</span>
+        <span class="n">string</span> <span class="n">substr</span> <span class="o">=</span> <span class="n">lexeme_substring</span><span class="p">(</span><span class="n">lexeme</span><span class="p">);</span>
+        <span class="n">repr</span> <span class="o">=</span> <span class="n">emalloc</span><span class="p">(</span><span class="n">substr</span><span class="p">.</span><span class="n">len</span> <span class="o">+</span> <span class="n">tt</span><span class="p">.</span><span class="n">len</span> <span class="o">+</span> <span class="mi">16</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+        <span class="n">len</span> <span class="o">=</span> <span class="n">sprintf</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span> <span class="s">&quot;:%s ‘%s’&quot;</span><span class="p">,</span> <span class="n">UNWRAP</span><span class="p">(</span><span class="n">tt</span><span class="p">),</span> <span class="n">UNWRAP</span><span class="p">(</span><span class="n">substr</span><span class="p">));</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">UNWRAP</span><span class="p">(</span><span class="n">substr</span><span class="p">));</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">repr</span> <span class="o">=</span> <span class="n">emalloc</span><span class="p">(</span><span class="n">tt</span><span class="p">.</span><span class="n">len</span> <span class="o">+</span> <span class="mi">16</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+        <span class="n">len</span> <span class="o">=</span> <span class="n">sprintf</span><span class="p">(</span><span class="n">repr</span><span class="p">,</span> <span class="s">&quot;:%s&quot;</span><span class="p">,</span> <span class="n">UNWRAP</span><span class="p">(</span><span class="n">tt</span><span class="p">));</span>
     <span class="p">}</span>
-    <span class="o">*</span><span class="n">repr</span><span class="o">++</span> <span class="o">=</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
-    <span class="o">*</span><span class="n">repr</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
 
-    <span class="k">return</span> <span class="n">start</span><span class="p">;</span>
+    <span class="n">repr</span><span class="p">[</span><span class="n">len</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">wrap_string</span><span class="p">(</span><span class="n">repr</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="cp">#endif</span>

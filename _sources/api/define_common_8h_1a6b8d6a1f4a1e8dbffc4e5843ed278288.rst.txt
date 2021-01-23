@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a6b8d6a1f4a1e8dbffc4e5843ed278288:
+
+Define VIEW
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: VIEW

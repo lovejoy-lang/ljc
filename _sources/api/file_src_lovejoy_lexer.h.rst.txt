@@ -31,6 +31,8 @@ Includes
 
 - ``common.h`` (:ref:`file_src_lovejoy_common.h`)
 
+- ``operators.h`` (:ref:`file_src_lovejoy_operators.h`)
+
 
 
 Included By
@@ -78,7 +80,9 @@ Functions
 
 - :ref:`exhale_function_lexer_8h_1aec2511a538cc7e8e94f1635273b8dfe5`
 
-- :ref:`exhale_function_lexer_8h_1a15ee16aa94427be108da355ed8ce3023`
+- :ref:`exhale_function_lexer_8h_1a70ef41d0a32e4bc43e80d09373a3b70b`
+
+- :ref:`exhale_function_lexer_8h_1a4df15deb53b6818a85f0e65155aa5f77`
 
 - :ref:`exhale_function_lexer_8h_1aff05387e6482b2f20650c5da3046eca2`
 
@@ -92,11 +96,4 @@ Typedefs
 - :ref:`exhale_typedef_lexer_8h_1abb3ac3c7d13ebf90ad1d345939a74add`
 
 - :ref:`exhale_typedef_lexer_8h_1a223ce5df2488277839246d7ebf52a7f8`
-
-
-Variables
----------
-
-
-- :ref:`exhale_variable_lexer_8h_1a6919137ba7e375ce8d62b7c48b1b3ff1`
 

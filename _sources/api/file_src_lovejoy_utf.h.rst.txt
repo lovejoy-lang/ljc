@@ -41,6 +41,10 @@ Included By
 
 - :ref:`file_src_bin.c`
 
+- :ref:`file_src_lovejoy_display.c`
+
+- :ref:`file_src_lovejoy_lexer.c`
+
 - :ref:`file_src_lovejoy_utf.c`
 
 - :ref:`file_src_tests.c`
@@ -88,7 +92,7 @@ Functions
 
 - :ref:`exhale_function_utf_8h_1aaa418820fe18d784b08d6bf035fa214c`
 
-- :ref:`exhale_function_utf_8h_1aae6680122e83f80b239619fd1428ca65`
+- :ref:`exhale_function_utf_8h_1a5bb949e908411d9b15bf2e0e3d4bc9da`
 
 
 Defines

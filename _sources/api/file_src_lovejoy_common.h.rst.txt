@@ -34,6 +34,8 @@ Includes
 --------
 
 
+- ``assert.h``
+
 - ``limits.h``
 
 - ``stdbool.h``
@@ -100,6 +102,8 @@ Functions
 
 - :ref:`exhale_function_common_8h_1a9a1399f98631609423ac3f1818d81d0b`
 
+- :ref:`exhale_function_common_8h_1a158859a563fda07a5577dd97082edb5c`
+
 - :ref:`exhale_function_common_8h_1a74157f97be132e59a2d575c718563b58`
 
 
@@ -113,9 +117,9 @@ Defines
 
 - :ref:`exhale_define_common_8h_1ab4e32de48427d6ed061f6b8a7d3d8e50`
 
-- :ref:`exhale_define_common_8h_1a725b8c0c5ab59fc3f47e4cf7331a86aa`
+- :ref:`exhale_define_common_8h_1accb2f1b328ae7b5ac4bd0714f1465dfd`
 
-- :ref:`exhale_define_common_8h_1afacba651c786dab4d0b3ee9f83e19bfe`
+- :ref:`exhale_define_common_8h_1a725b8c0c5ab59fc3f47e4cf7331a86aa`
 
 - :ref:`exhale_define_common_8h_1a6d926245f69a2380e2dd72a1b68d6673`
 
@@ -147,6 +151,8 @@ Defines
 
 - :ref:`exhale_define_common_8h_1aefcff8112da2f0836592c2dcb0f99dce`
 
+- :ref:`exhale_define_common_8h_1ae465a9a748a637d325f13e727c8d9d18`
+
 - :ref:`exhale_define_common_8h_1ac6f1bd1c364d59f406f712221af8d4b1`
 
 - :ref:`exhale_define_common_8h_1acac9d44a5e826ff2ca3398e43f2e7aec`
@@ -176,6 +182,8 @@ Defines
 - :ref:`exhale_define_common_8h_1afb4d88975800ffd629200ff97f03b221`
 
 - :ref:`exhale_define_common_8h_1a1c6d5de492ac61ad29aec7aa9a436bbf`
+
+- :ref:`exhale_define_common_8h_1a6b8d6a1f4a1e8dbffc4e5843ed278288`
 
 
 Typedefs

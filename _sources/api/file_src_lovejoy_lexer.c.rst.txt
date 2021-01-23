@@ -31,6 +31,8 @@ Includes
 
 - ``lexer.h`` (:ref:`file_src_lovejoy_lexer.h`)
 
+- ``lovejoy/utf.h`` (:ref:`file_src_lovejoy_utf.h`)
+
 - ``string.h``
 
 

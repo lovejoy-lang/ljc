@@ -1,0 +1,16 @@
+.. _exhale_struct_struct__OperatorTable:
+
+Struct _OperatorTable
+=====================
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: _OperatorTable
+   :members:
+   :protected-members:
+   :undoc-members:

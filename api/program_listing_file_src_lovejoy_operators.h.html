@@ -58,24 +58,19 @@
 
 <span class="k">struct</span> <span class="n">Operator</span> <span class="p">{</span>
     <span class="n">u16</span> <span class="n">precedence</span><span class="p">;</span>
-    <span class="n">Associativity</span> <span class="n">assoc</span><span class="p">;</span>
+    <span class="n">Associativity</span> <span class="n">associativity</span><span class="p">;</span>
     <span class="n">Fixity</span> <span class="n">fixity</span><span class="p">;</span>
-    <span class="n">byte</span> <span class="n">name</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
-    <span class="k">struct</span> <span class="n">Operator</span> <span class="o">*</span><span class="n">_next</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
 <span class="p">};</span>
 <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">Operator</span><span class="p">);</span>
 
-<span class="k">struct</span> <span class="n">OperatorTable</span> <span class="p">{</span>
-    <span class="n">Operator</span> <span class="o">*</span><span class="n">operators</span><span class="p">;</span>
-    <span class="n">usize</span> <span class="n">count</span><span class="p">;</span>
-<span class="p">};</span>
-<span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">OperatorTable</span><span class="p">);</span>
+<span class="n">newarray</span><span class="p">(</span><span class="n">OperatorTable</span><span class="p">,</span> <span class="n">Operator</span><span class="p">);</span>
 
 <span class="n">OperatorTable</span> <span class="nf">DefaultOperators</span><span class="p">();</span>
 
-<span class="n">u0</span> <span class="nf">new_operator</span><span class="p">(</span><span class="n">OperatorTable</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="n">u16</span><span class="p">,</span> <span class="n">Associativity</span><span class="p">,</span> <span class="n">Fixity</span><span class="p">);</span>
+<span class="n">u0</span> <span class="nf">new_operator</span><span class="p">(</span><span class="n">OperatorTable</span> <span class="o">*</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">u16</span><span class="p">,</span> <span class="n">Associativity</span><span class="p">,</span> <span class="n">Fixity</span><span class="p">);</span>
 
-<span class="n">Operator</span> <span class="o">*</span><span class="nf">get_operator</span><span class="p">(</span><span class="n">OperatorTable</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="n">Fixity</span><span class="p">);</span>
+<span class="n">Operator</span> <span class="o">*</span><span class="nf">get_operator</span><span class="p">(</span><span class="n">OperatorTable</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">Fixity</span><span class="p">);</span>
 
 <span class="kr">inline</span>
 <span class="kt">bool</span> <span class="nf">is_prefix</span><span class="p">(</span><span class="n">Operator</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span>

@@ -13,6 +13,7 @@ Program Listing for File lexer.h
    #pragma once
    
    #include "common.h"
+   #include "operators.h"
    
    enum TokenType {
        TT_NUMBER,  
@@ -33,13 +34,14 @@ Program Listing for File lexer.h
    
    struct LexerContext {
        const byte *filename;
+       const OperatorTable operator_table;  
        const byte *lineptr;  
        usize lineno;
        TokenType last_token_type;
    };
    unqualify(struct, LexerContext);
    
-   extern LexerContext NewLexer;
+   LexerContext NewLexer();
    
    struct Lexeme {
        TokenType type;
@@ -59,7 +61,7 @@ Program Listing for File lexer.h
    usize lexeme_col(const Lexeme *lexeme)
        { return lexeme->start - lexeme->line + 1; }
    
-   byte *lexeme_substring(const Lexeme *);
+   string lexeme_substring(const Lexeme *);
    
    TokenType character_type(byte);
    

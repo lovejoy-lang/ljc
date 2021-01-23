@@ -29,7 +29,7 @@ Program Listing for File common.c
    
    u0 zero(u0 *blk, usize width)
    {
-       if (blk == NULL || width == 0)
+       if (blk == nil || width == 0)
            return UNIT;
        umin *_blk = blk;
        until (width-- == 0)
@@ -42,7 +42,7 @@ Program Listing for File common.c
        usize bytes = len * size;
        u0 *m = malloc(bytes);
        if (m == nil) {
-           eprintf("Could not allocate %lu bytes.\n", bytes);
+           eprintln("Could not allocate %lu bytes.", bytes);
            abort();
        }
        zero(m, bytes);
@@ -84,6 +84,17 @@ Program Listing for File common.c
        return (u0 *)(dyn->value + --dyn->len * width);
    }
    
+   bool string_eq(string self, string other)
+   {
+       unless (self.len == other.len)
+           return false;
+   
+       usize i = 0;
+       foreach (c, self)
+           if (*c != UNWRAP(other)[i++])
+               return false;
+       return true;
+   }
    
    i32 eputs(const byte *s)
    {

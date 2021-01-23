@@ -31,6 +31,8 @@ Includes
 
 - ``display.h`` (:ref:`file_src_lovejoy_display.h`)
 
+- ``lovejoy/utf.h`` (:ref:`file_src_lovejoy_utf.h`)
+
 - ``string.h``
 
 

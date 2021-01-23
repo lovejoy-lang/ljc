@@ -64,7 +64,7 @@
             <span class="n">eprintf</span><span class="p">(</span><span class="s">&quot;Source file: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
 
             <span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s">&quot;rb&quot;</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">f</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">f</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span>  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
 
             <span class="n">byte</span> <span class="o">*</span><span class="n">source</span><span class="p">;</span>
             <span class="n">usize</span> <span class="n">source_len</span><span class="p">;</span>
@@ -90,27 +90,27 @@
 <span class="p">{</span>
     <span class="n">eprintln</span><span class="p">(</span><span class="s">&quot;Compiling: `%s&#39;.&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
 
-    <span class="n">LexerContext</span> <span class="n">lexer_ctx</span> <span class="o">=</span> <span class="n">NewLexer</span><span class="p">;</span>
+    <span class="n">LexerContext</span> <span class="n">lexer_ctx</span> <span class="o">=</span> <span class="n">NewLexer</span><span class="p">();</span>
     <span class="n">lexer_ctx</span><span class="p">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
 
-    <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nb">NULL</span> <span class="o">!=</span> <span class="p">(</span><span class="n">lexeme</span> <span class="o">=</span> <span class="n">lex</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lexer_ctx</span><span class="p">,</span> <span class="n">source</span><span class="p">)))</span> <span class="p">{</span>
+    <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span> <span class="o">=</span> <span class="n">nil</span><span class="p">;</span>
+    <span class="n">until</span> <span class="p">(</span><span class="n">nil</span> <span class="o">==</span> <span class="p">(</span><span class="n">lexeme</span> <span class="o">=</span> <span class="n">lex</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lexer_ctx</span><span class="p">,</span> <span class="n">source</span><span class="p">)))</span> <span class="p">{</span>
         <span class="n">source</span> <span class="o">=</span> <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">end</span><span class="p">;</span>
 
         <span class="c1">// Print fo debugging</span>
-        <span class="n">byte</span> <span class="o">*</span><span class="n">lexeme_repr</span> <span class="o">=</span> <span class="n">display_lexeme</span><span class="p">(</span><span class="n">lexeme</span><span class="p">);</span>
-        <span class="n">eprintln</span><span class="p">(</span><span class="s">&quot;lexem[%02lu:%02lu] -&gt; %s&quot;</span><span class="p">,</span>
+        <span class="n">string</span> <span class="n">lexeme_repr</span> <span class="o">=</span> <span class="n">display_lexeme</span><span class="p">(</span><span class="n">lexeme</span><span class="p">);</span>
+        <span class="n">eprintln</span><span class="p">(</span><span class="s">&quot;(lexem %02lu:%02lu %s)&quot;</span><span class="p">,</span>
             <span class="n">lexeme</span><span class="o">-&gt;</span><span class="n">lineno</span><span class="p">,</span>
             <span class="n">lexeme_col</span><span class="p">(</span><span class="n">lexeme</span><span class="p">),</span>
-            <span class="n">lexeme_repr</span><span class="p">);</span>
+            <span class="n">UNWRAP</span><span class="p">(</span><span class="n">lexeme_repr</span><span class="p">));</span>
 
-        <span class="n">free</span><span class="p">(</span><span class="n">lexeme_repr</span><span class="p">);</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">UNWRAP</span><span class="p">(</span><span class="n">lexeme_repr</span><span class="p">));</span>
         <span class="n">lexeme_free</span><span class="p">(</span><span class="n">lexeme</span><span class="p">);</span>
     <span class="p">}</span>
     <span class="n">eputs</span><span class="p">(</span><span class="s">&quot;EOT - End of Token Stream&quot;</span><span class="p">);</span>
 
     <span class="c1">// Not producing executables yet.</span>
-    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">nil</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="cp">#endif</span>

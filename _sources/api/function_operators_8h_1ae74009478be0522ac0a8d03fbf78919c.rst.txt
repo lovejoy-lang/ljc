@@ -1,0 +1,13 @@
+.. _exhale_function_operators_8h_1ae74009478be0522ac0a8d03fbf78919c:
+
+Function new_operator
+=====================
+
+- Defined in :ref:`file_src_lovejoy_operators.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: new_operator(OperatorTable *, string, u16, Associativity, Fixity)

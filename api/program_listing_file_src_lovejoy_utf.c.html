@@ -254,7 +254,7 @@
     <span class="p">}</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">dno</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">ch</span> <span class="o">=</span> <span class="n">strtol</span><span class="p">(</span><span class="n">digs</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+        <span class="n">ch</span> <span class="o">=</span> <span class="n">strtol</span><span class="p">(</span><span class="n">digs</span><span class="p">,</span> <span class="n">nil</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
 
     <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">ch</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
@@ -360,7 +360,7 @@
         <span class="o">++</span><span class="p">(</span><span class="o">*</span><span class="n">i</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">return</span> <span class="n">EMPTY</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">SEMPTY</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="n">usize</span> <span class="nf">utf_strlen</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span>

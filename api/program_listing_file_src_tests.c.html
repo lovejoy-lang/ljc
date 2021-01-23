@@ -79,6 +79,8 @@
 
 <span class="cp">#ifndef IMPLEMENTATION</span>
 
+<span class="n">newtype</span><span class="p">(</span><span class="n">Natural</span><span class="p">,</span> <span class="n">u64</span><span class="p">);</span>  <span class="c1">// New-type idiom.</span>
+
 <span class="n">i32</span> <span class="nf">main</span><span class="p">(</span><span class="n">i32</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">UNUSED</span><span class="p">(</span><span class="n">argc</span><span class="p">);</span> <span class="n">UNUSED</span><span class="p">(</span><span class="n">argv</span><span class="p">);</span>
@@ -87,6 +89,8 @@
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;Locale is UTF-8?  %s.&quot;</span><span class="p">,</span>
         <span class="n">is_locale_utf8</span><span class="p">(</span><span class="n">locale</span><span class="p">)</span> <span class="o">?</span> <span class="s">&quot;true&quot;</span> <span class="o">:</span> <span class="s">&quot;false&quot;</span><span class="p">);</span>
 
+    <span class="n">Natural</span> <span class="n">n</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">7</span> <span class="p">};</span>  <span class="c1">// How to use newtypes.</span>
+    <span class="n">n</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>  <span class="n">UNUSED</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
 
     <span class="cm">/* UTF-8 &lt;--&gt; UCS-4, conversions. */</span>
     <span class="n">TEST</span><span class="p">(</span><span class="s">&quot;Converts between UTF-8 and UCS-4.&quot;</span><span class="p">)</span> <span class="p">{</span>

@@ -61,6 +61,7 @@
 <span class="cp">#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;limits.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp"></span>
 
 <span class="cm">/* Misc macros */</span>
 <span class="cp">#define STR_HELPER(x) #x</span>
@@ -79,7 +80,7 @@
 <span class="cp">#define loop while (1)</span>
 <span class="cp">#define unless(cond) if (!(cond))</span>
 <span class="cp">#define until(cond) while (!(cond))</span>
-<span class="cp">#define newtype(NT, T) typedef struct _##NT { const T value; } NT</span>
+<span class="cp">#define newtype(NT, T) typedef struct _##NT { T value; } NT</span>
 <span class="cp">#define newarray(NT, T) typedef struct _##NT { \</span>
 <span class="cp">    usize len; \</span>
 <span class="cp">    usize cap; \</span>
@@ -192,6 +193,7 @@
 <span class="k">extern</span> <span class="n">usize</span> <span class="nf">push</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="k">const</span> <span class="n">u0</span> <span class="o">*</span><span class="n">element</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">u0</span> <span class="o">*</span><span class="nf">pop</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">i32</span> <span class="nf">eputs</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">);</span>
+<span class="k">extern</span> <span class="kt">bool</span> <span class="nf">string_eq</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="p">);</span>
 
 <span class="cm">/* Common Macros */</span>
 
@@ -205,7 +207,9 @@
 <span class="cp">    .value = (byte[]){ __VA_ARGS__ } \</span>
 <span class="cp">}</span>
 
-<span class="cp">#define EMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })</span>
+<span class="cp">#define SEMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })</span>
+<span class="cp">#define AEMPTY(TYPE) ((TYPE){ .len = 0, .cap = 0, .value = NULL })</span>
+
 <span class="cp">#define IS_EMPTY(ARR) ((ARR).len == 0)</span>
 
 <span class="cp">#define AMAKE(TYPE, CAP) ((TYPE){ \</span>
@@ -223,6 +227,11 @@
 <span class="cp">    .len = (((isize)(END) &lt; 0) ? (OBJ).len : 0) + (END) - (START), \</span>
 <span class="cp">    .value = (OBJ).value + (START) \</span>
 <span class="cp">})</span>
+
+<span class="cp">#define VIEW(PTR, START, END) { \</span>
+<span class="cp">    .len = (END) - (START), \</span>
+<span class="cp">    .value = (PTR) + (START) \</span>
+<span class="cp">}</span>
 
 <span class="cp">#define FOR_EACH(ELEM, ELEMS) \</span>
 <span class="cp">    for (typeof((ELEMS).value) ELEM = (ELEMS).value, _frst = ELEM; \</span>
