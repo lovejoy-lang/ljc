@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: update
-      run: |
+    - uses: actions/checkout@v2
+    - run: |
         apt-get update -y
         apt-get install -y dc coreutils build-essential
         apt-get upgrade -y
-    - uses: actions/checkout@v2
+        true  # Don't care.
     - name: make
       run: make clean all
 
