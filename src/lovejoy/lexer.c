@@ -127,7 +127,7 @@ Lexeme *lex(LexerContext *ctx, const byte *source)
 			until (*source++ == '\0' || *source == '\n');
 		} else if (*(source + 1) == '*') {  // Multiline comment.
 			// TODO: Allow for nested multiline comments.
-			++source;
+			source += 2; // Skip the '-' and '*'.
 			until (*source == '\0'
 			|| (*source++ == '*' && *source == '-')
 			|| *source == '\0')
@@ -178,12 +178,13 @@ make_token:;
 	}
 	if (tt == TT_STRING) {
 		// Find the EOS.
-		usize i = 1;
-		until (source[i++] == '"') {
-			if (source[i - 1] == '\\' && source[i] == '"')
-				++i;
+		usize eos = 1;
+		until (source[eos++] == '"') {
+			if (source[eos - 1] == '\\'
+			&& (source[eos] == '"' || source[eos] == '\\'))
+				++eos;
 		}
-		token->end = source + i;
+		token->end = source + eos;
 		goto return_token;
 	}
 	if (tt == TT_CHAR) {

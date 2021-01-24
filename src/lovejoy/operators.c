@@ -13,6 +13,7 @@ static const string OP_CMPEQ  = STRING("==");
 static const string OP_CMPNE  = STRING("/=");
 static const string OP_MATCH  = STRING("=>");
 static const string OP_FIELD  = STRING(".");
+static const string OP_MACRO  = STRING("#");
 static const string OP_TIMES  = STRING("*");
 static const string OP_RATIO  = STRING("/");
 static const string OP_MOD    = STRING("%");
@@ -41,17 +42,18 @@ OperatorTable DefaultOperators()
 	new_operator(&table, OP_MATCH,  15, ASSOC_NEITHER, INFIX);  // =>
 
 	// One byte.
-	new_operator(&table, OP_FIELD, 200, ASSOC_LEFT,    INFIX);  // .
-	new_operator(&table, OP_TIMES,  70, ASSOC_LEFT,    INFIX);  // *
-	new_operator(&table, OP_RATIO,  70, ASSOC_LEFT,    INFIX);  // /
-	new_operator(&table, OP_MOD,    70, ASSOC_LEFT,    INFIX);  // %
-	new_operator(&table, OP_PLUS,   60, ASSOC_LEFT,    INFIX);  // +
-	new_operator(&table, OP_MINUS,  60, ASSOC_LEFT,    INFIX);  // -
-	new_operator(&table, OP_COLON,  35, ASSOC_NEITHER, INFIX);  // :
-	new_operator(&table, OP_CMPGT,  35, ASSOC_LEFT,    INFIX);  // >
-	new_operator(&table, OP_CMPLT,  35, ASSOC_LEFT,    INFIX);  // <
-	new_operator(&table, OP_EQUAL,  20, ASSOC_RIGHT,   INFIX);  // =
-	new_operator(&table, OP_COMMA,  10, ASSOC_RIGHT,   INFIX);  // ,
+	new_operator(&table, OP_FIELD, 200, ASSOC_LEFT,     INFIX);  // .
+	new_operator(&table, OP_MACRO, 180, ASSOC_NEITHER, PREFIX);  // #
+	new_operator(&table, OP_TIMES,  70, ASSOC_LEFT,     INFIX);  // *
+	new_operator(&table, OP_RATIO,  70, ASSOC_LEFT,     INFIX);  // /
+	new_operator(&table, OP_MOD,    70, ASSOC_LEFT,     INFIX);  // %
+	new_operator(&table, OP_PLUS,   60, ASSOC_LEFT,     INFIX);  // +
+	new_operator(&table, OP_MINUS,  60, ASSOC_LEFT,     INFIX);  // -
+	new_operator(&table, OP_COLON,  35, ASSOC_NEITHER , INFIX);  // :
+	new_operator(&table, OP_CMPGT,  35, ASSOC_LEFT,     INFIX);  // >
+	new_operator(&table, OP_CMPLT,  35, ASSOC_LEFT,     INFIX);  // <
+	new_operator(&table, OP_EQUAL,  20, ASSOC_RIGHT,    INFIX);  // =
+	new_operator(&table, OP_COMMA,  10, ASSOC_RIGHT,    INFIX);  // ,
 
 	return table;
 }
