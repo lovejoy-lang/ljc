@@ -168,7 +168,7 @@
             <span class="n">until</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="o">++</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span> <span class="o">||</span> <span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\n&#39;</span><span class="p">);</span>
         <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="sc">&#39;*&#39;</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// Multiline comment.</span>
             <span class="c1">// TODO: Allow for nested multiline comments.</span>
-            <span class="o">++</span><span class="n">source</span><span class="p">;</span>
+            <span class="n">source</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// Skip the &#39;-&#39; and &#39;*&#39;.</span>
             <span class="n">until</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span>
             <span class="o">||</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span><span class="o">++</span> <span class="o">==</span> <span class="sc">&#39;*&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span>
             <span class="o">||</span> <span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span>
@@ -219,12 +219,13 @@
     <span class="p">}</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_STRING</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// Find the EOS.</span>
-        <span class="n">usize</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="n">until</span> <span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;&quot;&#39;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;\\&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">source</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;&quot;&#39;</span><span class="p">)</span>
-                <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+        <span class="n">usize</span> <span class="n">eos</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">until</span> <span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="n">eos</span><span class="o">++</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;&quot;&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="n">eos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;\\&#39;</span>
+            <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="n">eos</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;&quot;&#39;</span> <span class="o">||</span> <span class="n">source</span><span class="p">[</span><span class="n">eos</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;\\&#39;</span><span class="p">))</span>
+                <span class="o">++</span><span class="n">eos</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="n">eos</span><span class="p">;</span>
         <span class="k">goto</span> <span class="n">return_token</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_CHAR</span><span class="p">)</span> <span class="p">{</span>
