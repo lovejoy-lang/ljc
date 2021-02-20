@@ -8,16 +8,16 @@
     <title>Program Listing for File common.c &#8212; Lovejoy Compiler 0.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
     <link rel="stylesheet" type="text/css" href="../_static/fonts.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/onload.js"></script>
     <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/onload.js"></script>
     <link rel="shortcut icon" href="../_static/lovejoy_icon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -41,9 +41,25 @@
 <span id="program-listing-file-src-lovejoy-common-c"></span><h1>Program Listing for File common.c<a class="headerlink" href="#program-listing-for-file-common-c" title="Permalink to this headline">¶</a></h1>
 <p>↰ <a class="reference internal" href="file_src_lovejoy_common.c.html#file-src-lovejoy-common-c"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/lovejoy/common.c</span></code>)</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;common.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;assert.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;utf.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;ctype.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdarg.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;wchar.h&gt;</span><span class="cp"></span>
 
 <span class="cp">#ifndef IMPLEMENTATION</span>
+
+<span class="n">u0</span> <span class="nf">panic</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">message</span><span class="p">,</span> <span class="p">...)</span>
+<span class="p">{</span>
+    <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
+    <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+    <span class="n">vfprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="n">va_end</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">abort</span><span class="p">();</span>
+<span class="p">}</span>
 
 <span class="kt">bool</span> <span class="nf">is_zero</span><span class="p">(</span><span class="n">imax</span> <span class="n">n</span><span class="p">)</span>
 <span class="p">{</span> <span class="k">return</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
@@ -71,59 +87,117 @@
 <span class="p">{</span>
     <span class="n">usize</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">len</span> <span class="o">*</span> <span class="n">size</span><span class="p">;</span>
     <span class="n">u0</span> <span class="o">*</span><span class="n">m</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">bytes</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">eprintln</span><span class="p">(</span><span class="s">&quot;Could not allocate %lu bytes.&quot;</span><span class="p">,</span> <span class="n">bytes</span><span class="p">);</span>
-        <span class="n">abort</span><span class="p">();</span>
-    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span>
+        <span class="n">PANIC</span><span class="p">(</span><span class="s">&quot;Could not allocate %zu bytes.&quot;</span><span class="p">,</span> <span class="n">bytes</span><span class="p">);</span>
     <span class="n">zero</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">bytes</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">m</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">usize</span> <span class="nf">push</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="k">const</span> <span class="n">u0</span> <span class="o">*</span><span class="n">element</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">)</span>
+<span class="n">usize</span> <span class="nf">push</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="k">restrict</span> <span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">u0</span> <span class="o">*</span><span class="k">restrict</span> <span class="n">element</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">element</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 
     <span class="n">newarray</span><span class="p">(</span><span class="n">ByteArray</span><span class="p">,</span> <span class="n">umin</span><span class="p">);</span>
-    <span class="n">ByteArray</span> <span class="o">*</span><span class="n">dyn</span> <span class="o">=</span> <span class="p">(</span><span class="n">ByteArray</span> <span class="o">*</span><span class="p">)</span><span class="n">arr</span><span class="p">;</span>
-    <span class="n">umin</span> <span class="o">*</span><span class="n">elem</span> <span class="o">=</span> <span class="p">(</span><span class="n">umin</span> <span class="o">*</span><span class="p">)</span><span class="n">element</span><span class="p">;</span>
+    <span class="n">ByteArray</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="p">(</span><span class="n">ByteArray</span> <span class="o">*</span><span class="k">restrict</span><span class="p">)</span><span class="n">self</span><span class="p">;</span>
+    <span class="n">umin</span> <span class="o">*</span><span class="n">elem</span> <span class="o">=</span> <span class="p">(</span><span class="n">umin</span> <span class="o">*</span><span class="k">restrict</span><span class="p">)</span><span class="n">element</span><span class="p">;</span>
 
-    <span class="n">usize</span> <span class="n">old_cap</span> <span class="o">=</span> <span class="n">dyn</span><span class="o">-&gt;</span><span class="n">cap</span><span class="p">;</span>
+    <span class="n">usize</span> <span class="n">old_cap</span> <span class="o">=</span> <span class="n">arr</span><span class="o">-&gt;</span><span class="n">cap</span><span class="p">;</span>
     <span class="n">usize</span> <span class="n">new_cap</span> <span class="o">=</span> <span class="n">old_cap</span><span class="p">;</span>
 
-    <span class="n">unless</span> <span class="p">(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&lt;</span> <span class="n">dyn</span><span class="o">-&gt;</span><span class="n">cap</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">new_cap</span> <span class="o">=</span> <span class="p">(</span><span class="n">usize</span><span class="p">)(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">cap</span> <span class="o">*</span> <span class="n">REALLOC_FACTOR</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-        <span class="n">dyn</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">umin</span> <span class="o">*</span><span class="p">)</span><span class="n">realloc</span><span class="p">(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">,</span> <span class="n">new_cap</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">eprintln</span><span class="p">(</span><span class="s">&quot;Failed to realloc %lu bytes.&quot;</span><span class="p">,</span> <span class="n">new_cap</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
-            <span class="n">abort</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="n">dyn</span><span class="o">-&gt;</span><span class="n">cap</span> <span class="o">=</span> <span class="n">new_cap</span><span class="p">;</span>
+    <span class="n">unless</span> <span class="p">(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">-&gt;</span><span class="n">cap</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">new_cap</span> <span class="o">=</span> <span class="p">(</span><span class="n">usize</span><span class="p">)(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">cap</span> <span class="o">*</span> <span class="n">REALLOC_FACTOR</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">arr</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">umin</span> <span class="o">*</span><span class="p">)</span><span class="n">realloc</span><span class="p">(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">,</span> <span class="n">new_cap</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span>
+            <span class="n">PANIC</span><span class="p">(</span><span class="s">&quot;Failed to reallocate %zu bytes.&quot;</span><span class="p">,</span> <span class="n">new_cap</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
+        <span class="n">arr</span><span class="o">-&gt;</span><span class="n">cap</span> <span class="o">=</span> <span class="n">new_cap</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="n">memcpy</span><span class="p">(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="n">dyn</span><span class="o">-&gt;</span><span class="n">len</span><span class="o">++</span><span class="p">,</span> <span class="n">elem</span><span class="p">,</span> <span class="n">width</span><span class="p">);</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="n">arr</span><span class="o">-&gt;</span><span class="n">len</span><span class="o">++</span><span class="p">,</span> <span class="n">elem</span><span class="p">,</span> <span class="n">width</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">new_cap</span> <span class="o">-</span> <span class="n">old_cap</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">u0</span> <span class="o">*</span><span class="nf">pop</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">)</span>
+<span class="n">usize</span> <span class="nf">extend</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="k">restrict</span> <span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">u0</span> <span class="o">*</span><span class="k">restrict</span> <span class="n">slice</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">)</span>
 <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">slice</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
     <span class="n">newarray</span><span class="p">(</span><span class="n">ByteArray</span><span class="p">,</span> <span class="n">umin</span><span class="p">);</span>
-    <span class="n">ByteArray</span> <span class="o">*</span><span class="n">dyn</span> <span class="o">=</span> <span class="p">(</span><span class="n">ByteArray</span> <span class="o">*</span><span class="p">)</span><span class="n">array</span><span class="p">;</span>
+    <span class="n">newslice</span><span class="p">(</span><span class="n">ByteSlice</span><span class="p">,</span> <span class="n">umin</span><span class="p">);</span>
+    <span class="n">ByteArray</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="p">(</span><span class="n">ByteArray</span> <span class="o">*</span><span class="k">restrict</span><span class="p">)</span><span class="n">self</span><span class="p">;</span>
+    <span class="n">ByteSlice</span> <span class="o">*</span><span class="n">sub</span> <span class="o">=</span> <span class="p">(</span><span class="n">ByteSlice</span> <span class="o">*</span><span class="k">restrict</span><span class="p">)</span><span class="n">slice</span><span class="p">;</span>
 
-    <span class="n">assert</span><span class="p">(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sub</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 
-    <span class="k">return</span> <span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="p">)(</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">+</span> <span class="o">--</span><span class="n">dyn</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
+    <span class="n">usize</span> <span class="n">old_cap</span> <span class="o">=</span> <span class="n">arr</span><span class="o">-&gt;</span><span class="n">cap</span><span class="p">;</span>
+    <span class="n">usize</span> <span class="n">new_cap</span> <span class="o">=</span> <span class="n">old_cap</span><span class="p">;</span>
+
+    <span class="n">unless</span> <span class="p">(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">+</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">-&gt;</span><span class="n">cap</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">new_cap</span> <span class="o">=</span> <span class="p">(</span><span class="n">usize</span><span class="p">)(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">cap</span> <span class="o">*</span> <span class="n">REALLOC_FACTOR</span><span class="p">)</span> <span class="o">+</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">;</span>
+        <span class="n">arr</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">umin</span> <span class="o">*</span><span class="p">)</span><span class="n">realloc</span><span class="p">(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">,</span> <span class="n">new_cap</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span>
+            <span class="n">panic</span><span class="p">(</span><span class="s">&quot;extend(): Failed to reallocate %zu bytes.&quot;</span><span class="p">,</span> <span class="n">new_cap</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
+        <span class="n">arr</span><span class="o">-&gt;</span><span class="n">cap</span> <span class="o">=</span> <span class="n">new_cap</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="n">arr</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">,</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">,</span> <span class="n">width</span> <span class="o">*</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">);</span>
+    <span class="n">arr</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">+=</span> <span class="n">sub</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">new_cap</span> <span class="o">-</span> <span class="n">old_cap</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kt">bool</span> <span class="nf">string_eq</span><span class="p">(</span><span class="n">string</span> <span class="n">self</span><span class="p">,</span> <span class="n">string</span> <span class="n">other</span><span class="p">)</span>
+<span class="n">u0</span> <span class="o">*</span><span class="nf">pop</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">newarray</span><span class="p">(</span><span class="n">ByteArray</span><span class="p">,</span> <span class="n">umin</span><span class="p">);</span>
+    <span class="n">ByteArray</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="p">(</span><span class="n">ByteArray</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">;</span>
+
+    <span class="n">assert</span><span class="p">(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="p">)(</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">+</span> <span class="o">--</span><span class="n">arr</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">*</span> <span class="n">width</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">string_eq</span><span class="p">(</span><span class="n">string</span> <span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="n">other</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">unless</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">len</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">len</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
 
     <span class="n">usize</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="n">foreach</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">c</span> <span class="o">!=</span> <span class="n">UNWRAP</span><span class="p">(</span><span class="n">other</span><span class="p">)[</span><span class="n">i</span><span class="o">++</span><span class="p">])</span>
             <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
     <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">i16</span> <span class="nf">string_cmp</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="n">other</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">byte</span> <span class="o">*</span><span class="n">ptr0</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">value</span><span class="p">,</span>
+         <span class="o">*</span><span class="n">ptr1</span> <span class="o">=</span> <span class="n">other</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ptr0</span> <span class="o">==</span> <span class="n">ptr1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">len</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">len</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">len</span> <span class="o">&gt;</span> <span class="n">other</span><span class="p">.</span><span class="n">len</span>
+            <span class="o">?</span> <span class="n">ptr0</span><span class="p">[</span><span class="n">other</span><span class="p">.</span><span class="n">len</span><span class="p">]</span> <span class="o">-</span> <span class="mi">0</span>
+            <span class="o">:</span> <span class="mi">0</span> <span class="o">-</span> <span class="n">ptr1</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">len</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="n">byte</span> <span class="n">c0</span><span class="p">,</span> <span class="n">c1</span><span class="p">;</span>
+    <span class="n">usize</span> <span class="n">len</span> <span class="o">=</span> <span class="n">MIN</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">len</span><span class="p">,</span> <span class="n">other</span><span class="p">.</span><span class="n">len</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">usize</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">c0</span> <span class="o">=</span> <span class="n">ptr0</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">!=</span> <span class="p">(</span><span class="n">c1</span> <span class="o">=</span> <span class="n">ptr1</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">c0</span> <span class="o">-</span> <span class="n">c1</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">len</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">len</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">len</span> <span class="o">==</span> <span class="n">len</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span> <span class="o">-</span> <span class="n">ptr1</span><span class="p">[</span><span class="n">len</span><span class="p">];</span>
+    <span class="k">return</span> <span class="n">ptr0</span><span class="p">[</span><span class="n">len</span><span class="p">]</span> <span class="o">-</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">u64</span> <span class="nf">hash_string</span><span class="p">(</span><span class="n">string</span> <span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">u64</span> <span class="n">hash</span> <span class="o">=</span> <span class="mi">5381</span><span class="p">;</span>
+    <span class="n">foreach</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">str</span><span class="p">)</span>
+        <span class="n">hash</span> <span class="o">+=</span> <span class="o">*</span><span class="n">c</span> <span class="o">+</span> <span class="p">(</span><span class="n">hash</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">hash</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="n">i32</span> <span class="nf">eputs</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span>
@@ -133,6 +207,400 @@
     <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
     <span class="n">err</span> <span class="o">=</span> <span class="n">fputc</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">,</span> <span class="n">stderr</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">usize</span> <span class="nf">sizeof_specifier</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">spec</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">UNUSED</span><span class="p">(</span><span class="n">spec</span><span class="p">);</span>
+    <span class="n">PANIC</span><span class="p">(</span><span class="s">&quot;Not implemented.&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="n">string</span> <span class="n">FORMATTER_FLAGS</span>
+    <span class="o">=</span> <span class="n">INIT</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="p">{</span> <span class="sc">&#39;+&#39;</span><span class="p">,</span> <span class="sc">&#39;-&#39;</span><span class="p">,</span> <span class="sc">&#39; &#39;</span><span class="p">,</span> <span class="sc">&#39;#&#39;</span><span class="p">,</span> <span class="sc">&#39;0&#39;</span> <span class="p">});</span>
+<span class="k">static</span> <span class="n">string</span> <span class="n">LENGTH_SUBSPECIFIERS</span>
+    <span class="o">=</span> <span class="n">INIT</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="p">{</span> <span class="sc">&#39;h&#39;</span><span class="p">,</span> <span class="sc">&#39;l&#39;</span><span class="p">,</span> <span class="sc">&#39;j&#39;</span><span class="p">,</span> <span class="sc">&#39;z&#39;</span><span class="p">,</span> <span class="sc">&#39;t&#39;</span><span class="p">,</span> <span class="sc">&#39;L&#39;</span> <span class="p">});</span>
+
+
+<span class="k">struct</span> <span class="n">Formatter</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">flags</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">width</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">precision</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">length</span><span class="p">;</span>
+    <span class="n">byte</span> <span class="n">specifier</span><span class="p">;</span>
+
+    <span class="n">usize</span> <span class="n">offset</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">Formatter</span><span class="p">);</span>
+
+<span class="c1">// NOTE: Allocates on heap.</span>
+<span class="k">static</span> <span class="n">string</span> <span class="nf">formatter_string</span><span class="p">(</span><span class="n">Formatter</span> <span class="n">formatter</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">newarray</span><span class="p">(</span><span class="n">StringBuilder</span><span class="p">,</span> <span class="n">byte</span><span class="p">);</span>
+    <span class="n">StringBuilder</span> <span class="n">repr</span> <span class="o">=</span> <span class="n">AMAKE</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="n">formatter</span><span class="p">.</span><span class="n">offset</span> <span class="o">+</span> <span class="mi">2</span><span class="p">);</span>
+
+    <span class="n">push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">repr</span><span class="p">,</span> <span class="s">&quot;%&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">extend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">repr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">formatter</span><span class="p">.</span><span class="n">flags</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">extend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">repr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">formatter</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">unless</span> <span class="p">(</span><span class="n">IS_EMPTY</span><span class="p">(</span><span class="n">formatter</span><span class="p">.</span><span class="n">precision</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">repr</span><span class="p">,</span> <span class="s">&quot;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="n">extend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">repr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">formatter</span><span class="p">.</span><span class="n">precision</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">extend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">repr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">formatter</span><span class="p">.</span><span class="n">length</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">repr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">formatter</span><span class="p">.</span><span class="n">specifier</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+    <span class="c1">// NUL-terminate the string slice.</span>
+    <span class="n">push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">repr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">NUL_BYTE</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">repr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="n">Formatter</span> <span class="nf">parse_formatter</span><span class="p">(</span><span class="n">string</span> <span class="n">formatter</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">usize</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">formatter</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;%&#39;</span><span class="p">)</span> <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+
+    <span class="n">usize</span> <span class="n">flags_start</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="n">loop</span> <span class="p">{</span>  <span class="c1">// Parse flags.</span>
+        <span class="kt">bool</span> <span class="n">found</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="n">foreach</span> <span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">FORMATTER_FLAGS</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">formatter</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">*</span><span class="n">ss</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">unless</span> <span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">string</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">flags_start</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+
+
+    <span class="n">usize</span> <span class="n">width_start</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>  <span class="c1">// Parse width.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">formatter</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;*&#39;</span><span class="p">)</span> <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">while</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">formatter</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">width</span> <span class="o">=</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">width_start</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+
+    <span class="n">usize</span> <span class="n">precision_start</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">formatter</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// Parse precision.</span>
+        <span class="o">++</span><span class="n">i</span><span class="p">;</span>  <span class="c1">// Skip &#39;.&#39;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">formatter</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;*&#39;</span><span class="p">)</span> <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">while</span> <span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">formatter</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">string</span> <span class="n">precision</span> <span class="o">=</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">precision_start</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+
+    <span class="n">usize</span> <span class="n">length_start</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="n">loop</span> <span class="p">{</span>  <span class="c1">// Parse length subspecifier.</span>
+        <span class="kt">bool</span> <span class="n">found</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="n">foreach</span> <span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">LENGTH_SUBSPECIFIERS</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">formatter</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">*</span><span class="n">ss</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">unless</span> <span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">string</span> <span class="n">length</span> <span class="o">=</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">length_start</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+
+    <span class="c1">// Parse specifier as the single byte immediately after.</span>
+    <span class="n">byte</span> <span class="n">specifier</span> <span class="o">=</span> <span class="n">formatter</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">];</span>
+
+
+    <span class="n">Formatter</span> <span class="n">parsed</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="p">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">flags</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">precision</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">specifier</span> <span class="o">=</span> <span class="n">specifier</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="p">};</span>
+
+    <span class="k">return</span> <span class="n">parsed</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="nf">novel_vsprintf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">newarray</span><span class="p">(</span><span class="n">ByteArray</span><span class="p">,</span> <span class="n">byte</span><span class="p">);</span>
+    <span class="n">ByteArray</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">AMAKE</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">format</span><span class="p">)</span> <span class="o">+</span> <span class="mi">64</span><span class="p">);</span>
+
+    <span class="n">usize</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">byte</span> <span class="n">c</span><span class="p">;</span>
+    <span class="n">until</span> <span class="p">(</span><span class="sc">&#39;\0&#39;</span> <span class="o">==</span> <span class="p">(</span><span class="n">c</span> <span class="o">=</span> <span class="n">format</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]))</span> <span class="p">{</span>
+        <span class="n">unless</span> <span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;%&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>  <span class="c1">// Other characters are preserved.</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">string</span> <span class="n">format_string</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">Formatter</span> <span class="n">formatter</span> <span class="o">=</span> <span class="n">parse_formatter</span><span class="p">(</span><span class="n">format_string</span><span class="p">);</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="n">formatter</span><span class="p">.</span><span class="n">offset</span><span class="p">;</span>
+
+        <span class="kt">bool</span> <span class="n">is_array_formatter</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+        <span class="k">switch</span> <span class="p">(</span><span class="n">formatter</span><span class="p">.</span><span class="n">specifier</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="sc">&#39;S&#39;</span><span class="o">:</span> <span class="p">{</span>  <span class="c1">// &#39;%S&#39;, string slice formatter.</span>
+            <span class="n">string</span> <span class="n">value</span> <span class="o">=</span> <span class="n">va_arg</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">string</span><span class="p">);</span>
+            <span class="n">extend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+        <span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;C&#39;</span><span class="o">:</span> <span class="p">{</span>  <span class="c1">// &#39;%C&#39;, rune formatter.</span>
+            <span class="n">rune</span> <span class="n">value</span> <span class="o">=</span> <span class="n">va_arg</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">rune</span><span class="p">);</span>
+            <span class="n">string</span> <span class="n">ucs_bytes</span> <span class="o">=</span> <span class="n">STRING</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\0\0\0\0\0</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="n">ucs_bytes</span> <span class="o">=</span> <span class="n">rune_to_utf8</span><span class="p">(</span><span class="n">ucs_bytes</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+            <span class="n">extend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ucs_bytes</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+        <span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;r&#39;</span><span class="o">:</span> <span class="p">{</span>  <span class="c1">// &#39;%r&#39;, runic (UCS-4) string formatter.</span>
+            <span class="n">runic</span> <span class="n">value</span> <span class="o">=</span> <span class="n">va_arg</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">runic</span><span class="p">);</span>
+            <span class="n">string</span> <span class="n">ucs_bytes</span> <span class="o">=</span> <span class="n">SMAKE</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+            <span class="n">ucs_bytes</span> <span class="o">=</span> <span class="n">ucs4_to_utf8</span><span class="p">(</span><span class="n">ucs_bytes</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+            <span class="n">extend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ucs_bytes</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+        <span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;U&#39;</span><span class="o">:</span> <span class="p">{</span>  <span class="c1">// &#39;%U&#39;, runic unicode codepoint formatter.</span>
+            <span class="n">rune</span> <span class="n">value</span> <span class="o">=</span> <span class="n">va_arg</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">rune</span><span class="p">);</span>
+            <span class="n">byte</span> <span class="n">res</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;U+00000000&quot;</span><span class="p">;</span>
+            <span class="n">string</span> <span class="n">sliced</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+            <span class="n">sprintf</span><span class="p">(</span><span class="n">res</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;%08X&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+            <span class="n">extend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sliced</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+        <span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;D&#39;</span><span class="o">:</span>  <span class="c1">// &#39;%D{.}{.}&#39; dynamic array type formatter.</span>
+            <span class="c1">// Following the &#39;D&#39; must be the format specifier for the elements,</span>
+            <span class="c1">// and finally the delimiter characters.</span>
+            <span class="c1">// e.g. array of `int`s, separated by command and a space (&quot;, &quot;):</span>
+            <span class="c1">// `println(&quot;[%Dd{, }]&quot;, my_arr);`.</span>
+            <span class="n">is_array_formatter</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="cm">/* fallthrough */</span>
+        <span class="k">case</span> <span class="sc">&#39;V&#39;</span><span class="o">:</span> <span class="p">{</span>  <span class="c1">// &#39;%V{.}{.}&#39; view/slice type formatter.</span>
+            <span class="c1">// Following the &#39;V&#39; must be the format specifier for the elements.</span>
+            <span class="c1">// and finally the delimiter characters.</span>
+            <span class="c1">// e.g. slice of doubles, separated by tabs:</span>
+            <span class="c1">// `println(&quot;{ %V{%0.3lf}\t }&quot;, my_slice);`.</span>
+            <span class="n">string</span> <span class="n">elem_repr</span> <span class="o">=</span> <span class="n">SEMPTY</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+            <span class="n">Formatter</span> <span class="n">elem_formatter</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">format</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;{&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">usize</span> <span class="n">begin</span> <span class="o">=</span> <span class="o">++</span><span class="n">i</span><span class="p">;</span>  <span class="c1">// TODO: Nesting &#39;{...}&#39;?</span>
+                <span class="n">until</span> <span class="p">(</span><span class="n">format</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;}&#39;</span><span class="p">)</span> <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+                <span class="n">usize</span> <span class="n">len</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">begin</span><span class="p">;</span>
+                <span class="o">++</span><span class="n">i</span><span class="p">;</span>  <span class="c1">// Skip &#39;}&#39;.</span>
+
+                <span class="c1">// `elem_repr` must NUL-terminate, hence we make a copy.</span>
+                <span class="n">byte</span> <span class="o">*</span><span class="n">buf</span> <span class="o">=</span> <span class="n">emalloc</span><span class="p">(</span><span class="n">len</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+                <span class="n">buf</span> <span class="o">=</span> <span class="n">memcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">format</span> <span class="o">+</span> <span class="n">begin</span><span class="p">,</span> <span class="n">len</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+                <span class="n">buf</span><span class="p">[</span><span class="n">len</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+                <span class="n">elem_repr</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+
+                <span class="n">usize</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">until</span> <span class="p">(</span><span class="n">elem_repr</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;%&#39;</span><span class="p">)</span>  <span class="c1">// TODO: Better error message.</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="n">elem_repr</span><span class="p">.</span><span class="n">len</span><span class="p">)</span>
+                        <span class="n">PANIC</span><span class="p">(</span><span class="s">&quot;Broken printf element formatter, missing &#39;%%&#39;.&quot;</span><span class="p">);</span>
+                    <span class="k">else</span> <span class="o">++</span><span class="n">j</span><span class="p">;</span>
+                <span class="c1">// Slice with everything after the</span>
+                <span class="c1">// &#39;%&#39; sign in the element formatter.</span>
+                <span class="n">string</span> <span class="n">elem_format_string</span> <span class="o">=</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">elem_repr</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+                <span class="n">elem_formatter</span> <span class="o">=</span> <span class="n">parse_formatter</span><span class="p">(</span><span class="n">elem_format_string</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  <span class="c1">// Otherwise, it should just have a specifier.</span>
+                <span class="c1">// Prepend a &#39;%&#39; character, if not given.</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">format</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;%&#39;</span><span class="p">)</span> <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+
+                <span class="n">string</span> <span class="n">elem_format_string</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+                <span class="n">elem_formatter</span> <span class="o">=</span> <span class="n">parse_formatter</span><span class="p">(</span><span class="n">elem_format_string</span><span class="p">);</span>
+                <span class="n">usize</span> <span class="n">offs</span> <span class="o">=</span> <span class="n">elem_formatter</span><span class="p">.</span><span class="n">offset</span><span class="p">;</span>
+
+                <span class="c1">// `elem_repr` must NUL-terminate, hence we make a copy.</span>
+                <span class="n">byte</span> <span class="o">*</span><span class="n">buf</span> <span class="o">=</span> <span class="n">emalloc</span><span class="p">(</span><span class="n">offs</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+                <span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;%&#39;</span><span class="p">;</span>
+                <span class="n">memcpy</span><span class="p">(</span><span class="n">buf</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">format</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">offs</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+                <span class="n">buf</span><span class="p">[</span><span class="n">offs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+                <span class="n">elem_repr</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">offs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+
+                <span class="n">i</span> <span class="o">+=</span> <span class="n">offs</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">string</span> <span class="n">delim</span> <span class="o">=</span> <span class="n">SEMPTY</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">format</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;{&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">usize</span> <span class="n">begin</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// TODO: Nesting &#39;{...}&#39;?</span>
+                <span class="n">until</span> <span class="p">(</span><span class="n">format</span><span class="p">[</span><span class="o">++</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;}&#39;</span><span class="p">);</span>
+                <span class="n">delim</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+                <span class="o">++</span><span class="n">i</span><span class="p">;</span>  <span class="c1">// Skip last brace.</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  <span class="c1">// Single character for the delimiter.</span>
+                <span class="n">delim</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+                <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="cp">#define SPRINT_ELEM(TYPE) do { \</span>
+<span class="cp">                newslice(TSlice, TYPE); \</span>
+<span class="cp">                newarray(TArray, TYPE); \</span>
+<span class="cp">                TSlice slice; \</span>
+<span class="cp">                if (is_array_formatter) { \</span>
+<span class="cp">                    TArray arr = va_arg(args, TArray); \</span>
+<span class="cp">                    slice = SLICE(TSlice, arr, 0, -1); \</span>
+<span class="cp">                } else { \</span>
+<span class="cp">                    slice = va_arg(args, TSlice); \</span>
+<span class="cp">                } \</span>
+<span class="cp">                for (usize n = 0; n &lt; slice.len; ++n) { \</span>
+<span class="cp">                    TYPE *elem = slice.value + n; \</span>
+<span class="cp">                    string elem_str = novel_sprintf(elem_repr.value, *elem); \</span>
+<span class="cp">                    extend(&amp;bytes, &amp;elem_str, sizeof(byte)); \</span>
+<span class="cp">                    free(elem_str.value); \</span>
+<span class="cp">                    unless (n == slice.len - 1) \</span>
+<span class="cp">                        extend(&amp;bytes, &amp;delim, sizeof(byte)); \</span>
+<span class="cp">                } \</span>
+<span class="cp">            } while (false)</span>
+
+            <span class="n">string</span> <span class="n">fmt_l</span> <span class="o">=</span> <span class="n">elem_formatter</span><span class="p">.</span><span class="n">length</span><span class="p">;</span>
+
+            <span class="k">switch</span> <span class="p">(</span><span class="n">elem_formatter</span><span class="p">.</span><span class="n">specifier</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// New formatters.</span>
+            <span class="k">case</span> <span class="sc">&#39;C&#39;</span><span class="o">:</span> <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">rune</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;U&#39;</span><span class="o">:</span> <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">rune</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;r&#39;</span><span class="o">:</span> <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">runic</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;S&#39;</span><span class="o">:</span> <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">string</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;D&#39;</span><span class="o">:</span> <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">GenericArray</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;V&#39;</span><span class="o">:</span> <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">GenericSlice</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
+            <span class="c1">// Standard C formatters:</span>
+            <span class="k">case</span> <span class="sc">&#39;i&#39;</span><span class="o">:</span> <span class="k">case</span> <span class="sc">&#39;d&#39;</span><span class="o">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;hh&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;ll&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">long</span> <span class="kt">long</span> <span class="kt">int</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;h&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">short</span> <span class="kt">int</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;l&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">long</span> <span class="kt">int</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;j&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">imax</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">isize</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">iptr</span><span class="p">);</span>
+                <span class="k">else</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;o&#39;</span><span class="o">:</span> <span class="k">case</span> <span class="sc">&#39;u&#39;</span><span class="o">:</span> <span class="k">case</span> <span class="sc">&#39;x&#39;</span><span class="o">:</span> <span class="k">case</span> <span class="sc">&#39;X&#39;</span><span class="o">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;hh&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;ll&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="kt">int</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;h&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="kt">int</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;l&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">int</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;j&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">umax</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">usize</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">uptr</span><span class="p">);</span>
+                <span class="k">else</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;c&#39;</span><span class="o">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;l&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">wint_t</span><span class="p">);</span>
+                <span class="k">else</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">char</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;e&#39;</span><span class="o">:</span> <span class="k">case</span> <span class="sc">&#39;f&#39;</span><span class="o">:</span> <span class="k">case</span> <span class="sc">&#39;g&#39;</span><span class="o">:</span> <span class="k">case</span> <span class="sc">&#39;a&#39;</span><span class="o">:</span>
+            <span class="k">case</span> <span class="sc">&#39;E&#39;</span><span class="o">:</span> <span class="k">case</span> <span class="sc">&#39;F&#39;</span><span class="o">:</span> <span class="k">case</span> <span class="sc">&#39;G&#39;</span><span class="o">:</span> <span class="k">case</span> <span class="sc">&#39;A&#39;</span><span class="o">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;L&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">long</span> <span class="kt">double</span><span class="p">);</span>
+                <span class="k">else</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;s&#39;</span><span class="o">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;l&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">wchar_t</span> <span class="o">*</span><span class="p">);</span>
+                <span class="k">else</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;p&#39;</span><span class="o">:</span>
+                <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">uptr</span><span class="p">);</span> <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;n&#39;</span><span class="o">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;hh&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">signed</span> <span class="kt">char</span> <span class="o">*</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;ll&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">long</span> <span class="kt">long</span> <span class="kt">int</span> <span class="o">*</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;h&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">short</span> <span class="kt">int</span> <span class="o">*</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;l&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">long</span> <span class="kt">int</span> <span class="o">*</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;j&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">imax</span> <span class="o">*</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">usize</span> <span class="o">*</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">fmt_l</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)))</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="n">iptr</span> <span class="o">*</span><span class="p">);</span>
+                <span class="k">else</span>
+                    <span class="n">SPRINT_ELEM</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">default</span><span class="o">:</span>
+                <span class="n">PANIC</span><span class="p">(</span><span class="s">&quot;Unknown formatter (&#39;%%%c&#39;) in array/slice.&quot;</span><span class="p">,</span>
+                    <span class="n">elem_formatter</span><span class="p">.</span><span class="n">specifier</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="n">free</span><span class="p">(</span><span class="n">elem_repr</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span> <span class="p">{</span>
+            <span class="c1">// Send it off to internal `vsprintf`.</span>
+            <span class="n">string</span> <span class="n">c_formatter</span> <span class="o">=</span> <span class="n">formatter_string</span><span class="p">(</span><span class="n">formatter</span><span class="p">);</span>
+
+            <span class="n">byte</span> <span class="o">*</span><span class="n">buf</span><span class="p">;</span>
+            <span class="n">isize</span> <span class="n">len</span> <span class="o">=</span> <span class="n">vasprintf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buf</span><span class="p">,</span> <span class="n">c_formatter</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+            <span class="n">string</span> <span class="n">buf_slice</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+            <span class="n">extend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buf_slice</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+            <span class="n">free</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+            <span class="n">free</span><span class="p">(</span><span class="n">c_formatter</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// NUL-terminate the string slice.</span>
+    <span class="n">push</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">NUL_BYTE</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
+    <span class="o">--</span><span class="n">bytes</span><span class="p">.</span><span class="n">len</span><span class="p">;</span>  <span class="c1">//&lt; But, don&#39;t count the NUL-byte as part of the length.</span>
+    <span class="k">return</span> <span class="n">SLICE</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">bytes</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="nf">novel_sprintf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
+<span class="p">{</span>
+    <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
+    <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">format</span><span class="p">);</span>
+    <span class="n">string</span> <span class="n">res</span> <span class="o">=</span> <span class="n">novel_vsprintf</span><span class="p">(</span><span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="n">va_end</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">i32</span> <span class="nf">novel_vfprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="n">novel_vsprintf</span><span class="p">(</span><span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="n">i32</span> <span class="n">res</span> <span class="o">=</span> <span class="n">fputs</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">stream</span><span class="p">);</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">i32</span> <span class="nf">novel_fprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
+<span class="p">{</span>
+    <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
+    <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">format</span><span class="p">);</span>
+    <span class="n">i32</span> <span class="n">res</span> <span class="o">=</span> <span class="n">novel_vfprintf</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="n">va_end</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">i32</span> <span class="nf">novel_fprintf_newline</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
+<span class="p">{</span>
+    <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
+    <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">format</span><span class="p">);</span>
+    <span class="n">i32</span> <span class="n">res</span> <span class="o">=</span> <span class="n">novel_vfprintf</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">res</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">EOF</span> <span class="o">==</span> <span class="n">fputc</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">,</span> <span class="n">stream</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">EOF</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">res</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">i32</span> <span class="nf">novel_printf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
+<span class="p">{</span>
+    <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
+    <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">format</span><span class="p">);</span>
+    <span class="n">i32</span> <span class="n">res</span> <span class="o">=</span> <span class="n">novel_vfprintf</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="n">va_end</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="cp">#endif</span>

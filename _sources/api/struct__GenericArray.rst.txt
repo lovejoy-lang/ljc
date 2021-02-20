@@ -1,0 +1,16 @@
+.. _exhale_struct_struct__GenericArray:
+
+Struct _GenericArray
+====================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: _GenericArray
+   :members:
+   :protected-members:
+   :undoc-members:

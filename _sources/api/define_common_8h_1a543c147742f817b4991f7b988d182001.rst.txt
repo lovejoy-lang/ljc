@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a543c147742f817b4991f7b988d182001:
+
+Define FAINT
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: FAINT

@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a9e0312eb1722eabe2bef14f4a7b4747d:
+
+Define RAPID
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: RAPID

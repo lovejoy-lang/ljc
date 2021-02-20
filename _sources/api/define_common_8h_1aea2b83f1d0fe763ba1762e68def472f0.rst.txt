@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1aea2b83f1d0fe763ba1762e68def472f0:
+
+Define SYMBOL_LITERAL
+=====================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SYMBOL_LITERAL

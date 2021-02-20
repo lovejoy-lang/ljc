@@ -33,6 +33,14 @@ Includes
 
 - ``common.h`` (:ref:`file_src_lovejoy_common.h`)
 
+- ``ctype.h``
+
+- ``stdarg.h``
+
+- ``utf.h`` (:ref:`file_src_lovejoy_utf.h`)
+
+- ``wchar.h``
+
 
 
 

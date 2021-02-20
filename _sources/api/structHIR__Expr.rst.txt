@@ -1,0 +1,16 @@
+.. _exhale_struct_structHIR__Expr:
+
+Struct HIR_Expr
+===============
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: HIR_Expr
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1a42def5cfa0997b596c1a03b3c9cbec5a:
+
+Typedef HIR_Import
+==================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_Import

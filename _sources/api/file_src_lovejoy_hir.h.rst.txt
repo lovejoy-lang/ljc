@@ -1,0 +1,115 @@
+
+.. _file_src_lovejoy_hir.h:
+
+File hir.h
+==========
+
+|exhale_lsh| :ref:`Parent directory <dir_src_lovejoy>` (``src/lovejoy``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/lovejoy/hir.h``)
+----------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_lovejoy_hir.h.rst
+
+
+
+Detailed Description
+--------------------
+
+High-Level Intermediate Representation. 
+
+
+
+Includes
+--------
+
+
+- ``lexer.h`` (:ref:`file_src_lovejoy_lexer.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_lovejoy_parser.h`
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_struct__HIR__Array`
+
+- :ref:`exhale_struct_struct__HIR__Tuple`
+
+- :ref:`exhale_struct_structHIR__Expr`
+
+- :ref:`exhale_struct_structHIR__Literal`
+
+- :ref:`exhale_struct_structSite`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_hir_8h_1a8cb9fbb7d80c9134ae81ee008d7b33d6`
+
+- :ref:`exhale_enum_hir_8h_1adaa4ecec941fa446d7019c24371f4ff0`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_hir_8h_1a00045d2d68d2327c8726e3c8051ece6d`
+
+- :ref:`exhale_typedef_hir_8h_1ab79b7f2ae0721bf5bb79b92f884df7d5`
+
+- :ref:`exhale_typedef_hir_8h_1a1927d050dd467888148c2b314144100d`
+
+- :ref:`exhale_typedef_hir_8h_1a3b94ed08c456a4f0476c16d404746fea`
+
+- :ref:`exhale_typedef_hir_8h_1accb70ab7fc522966b9f7b90accc06c86`
+
+- :ref:`exhale_typedef_hir_8h_1afa93850981e347e1255d3114a4f3dbe9`
+
+- :ref:`exhale_typedef_hir_8h_1a09c8560248437cca225acdbdc47eccf3`
+
+- :ref:`exhale_typedef_hir_8h_1a42def5cfa0997b596c1a03b3c9cbec5a`
+
+- :ref:`exhale_typedef_hir_8h_1abe2fde0a138b74f56501c8808444db03`
+
+- :ref:`exhale_typedef_hir_8h_1a74ee3a1e82bcf8ea009dfb58913093fc`
+
+- :ref:`exhale_typedef_hir_8h_1a3c57b220f44ec8dd4ce95e546a6bfeda`
+
+- :ref:`exhale_typedef_hir_8h_1ae12a29ba93b60b9d84c40f7f137822a4`
+
+- :ref:`exhale_typedef_hir_8h_1a860b5dc2487dc920db9169fbfba4b71d`
+
+- :ref:`exhale_typedef_hir_8h_1a4946503cb114fe99f2dd28b7e5b8a5c0`
+
+- :ref:`exhale_typedef_hir_8h_1a08a59eb084d777ca11eed771777eee33`
+
+- :ref:`exhale_typedef_hir_8h_1ac4b24f7ff187da194dc96c42ed267619`
+
+- :ref:`exhale_typedef_hir_8h_1a6f65bbad68276ae3cc8457f4af5b7b98`
+
+- :ref:`exhale_typedef_hir_8h_1ad1683216723983c87a1bcbe61db6e43e`
+
+- :ref:`exhale_typedef_hir_8h_1ac978e0c39bd7697b6bb9214a5a7ebde9`
+

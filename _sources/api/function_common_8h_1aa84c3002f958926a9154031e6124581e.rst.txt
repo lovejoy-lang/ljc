@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1aa84c3002f958926a9154031e6124581e:
+
+Function push
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: push(u0 *, const u0 *, usize)

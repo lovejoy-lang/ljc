@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1a860b5dc2487dc920db9169fbfba4b71d:
+
+Typedef HIR_ScopeBlock
+======================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_ScopeBlock

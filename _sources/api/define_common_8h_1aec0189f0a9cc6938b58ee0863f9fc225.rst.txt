@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1aec0189f0a9cc6938b58ee0863f9fc225:
+
+Define UNDER_OFF
+================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: UNDER_OFF

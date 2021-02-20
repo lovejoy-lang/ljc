@@ -1,0 +1,105 @@
+
+.. _program_listing_file_src_lovejoy_hir.h:
+
+Program Listing for File hir.h
+==============================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_lovejoy_hir.h>` (``src/lovejoy/hir.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   
+   #pragma once
+   
+   #include "lexer.h"
+   
+   struct Site {
+       byte *source;
+       usize begin_offs;
+       usize end_offs;
+       usize lineno;
+       byte *line;
+   };
+   unqualify(struct, Site);
+   
+   enum NodeKind {
+       CALL_NODE,
+       BLOCK_NODE,
+       RETURN_NODE,
+       FEILD_NODE,
+       DECLARATION_NODE,
+       SUBSCRIPT_NODE,
+       PATH_NODE,  
+       MODULE_NODE,
+       IMPORT_NODE,
+       CAST_NODE,
+       SIGNATURE_NODE,
+       LITERAL_NODE
+   };
+   unqualify(enum, NodeKind);
+   
+   struct HIR_Literal;      unqualify(struct, HIR_Literal);
+   struct HIR_FunctionCall; unqualify(struct, HIR_FunctionCall);
+   struct HIR_ScopeBlock;   unqualify(struct, HIR_ScopeBlock);
+   struct HIR_Return;       unqualify(struct, HIR_Return);
+   struct HIR_Branch;       unqualify(struct, HIR_Branch);
+   struct HIR_FieldAccess;  unqualify(struct, HIR_FeildAccess);
+   struct HIR_Subscript;    unqualify(struct, HIR_Subscript);
+   struct HIR_Path;         unqualify(struct, HIR_Path);
+   struct HIR_Declaration;  unqualify(struct, HIR_Declaration);
+   struct HIR_Module;       unqualify(struct, HIR_Module);
+   struct HIR_Import;       unqualify(struct, HIR_Import);
+   struct HIR_Signature;    unqualify(struct, HIR_Signature);
+   struct HIR_Cast;         unqualify(struct, HIR_Cast);
+   
+   struct HIR_Expr {
+       Site site;
+       NodeKind kind;
+       union {
+           HIR_FunctionCall *call_expr;
+           HIR_ScopeBlock *block_expr;
+           HIR_Return *return_expr;
+           HIR_Branch *jump_expr;
+           HIR_FeildAccess *field_expr;
+           HIR_Subscript *subscipt_expr;
+           HIR_Path *path_expr;
+           HIR_Declaration *declaration_expr;
+           HIR_Module *module_expr;
+           HIR_Import *import_expr;
+           HIR_Signature *signature_expr;
+           HIR_Cast *cast_expr;
+           HIR_Literal *literal_expr;
+       };
+   };
+   unqualify(struct, HIR_Expr);
+   
+   newarray(HIR_Array, HIR_Expr);
+   newarray(HIR_Tuple, HIR_Expr);
+   
+   enum LiteralKind {
+       ARRAY_LITERAL,
+       TUPLE_LITERAL,
+       STRING_LITERAL,
+       INTEGER_LITERAL,
+       FLOATING_LITERAL,
+       BYTE_LITEAL,
+       BOOL_LITERAL,
+       CODEPOINT_LITERAL
+   };
+   unqualify(enum, LiteralKind);
+   
+   struct HIR_Literal {
+       LiteralKind kind;
+       union {
+           HIR_Array array_literal;
+           HIR_Tuple tuple_literal;
+           symbol string_literal;
+           u128 integer_literal;  
+           symbol floating_literal;  
+           byte byte_literal;
+           bool bool_literal;
+           rune codepoint_literal;
+       };
+   };

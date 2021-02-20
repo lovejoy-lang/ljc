@@ -1,0 +1,16 @@
+.. _exhale_struct_structParserContext:
+
+Struct ParserContext
+====================
+
+- Defined in :ref:`file_src_lovejoy_parser.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: ParserContext
+   :members:
+   :protected-members:
+   :undoc-members:

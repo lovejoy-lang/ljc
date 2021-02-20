@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a8e3708fddec735a3e4bf6e859f1b81ef:
+
+Define STRIKE_OFF
+=================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: STRIKE_OFF

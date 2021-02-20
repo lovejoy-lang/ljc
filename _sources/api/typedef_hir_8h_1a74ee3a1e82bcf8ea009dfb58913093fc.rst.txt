@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1a74ee3a1e82bcf8ea009dfb58913093fc:
+
+Typedef HIR_Module
+==================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_Module

@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a95febca84b9b6b5b9cfd278e44ffc56f:
+
+Define INVERT
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: INVERT

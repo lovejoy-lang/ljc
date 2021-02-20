@@ -1,0 +1,13 @@
+.. _exhale_typedef_parser_8h_1aaf27d4bfdf901a2a7696966ddf4ece25:
+
+Typedef ParserContext
+=====================
+
+- Defined in :ref:`file_src_lovejoy_parser.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: ParserContext

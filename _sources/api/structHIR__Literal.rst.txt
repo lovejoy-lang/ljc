@@ -1,0 +1,16 @@
+.. _exhale_struct_structHIR__Literal:
+
+Struct HIR_Literal
+==================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: HIR_Literal
+   :members:
+   :protected-members:
+   :undoc-members:

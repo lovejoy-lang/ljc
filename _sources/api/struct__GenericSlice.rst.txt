@@ -1,0 +1,16 @@
+.. _exhale_struct_struct__GenericSlice:
+
+Struct _GenericSlice
+====================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: _GenericSlice
+   :members:
+   :protected-members:
+   :undoc-members:

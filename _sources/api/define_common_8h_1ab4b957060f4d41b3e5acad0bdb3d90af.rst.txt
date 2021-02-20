@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ab4b957060f4d41b3e5acad0bdb3d90af:
+
+Define newhashable
+==================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: newhashable

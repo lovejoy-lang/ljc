@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1a09c8560248437cca225acdbdc47eccf3:
+
+Typedef HIR_FunctionCall
+========================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_FunctionCall

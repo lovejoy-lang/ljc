@@ -1,0 +1,13 @@
+.. _exhale_variable_utf_8c_1aa7380e4e43a6f94c22752411c8a0718f:
+
+Variable TrailingBytesForUTF8
+=============================
+
+- Defined in :ref:`file_src_lovejoy_utf.c`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: TrailingBytesForUTF8

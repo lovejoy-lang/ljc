@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ab780e7ca6731942b497de9a59da810c7:
+
+Define SYMBOLIC
+===============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SYMBOLIC

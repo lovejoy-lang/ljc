@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a31c0de5a94fec66897f0351a70d7965d:
+
+Function novel_sprintf
+======================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: novel_sprintf(byte *, ...)

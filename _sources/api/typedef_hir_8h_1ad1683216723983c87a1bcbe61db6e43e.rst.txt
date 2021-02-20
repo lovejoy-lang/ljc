@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1ad1683216723983c87a1bcbe61db6e43e:
+
+Typedef NodeKind
+================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: NodeKind

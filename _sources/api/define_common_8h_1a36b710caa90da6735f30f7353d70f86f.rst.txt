@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a36b710caa90da6735f30f7353d70f86f:
+
+Define RAPID_OFF
+================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: RAPID_OFF

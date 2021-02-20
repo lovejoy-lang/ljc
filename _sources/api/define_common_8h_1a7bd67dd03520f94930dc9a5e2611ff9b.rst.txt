@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a7bd67dd03520f94930dc9a5e2611ff9b:
+
+Define ANSI
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: ANSI

@@ -28,7 +28,7 @@ Program Listing for File lexer.h
        TT_LCURLY,
        TT_RCURLY,
        TT_TERM,  
-       TT_NONE 
+       TT_NONE   
    };
    unqualify(enum, TokenType);
    
@@ -53,11 +53,11 @@ Program Listing for File lexer.h
    unqualify(struct, Lexeme);
    
    
-   inline
+   static inline
    usize lexeme_span(const Lexeme *lexeme)
        { return lexeme->end - lexeme->start; }
    
-   inline
+   static inline
    usize lexeme_col(const Lexeme *lexeme)
        { return lexeme->start - lexeme->line + 1; }
    

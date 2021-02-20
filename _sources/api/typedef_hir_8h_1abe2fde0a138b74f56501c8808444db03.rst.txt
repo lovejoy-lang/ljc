@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1abe2fde0a138b74f56501c8808444db03:
+
+Typedef HIR_Literal
+===================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_Literal

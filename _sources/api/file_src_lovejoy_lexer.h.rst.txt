@@ -43,7 +43,11 @@ Included By
 
 - :ref:`file_src_lovejoy_display.h`
 
+- :ref:`file_src_lovejoy_hir.h`
+
 - :ref:`file_src_lovejoy_lexer.c`
+
+- :ref:`file_src_lovejoy_parser.h`
 
 - :ref:`file_src_tests.c`
 
@@ -74,11 +78,11 @@ Functions
 
 - :ref:`exhale_function_lexer_8h_1a92f8721ce47aed2e0b04b7bcf76c374a`
 
-- :ref:`exhale_function_lexer_8h_1a715df3ffac7ace7f8706f0525aec2f89`
+- :ref:`exhale_function_lexer_8h_1afc647961f2dd0934932d591be7081265`
 
 - :ref:`exhale_function_lexer_8h_1a6ad56898c0769190010f97dff4412a2b`
 
-- :ref:`exhale_function_lexer_8h_1aec2511a538cc7e8e94f1635273b8dfe5`
+- :ref:`exhale_function_lexer_8h_1a150128f82e15bc38762090d1eadb42c5`
 
 - :ref:`exhale_function_lexer_8h_1a70ef41d0a32e4bc43e80d09373a3b70b`
 

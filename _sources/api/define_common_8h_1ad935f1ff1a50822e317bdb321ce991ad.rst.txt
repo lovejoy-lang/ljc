@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ad935f1ff1a50822e317bdb321ce991ad:
+
+Define MAX
+==========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: MAX

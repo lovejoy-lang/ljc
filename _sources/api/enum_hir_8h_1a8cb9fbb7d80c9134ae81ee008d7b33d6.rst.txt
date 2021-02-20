@@ -1,0 +1,13 @@
+.. _exhale_enum_hir_8h_1a8cb9fbb7d80c9134ae81ee008d7b33d6:
+
+Enum LiteralKind
+================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: LiteralKind

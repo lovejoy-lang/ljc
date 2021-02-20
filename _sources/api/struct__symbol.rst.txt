@@ -1,0 +1,16 @@
+.. _exhale_struct_struct__symbol:
+
+Struct _symbol
+==============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: _symbol
+   :members:
+   :protected-members:
+   :undoc-members:

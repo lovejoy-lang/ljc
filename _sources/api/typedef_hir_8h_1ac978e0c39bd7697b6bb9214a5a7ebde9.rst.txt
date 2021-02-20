@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1ac978e0c39bd7697b6bb9214a5a7ebde9:
+
+Typedef Site
+============
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: Site

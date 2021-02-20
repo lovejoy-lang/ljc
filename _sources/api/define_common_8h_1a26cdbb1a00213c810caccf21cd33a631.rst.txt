@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a26cdbb1a00213c810caccf21cd33a631:
+
+Define BOLD
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: BOLD

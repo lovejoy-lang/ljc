@@ -62,7 +62,7 @@ Program Listing for File lexer.c
    
    TokenType character_type(byte chr)
    {
-       // Spaces or null.
+       // Whitespace or NUL.
        switch (chr) {
            case '\n':
            case ';':
@@ -237,7 +237,7 @@ Program Listing for File lexer.c
            // then it becomes 2 +- 3.
            OperatorTable operators = ctx->operator_table;
            foreach (op, operators) {
-               string op_substr = VIEW((byte *)source, 0, op->name.len);
+               string op_substr = VIEW(string, (byte *)source, 0, op->name.len);
                if (string_eq(op->name, op_substr)) {
                    token->end = source + op_substr.len;
                    goto return_token;
@@ -256,7 +256,7 @@ Program Listing for File lexer.c
            // the previous check for known operators, then it does not exist.
            // Hence, we throw an error.
            // TODO: Throw proper lexer error.
-           eprintln("Error: Operator does not exist.");
+           eprintln("Error: Operator (`%c') is not recognised.", *source);
            return nil;
        default:
            return nil;

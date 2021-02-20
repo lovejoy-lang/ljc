@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1a00045d2d68d2327c8726e3c8051ece6d:
+
+Typedef HIR_Array
+=================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_Array

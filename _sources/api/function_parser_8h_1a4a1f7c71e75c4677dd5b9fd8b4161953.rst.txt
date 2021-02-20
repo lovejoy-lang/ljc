@@ -1,0 +1,13 @@
+.. _exhale_function_parser_8h_1a4a1f7c71e75c4677dd5b9fd8b4161953:
+
+Function NewParser()
+====================
+
+- Defined in :ref:`file_src_lovejoy_parser.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: NewParser()

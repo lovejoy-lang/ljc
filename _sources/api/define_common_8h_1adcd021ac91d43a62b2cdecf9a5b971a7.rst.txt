@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1adcd021ac91d43a62b2cdecf9a5b971a7:
+
+Define MIN
+==========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: MIN

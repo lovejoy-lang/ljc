@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a369266c24eacffb87046522897a570d5:
+
+Define _GNU_SOURCE
+==================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: _GNU_SOURCE

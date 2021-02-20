@@ -50,6 +50,11 @@ Files
 .. toctree::
    :maxdepth: 5
 
+   file_src_lovejoy_hir.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
    file_src_lovejoy_lexer.c.rst
 
 .. toctree::
@@ -66,6 +71,16 @@ Files
    :maxdepth: 5
 
    file_src_lovejoy_operators.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_lovejoy_parser.c.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_lovejoy_parser.h.rst
 
 .. toctree::
    :maxdepth: 5

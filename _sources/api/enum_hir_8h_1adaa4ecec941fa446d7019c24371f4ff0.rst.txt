@@ -1,0 +1,13 @@
+.. _exhale_enum_hir_8h_1adaa4ecec941fa446d7019c24371f4ff0:
+
+Enum NodeKind
+=============
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: NodeKind

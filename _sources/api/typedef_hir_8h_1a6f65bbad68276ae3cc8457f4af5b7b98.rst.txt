@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1a6f65bbad68276ae3cc8457f4af5b7b98:
+
+Typedef LiteralKind
+===================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: LiteralKind

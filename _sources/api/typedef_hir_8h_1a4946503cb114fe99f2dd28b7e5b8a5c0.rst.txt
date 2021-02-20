@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1a4946503cb114fe99f2dd28b7e5b8a5c0:
+
+Typedef HIR_Signature
+=====================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_Signature

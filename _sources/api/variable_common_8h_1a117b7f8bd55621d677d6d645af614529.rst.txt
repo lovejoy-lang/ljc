@@ -1,0 +1,13 @@
+.. _exhale_variable_common_8h_1a117b7f8bd55621d677d6d645af614529:
+
+Variable NUL_BYTE
+=================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: NUL_BYTE

@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a70936ba006fbea245777b474402365ad:
+
+Typedef GenericSlice
+====================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: GenericSlice

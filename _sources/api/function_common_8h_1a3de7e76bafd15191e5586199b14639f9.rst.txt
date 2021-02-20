@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a3de7e76bafd15191e5586199b14639f9:
+
+Function panic
+==============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: panic(const byte *, ...)

@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ae842a4272cf8f3bc596b60f6b4f3730e:
+
+Define ITALIC_OFF
+=================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: ITALIC_OFF

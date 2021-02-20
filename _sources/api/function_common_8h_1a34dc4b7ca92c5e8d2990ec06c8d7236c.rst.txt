@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a34dc4b7ca92c5e8d2990ec06c8d7236c:
+
+Function extend
+===============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: extend(u0 *, const u0 *, usize)

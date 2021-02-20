@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a7f2fdf597c3f486dc14d3103e08d275b:
+
+Function string_eq
+==================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: string_eq(const string, const string)

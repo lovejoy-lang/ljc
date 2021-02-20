@@ -1,0 +1,16 @@
+.. _exhale_struct_struct__HIR__Tuple:
+
+Struct _HIR_Tuple
+=================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: _HIR_Tuple
+   :members:
+   :protected-members:
+   :undoc-members:

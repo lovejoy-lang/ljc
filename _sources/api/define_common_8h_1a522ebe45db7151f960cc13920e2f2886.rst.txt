@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a522ebe45db7151f960cc13920e2f2886:
+
+Define FAINT_OFF
+================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: FAINT_OFF

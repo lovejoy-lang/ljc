@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1af17c8844294bee224d644e7228093d91:
+
+Define BOLD_OFF
+===============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: BOLD_OFF

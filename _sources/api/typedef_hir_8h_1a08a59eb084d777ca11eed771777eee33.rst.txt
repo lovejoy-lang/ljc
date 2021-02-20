@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1a08a59eb084d777ca11eed771777eee33:
+
+Typedef HIR_Subscript
+=====================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_Subscript

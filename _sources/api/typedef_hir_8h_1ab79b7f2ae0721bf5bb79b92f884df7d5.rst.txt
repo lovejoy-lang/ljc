@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1ab79b7f2ae0721bf5bb79b92f884df7d5:
+
+Typedef HIR_Branch
+==================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_Branch

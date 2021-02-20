@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a7bdc2c3d2eb3d001027108a0f072d18c:
+
+Define eprintln
+===============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: eprintln

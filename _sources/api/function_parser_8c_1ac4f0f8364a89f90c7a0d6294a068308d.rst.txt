@@ -1,0 +1,13 @@
+.. _exhale_function_parser_8c_1ac4f0f8364a89f90c7a0d6294a068308d:
+
+Function parse_expr(ParserContext \*, const string)
+===================================================
+
+- Defined in :ref:`file_src_lovejoy_parser.c`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: parse_expr(ParserContext *, const string)

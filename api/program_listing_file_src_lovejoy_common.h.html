@@ -8,16 +8,16 @@
     <title>Program Listing for File common.h &#8212; Lovejoy Compiler 0.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
     <link rel="stylesheet" type="text/css" href="../_static/fonts.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/onload.js"></script>
     <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/onload.js"></script>
     <link rel="shortcut icon" href="../_static/lovejoy_icon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -54,6 +54,9 @@
 <span class="cp">#ifndef COMMON_HEADER</span>
 <span class="cp">#define COMMON_HEADER</span>
 
+<span class="cp">#undef  _GNU_SOURCE</span>
+<span class="cp">#define _GNU_SOURCE 1</span>
+
 <span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stdbool.h&gt;</span><span class="cp"></span>
@@ -64,15 +67,15 @@
 <span class="cp">#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp"></span>
 
 <span class="cm">/* Misc macros */</span>
-<span class="cp">#define STR_HELPER(x) #x</span>
-<span class="cp">#define STR(x) STR_HELPER(x)</span>
+<span class="cp">#define TSTR_HELPER(x) #x</span>
+<span class="cp">#define TSTR(x) TSTR_HELPER(x)</span>
 
 <span class="cm">/* Version number */</span>
 <span class="cp">#define V_MAJOR 0</span>
 <span class="cp">#define V_MINOR 1</span>
 <span class="cp">#define V_PATCH 0</span>
 
-<span class="cp">#define VERSION &quot;v&quot; STR(V_MAJOR) &quot;.&quot; STR(V_MINOR) &quot;.&quot; STR(V_PATCH)</span>
+<span class="cp">#define VERSION &quot;v&quot; TSTR(V_MAJOR) &quot;.&quot; TSTR(V_MINOR) &quot;.&quot; TSTR(V_PATCH)</span>
 
 <span class="cp">#define REALLOC_FACTOR 1.5</span>
 
@@ -90,16 +93,23 @@
 <span class="cp">    usize len; \</span>
 <span class="cp">    T (*value); \</span>
 <span class="cp">} NT</span>
+<span class="cp">#define newhashable(NT, T) typedef struct _##NT { \</span>
+<span class="cp">    u64 hash; \</span>
+<span class="cp">    T value; \</span>
+<span class="cp">} NT</span>
 <span class="cp">#define unqualify(D, T) typedef D T T</span>
 <span class="cp">#define nil NULL</span>
 
 <span class="cp">#define UNUSED(x) (void)(x)</span>
 
-<span class="cp">#define print(...) printf(__VA_ARGS__)</span>
-<span class="cp">#define println(lit, ...) printf(lit &quot;\n&quot;, ## __VA_ARGS__)</span>
-<span class="cp">#define eprintf(...) fprintf(stderr, __VA_ARGS__)</span>
+<span class="cp">#define PANIC(lit, ...) \</span>
+<span class="cp">    panic(&quot;\n[**] Panicking!\n[**] CAUSE:\n -- \t%s(): &quot; \</span>
+<span class="cp">          lit &quot;\n[**] Aborting...\n&quot;, __func__, ## __VA_ARGS__)</span>
+<span class="cp">#define print(...) novel_fprintf(stdout, __VA_ARGS__)</span>
+<span class="cp">#define println(...) novel_fprintf_newline(stdout, __VA_ARGS__)</span>
+<span class="cp">#define eprintf(...) novel_fprintf(stderr, __VA_ARGS__)</span>
 <span class="cp">#define eprint(...) eprintf(__VA_ARGS__)</span>
-<span class="cp">#define eprintln(lit, ...) fprintf(stderr, lit &quot;\n&quot;, ## __VA_ARGS__)</span>
+<span class="cp">#define eprintln(...) novel_fprintf_newline(stderr, __VA_ARGS__)</span>
 
 <span class="cm">/* Types */</span>
 <span class="n">newtype</span><span class="p">(</span><span class="n">atomic_t</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
@@ -158,7 +168,6 @@
     <span class="k">typedef</span> <span class="n">__uint128_t</span> <span class="n">u128</span><span class="p">;</span>
 <span class="cp">#endif</span>
 
-
 <span class="k">typedef</span> <span class="kt">ptrdiff_t</span> <span class="n">isize</span><span class="p">;</span>
 <span class="k">typedef</span>    <span class="kt">size_t</span> <span class="n">usize</span><span class="p">;</span>
 
@@ -181,25 +190,71 @@
     <span class="k">typedef</span> <span class="kt">long</span> <span class="kt">double</span> <span class="n">f128</span><span class="p">;</span>
 <span class="cp">#endif</span>
 
+<span class="n">newarray</span><span class="p">(</span><span class="n">GenericArray</span><span class="p">,</span> <span class="n">u0</span><span class="p">);</span>
+<span class="n">newslice</span><span class="p">(</span><span class="n">GenericSlice</span><span class="p">,</span> <span class="n">u0</span><span class="p">);</span>
+
 <span class="n">newslice</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">byte</span><span class="p">);</span>
 <span class="n">newslice</span><span class="p">(</span><span class="n">runic</span><span class="p">,</span> <span class="n">rune</span><span class="p">);</span>
 
+<span class="n">newhashable</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">string</span><span class="p">);</span>
+
+<span class="cm">/* Common Constants */</span>
+<span class="k">static</span> <span class="k">const</span> <span class="n">byte</span> <span class="n">NUL_BYTE</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">const</span> <span class="n">string</span> <span class="n">NUL_STRING</span> <span class="o">=</span> <span class="p">{</span> <span class="p">.</span><span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">NUL_BYTE</span> <span class="p">};</span>
+
 <span class="cm">/* Common Functions */</span>
+<span class="k">extern</span> <span class="n">u0</span> <span class="nf">panic</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
 <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">is_zero</span><span class="p">(</span><span class="n">imax</span><span class="p">);</span>
 <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">is_zerof</span><span class="p">(</span><span class="n">f64</span><span class="p">);</span>
 <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">is_zeroed</span><span class="p">(</span><span class="n">imax</span> <span class="o">*</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">u0</span> <span class="nf">zero</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">blk</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">u0</span> <span class="o">*</span><span class="nf">emalloc</span><span class="p">(</span><span class="n">usize</span><span class="p">,</span> <span class="n">usize</span><span class="p">);</span>
-<span class="k">extern</span> <span class="n">usize</span> <span class="nf">push</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="k">const</span> <span class="n">u0</span> <span class="o">*</span><span class="n">element</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">usize</span> <span class="nf">push</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">u0</span> <span class="o">*</span><span class="n">element</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
+<span class="c1">//                   elements that are being appended to the array.</span>
+<span class="k">extern</span> <span class="n">usize</span> <span class="nf">extend</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">u0</span> <span class="o">*</span><span class="n">slice</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">u0</span> <span class="o">*</span><span class="nf">pop</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">i32</span> <span class="nf">eputs</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">);</span>
-<span class="k">extern</span> <span class="kt">bool</span> <span class="nf">string_eq</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">usize</span> <span class="nf">sizeof_specifier</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">string</span> <span class="nf">novel_vsprintf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="kt">va_list</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">string</span> <span class="nf">novel_sprintf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
+<span class="k">extern</span> <span class="n">i32</span> <span class="nf">novel_vfprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="kt">va_list</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">i32</span> <span class="nf">novel_fprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
+<span class="k">extern</span> <span class="n">i32</span> <span class="nf">novel_fprintf_newline</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
+<span class="k">extern</span> <span class="n">i32</span> <span class="nf">novel_printf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
+<span class="k">extern</span> <span class="kt">bool</span> <span class="nf">string_eq</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">i16</span> <span class="nf">string_cmp</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">u64</span> <span class="nf">hash_string</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
 
 <span class="cm">/* Common Macros */</span>
 
+<span class="c1">// ANSI colour code.</span>
+<span class="cp">#define ANSI(CODE) &quot;\x1b[&quot; CODE &quot;m&quot;</span>
+<span class="cp">#define BOLD   &quot;1&quot;</span>
+<span class="cp">#define FAINT  &quot;2&quot;</span>
+<span class="cp">#define ITALIC &quot;3&quot;</span>
+<span class="cp">#define UNDER  &quot;4&quot;</span>
+<span class="cp">#define BLINK  &quot;5&quot;</span>
+<span class="cp">#define RAPID  &quot;6&quot;</span>
+<span class="cp">#define INVERT &quot;7&quot;</span>
+<span class="cp">#define HIDDEN &quot;8&quot;</span>
+<span class="cp">#define STRIKE &quot;9&quot;</span>
+<span class="cp">#define BOLD_OFF   &quot;21&quot;  </span><span class="c1">// Or sometimes, double-underline...</span>
+<span class="cp">#define FAINT_OFF  &quot;22&quot;</span>
+<span class="cp">#define ITALIC_OFF &quot;23&quot;</span>
+<span class="cp">#define UNDER_OFF  &quot;24&quot;</span>
+<span class="cp">#define BLINK_OFF  &quot;25&quot;</span>
+<span class="cp">#define RAPID_OFF  &quot;26&quot;</span>
+<span class="cp">#define INVERT_OFF &quot;27&quot;</span>
+<span class="cp">#define HIDDEN_OFF &quot;28&quot;</span>
+<span class="cp">#define STRIKE_OFF &quot;29&quot;</span>
+<span class="cp">#define RESET &quot;0&quot;</span>
+
+<span class="cp">#define MIN(A, B) (((A) &gt; (B)) ? (B) : (A))</span>
+<span class="cp">#define MAX(A, B) (((A) &gt; (B)) ? (A) : (B))</span>
+
 <span class="cp">#define UNWRAP(STRUCTURE) (STRUCTURE).value</span>
 <span class="cp">#define INIT(TYPE, ...) { \</span>
-<span class="cp">    .len = sizeof((TYPE[])__VA_ARGS__), \</span>
+<span class="cp">    .len = sizeof((TYPE[])__VA_ARGS__)/sizeof(TYPE), \</span>
 <span class="cp">    .value = (TYPE[])__VA_ARGS__ \</span>
 <span class="cp">}</span>
 <span class="cp">#define STRING(...) { \</span>
@@ -207,31 +262,43 @@
 <span class="cp">    .value = (byte[]){ __VA_ARGS__ } \</span>
 <span class="cp">}</span>
 
-<span class="cp">#define SEMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })</span>
-<span class="cp">#define AEMPTY(TYPE) ((TYPE){ .len = 0, .cap = 0, .value = NULL })</span>
+<span class="cp">#define STR(...) ((string)STRING(__VA_ARGS__))</span>
+
+<span class="cp">#define SEMPTY(TYPE) ((TYPE){ .len = 0, .value = nil })</span>
+<span class="cp">#define AEMPTY(TYPE) ((TYPE){ .len = 0, .cap = 0, .value = nil })</span>
 
 <span class="cp">#define IS_EMPTY(ARR) ((ARR).len == 0)</span>
 
-<span class="cp">#define AMAKE(TYPE, CAP) ((TYPE){ \</span>
+<span class="cp">#define AMAKE(TYPE, CAP) { \</span>
 <span class="cp">    .len = 0, \</span>
 <span class="cp">    .cap = (CAP), \</span>
 <span class="cp">    .value = emalloc((CAP), sizeof(TYPE)) \</span>
-<span class="cp">})</span>
+<span class="cp">}</span>
 
 <span class="cp">#define SMAKE(TYPE, LEN) { \</span>
 <span class="cp">    .len = (LEN), \</span>
 <span class="cp">    .value = emalloc((LEN), sizeof(TYPE)) \</span>
 <span class="cp">}</span>
 
-<span class="cp">#define SLICE(OBJ, START, END) ((typeof(OBJ)){ \</span>
-<span class="cp">    .len = (((isize)(END) &lt; 0) ? (OBJ).len : 0) + (END) - (START), \</span>
+<span class="cp">#define SLICE(TYPE, OBJ, START, END) ((TYPE){ \</span>
+<span class="cp">    .len = (((isize)(END) &lt; 0) ? (OBJ).len + 1 : 0) + (END) - (START), \</span>
 <span class="cp">    .value = (OBJ).value + (START) \</span>
 <span class="cp">})</span>
 
-<span class="cp">#define VIEW(PTR, START, END) { \</span>
+<span class="cp">#define VIEW(TYPE, PTR, START, END) ((TYPE){ \</span>
 <span class="cp">    .len = (END) - (START), \</span>
 <span class="cp">    .value = (PTR) + (START) \</span>
-<span class="cp">}</span>
+<span class="cp">})</span>
+
+<span class="cp">#define SYMBOLIC(str) ((symbol){ \</span>
+<span class="cp">    .hash = hash_string(str), \</span>
+<span class="cp">    .value = str \</span>
+<span class="cp">})</span>
+
+<span class="cp">#define SYMBOL_LITERAL(STR_LIT) ((symbol){ \</span>
+<span class="cp">    .hash = hash_string(STRING(STR_LIT)), \</span>
+<span class="cp">    .value = STRING(STR_LIT) \</span>
+<span class="cp">})</span>
 
 <span class="cp">#define FOR_EACH(ELEM, ELEMS) \</span>
 <span class="cp">    for (typeof((ELEMS).value) ELEM = (ELEMS).value, _frst = ELEM; \</span>

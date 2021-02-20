@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1ac4b24f7ff187da194dc96c42ed267619:
+
+Typedef HIR_Tuple
+=================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_Tuple

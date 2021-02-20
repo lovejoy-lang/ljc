@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1aa35c32058bd9786255bc8cf9455a454b:
+
+Define BLINK_OFF
+================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: BLINK_OFF

@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a8137bf11804d5e865df82236b875d232:
+
+Define TSTR_HELPER
+==================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: TSTR_HELPER

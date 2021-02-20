@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1ae28598e8d421330b26cd0cbbaa292674:
+
+Typedef symbol
+==============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: symbol

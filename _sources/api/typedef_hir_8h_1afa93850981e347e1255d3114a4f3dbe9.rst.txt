@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1afa93850981e347e1255d3114a4f3dbe9:
+
+Typedef HIR_FeildAccess
+=======================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_FeildAccess

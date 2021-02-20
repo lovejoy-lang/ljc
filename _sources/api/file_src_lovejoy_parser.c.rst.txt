@@ -1,0 +1,46 @@
+
+.. _file_src_lovejoy_parser.c:
+
+File parser.c
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir_src_lovejoy>` (``src/lovejoy``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/lovejoy/parser.c``)
+-------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_lovejoy_parser.c.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``parser.h`` (:ref:`file_src_lovejoy_parser.h`)
+
+
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_parser_8c_1a4a1f7c71e75c4677dd5b9fd8b4161953`
+
+- :ref:`exhale_function_parser_8c_1ac4f0f8364a89f90c7a0d6294a068308d`
+

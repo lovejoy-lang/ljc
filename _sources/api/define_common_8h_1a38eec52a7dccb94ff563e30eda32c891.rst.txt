@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a38eec52a7dccb94ff563e30eda32c891:
+
+Define BLINK
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: BLINK

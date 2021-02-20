@@ -1,0 +1,13 @@
+.. _exhale_variable_common_8h_1afd1974cf6ed19dc1a472add6ee5dcbfe:
+
+Variable NUL_STRING
+===================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: NUL_STRING

@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Struct HIR_Expr &#8212; Lovejoy Compiler 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fonts.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/onload.js"></script>
+    <link rel="shortcut icon" href="../_static/lovejoy_icon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Struct HIR_Literal" href="structHIR__Literal.html" />
+    <link rel="prev" title="Struct _symbol" href="struct__symbol.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="struct-hir-expr">
+<span id="exhale-struct-structhir-expr"></span><h1>Struct HIR_Expr<a class="headerlink" href="#struct-hir-expr" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_src_lovejoy_hir.h.html#file-src-lovejoy-hir-h"><span class="std std-ref">File hir.h</span></a></p></li>
+</ul>
+<div class="section" id="struct-documentation">
+<h2>Struct Documentation<a class="headerlink" href="#struct-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp struct">
+<dt id="_CPPv48HIR_Expr">
+<span id="_CPPv38HIR_Expr"></span><span id="_CPPv28HIR_Expr"></span><span id="HIR_Expr"></span><span class="target" id="structHIR__Expr"></span><em class="property"><span class="pre">struct</span> </em><code class="sig-name descname"><span class="pre">HIR_Expr</span></code><a class="headerlink" href="#_CPPv48HIR_Expr" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Most general/top-level sort of AST entry. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr4siteE">
+<span id="_CPPv3N8HIR_Expr4siteE"></span><span id="_CPPv2N8HIR_Expr4siteE"></span><span id="HIR_Expr::site__Site"></span><span class="target" id="structHIR__Expr_1a505825a0c19ccdb94d0045a0dc9cd083"></span><a class="reference internal" href="structSite.html#_CPPv44Site" title="Site"><span class="pre">Site</span></a> <code class="sig-name descname"><span class="pre">site</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr4siteE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr4kindE">
+<span id="_CPPv3N8HIR_Expr4kindE"></span><span id="_CPPv2N8HIR_Expr4kindE"></span><span id="HIR_Expr::kind__NodeKind"></span><span class="target" id="structHIR__Expr_1a3927c86ed55ad641843f2d114fe461d0"></span><a class="reference internal" href="enum_hir_8h_1adaa4ecec941fa446d7019c24371f4ff0.html#_CPPv48NodeKind" title="NodeKind"><span class="pre">NodeKind</span></a> <code class="sig-name descname"><span class="pre">kind</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr4kindE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr9call_exprE">
+<span id="_CPPv3N8HIR_Expr9call_exprE"></span><span id="_CPPv2N8HIR_Expr9call_exprE"></span><span id="HIR_Expr::call_expr__HIR_FunctionCallP"></span><span class="target" id="structHIR__Expr_1ac2d8ee1e6c229356abbc1aa134d5b15c"></span><a class="reference internal" href="typedef_hir_8h_1a09c8560248437cca225acdbdc47eccf3.html#_CPPv416HIR_FunctionCall" title="HIR_FunctionCall"><span class="pre">HIR_FunctionCall</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">call_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr9call_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr10block_exprE">
+<span id="_CPPv3N8HIR_Expr10block_exprE"></span><span id="_CPPv2N8HIR_Expr10block_exprE"></span><span id="HIR_Expr::block_expr__HIR_ScopeBlockP"></span><span class="target" id="structHIR__Expr_1a06bfd468661cb9a86724739902271a0d"></span><a class="reference internal" href="typedef_hir_8h_1a860b5dc2487dc920db9169fbfba4b71d.html#_CPPv414HIR_ScopeBlock" title="HIR_ScopeBlock"><span class="pre">HIR_ScopeBlock</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">block_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr10block_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr11return_exprE">
+<span id="_CPPv3N8HIR_Expr11return_exprE"></span><span id="_CPPv2N8HIR_Expr11return_exprE"></span><span id="HIR_Expr::return_expr__HIR_ReturnP"></span><span class="target" id="structHIR__Expr_1a5609c2c5d44ac24bff04fba55e8c203e"></span><a class="reference internal" href="typedef_hir_8h_1ae12a29ba93b60b9d84c40f7f137822a4.html#_CPPv410HIR_Return" title="HIR_Return"><span class="pre">HIR_Return</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">return_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr11return_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr9jump_exprE">
+<span id="_CPPv3N8HIR_Expr9jump_exprE"></span><span id="_CPPv2N8HIR_Expr9jump_exprE"></span><span id="HIR_Expr::jump_expr__HIR_BranchP"></span><span class="target" id="structHIR__Expr_1a930eeb3599b6ee53bd550336f05117c8"></span><a class="reference internal" href="typedef_hir_8h_1ab79b7f2ae0721bf5bb79b92f884df7d5.html#_CPPv410HIR_Branch" title="HIR_Branch"><span class="pre">HIR_Branch</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">jump_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr9jump_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr10field_exprE">
+<span id="_CPPv3N8HIR_Expr10field_exprE"></span><span id="_CPPv2N8HIR_Expr10field_exprE"></span><span id="HIR_Expr::field_expr__HIR_FeildAccessP"></span><span class="target" id="structHIR__Expr_1a9cc6a2c846f7efe010eb68821346db4f"></span><a class="reference internal" href="typedef_hir_8h_1afa93850981e347e1255d3114a4f3dbe9.html#_CPPv415HIR_FeildAccess" title="HIR_FeildAccess"><span class="pre">HIR_FeildAccess</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">field_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr10field_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr13subscipt_exprE">
+<span id="_CPPv3N8HIR_Expr13subscipt_exprE"></span><span id="_CPPv2N8HIR_Expr13subscipt_exprE"></span><span id="HIR_Expr::subscipt_expr__HIR_SubscriptP"></span><span class="target" id="structHIR__Expr_1a8c4821e308c4d53db144dd66b813da15"></span><a class="reference internal" href="typedef_hir_8h_1a08a59eb084d777ca11eed771777eee33.html#_CPPv413HIR_Subscript" title="HIR_Subscript"><span class="pre">HIR_Subscript</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">subscipt_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr13subscipt_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr9path_exprE">
+<span id="_CPPv3N8HIR_Expr9path_exprE"></span><span id="_CPPv2N8HIR_Expr9path_exprE"></span><span id="HIR_Expr::path_expr__HIR_PathP"></span><span class="target" id="structHIR__Expr_1a3f3293822fb1a023ea5de7f4f2941187"></span><a class="reference internal" href="typedef_hir_8h_1a3c57b220f44ec8dd4ce95e546a6bfeda.html#_CPPv48HIR_Path" title="HIR_Path"><span class="pre">HIR_Path</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">path_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr9path_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr16declaration_exprE">
+<span id="_CPPv3N8HIR_Expr16declaration_exprE"></span><span id="_CPPv2N8HIR_Expr16declaration_exprE"></span><span id="HIR_Expr::declaration_expr__HIR_DeclarationP"></span><span class="target" id="structHIR__Expr_1aecca2367b75da41f63f8a9b577bab8cd"></span><a class="reference internal" href="typedef_hir_8h_1a3b94ed08c456a4f0476c16d404746fea.html#_CPPv415HIR_Declaration" title="HIR_Declaration"><span class="pre">HIR_Declaration</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">declaration_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr16declaration_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr11module_exprE">
+<span id="_CPPv3N8HIR_Expr11module_exprE"></span><span id="_CPPv2N8HIR_Expr11module_exprE"></span><span id="HIR_Expr::module_expr__HIR_ModuleP"></span><span class="target" id="structHIR__Expr_1ab1e11d157ad51ddc24338f8cd7482b0d"></span><a class="reference internal" href="typedef_hir_8h_1a74ee3a1e82bcf8ea009dfb58913093fc.html#_CPPv410HIR_Module" title="HIR_Module"><span class="pre">HIR_Module</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">module_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr11module_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr11import_exprE">
+<span id="_CPPv3N8HIR_Expr11import_exprE"></span><span id="_CPPv2N8HIR_Expr11import_exprE"></span><span id="HIR_Expr::import_expr__HIR_ImportP"></span><span class="target" id="structHIR__Expr_1a98aa2c7067f39a5822bdeacd99faaa11"></span><a class="reference internal" href="typedef_hir_8h_1a42def5cfa0997b596c1a03b3c9cbec5a.html#_CPPv410HIR_Import" title="HIR_Import"><span class="pre">HIR_Import</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">import_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr11import_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr14signature_exprE">
+<span id="_CPPv3N8HIR_Expr14signature_exprE"></span><span id="_CPPv2N8HIR_Expr14signature_exprE"></span><span id="HIR_Expr::signature_expr__HIR_SignatureP"></span><span class="target" id="structHIR__Expr_1a59c1decd78554a5b717fa02d146c567a"></span><a class="reference internal" href="typedef_hir_8h_1a4946503cb114fe99f2dd28b7e5b8a5c0.html#_CPPv413HIR_Signature" title="HIR_Signature"><span class="pre">HIR_Signature</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">signature_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr14signature_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr9cast_exprE">
+<span id="_CPPv3N8HIR_Expr9cast_exprE"></span><span id="_CPPv2N8HIR_Expr9cast_exprE"></span><span id="HIR_Expr::cast_expr__HIR_CastP"></span><span class="target" id="structHIR__Expr_1a22661ccd332de89461c11217562d7574"></span><a class="reference internal" href="typedef_hir_8h_1a1927d050dd467888148c2b314144100d.html#_CPPv48HIR_Cast" title="HIR_Cast"><span class="pre">HIR_Cast</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">cast_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr9cast_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_Expr12literal_exprE">
+<span id="_CPPv3N8HIR_Expr12literal_exprE"></span><span id="_CPPv2N8HIR_Expr12literal_exprE"></span><span id="HIR_Expr::literal_expr__HIR_LiteralP"></span><span class="target" id="structHIR__Expr_1af3e204cae754ea45e1b44be634372c7d"></span><a class="reference internal" href="structHIR__Literal.html#_CPPv411HIR_Literal" title="HIR_Literal"><span class="pre">HIR_Literal</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">literal_expr</span></code><a class="headerlink" href="#_CPPv4N8HIR_Expr12literal_exprE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N8HIR_ExprUt1_1E">
+<span id="_CPPv3N8HIR_ExprUt1_1E"></span><span class="target" id="structHIR__Expr_1a6df6fbf4dbdc4786343d10d2c67c6fbf"></span><em class="property"><span class="pre">union</span></em> <a class="reference internal" href="#_CPPv48HIR_Expr" title="HIR_Expr"><span class="pre">HIR_Expr</span></a><span class="pre">::</span><strong><span class="pre">[anonymous]</span></strong> <strong><span class="pre">[anonymous]</span></strong><a class="headerlink" href="#_CPPv4N8HIR_ExprUt1_1E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/lovejoy.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">Lovejoy Compiler</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=lovejoy-lang&repo=ljc&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="root.html">Lovejoy Compiler API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="root.html">Lovejoy Compiler API</a><ul>
+      <li>Previous: <a href="struct__symbol.html" title="previous chapter">Struct _symbol</a></li>
+      <li>Next: <a href="structHIR__Literal.html" title="next chapter">Struct HIR_Literal</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+    &#127279; Copyleft all wrongs reserved
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a7a47f620f7bd4eb588370e268e2df404:
+
+Function sizeof_specifier
+=========================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: sizeof_specifier(const byte *)

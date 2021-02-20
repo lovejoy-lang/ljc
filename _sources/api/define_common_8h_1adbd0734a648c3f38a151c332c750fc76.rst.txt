@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1adbd0734a648c3f38a151c332c750fc76:
+
+Define TSTR
+===========
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: TSTR

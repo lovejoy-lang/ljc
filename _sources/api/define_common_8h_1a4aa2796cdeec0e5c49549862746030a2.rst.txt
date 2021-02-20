@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a4aa2796cdeec0e5c49549862746030a2:
+
+Define STRIKE
+=============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: STRIKE

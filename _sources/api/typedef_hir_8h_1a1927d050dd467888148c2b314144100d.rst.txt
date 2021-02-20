@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1a1927d050dd467888148c2b314144100d:
+
+Typedef HIR_Cast
+================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_Cast

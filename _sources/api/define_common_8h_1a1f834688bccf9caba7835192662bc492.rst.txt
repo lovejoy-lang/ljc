@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1a1f834688bccf9caba7835192662bc492:
+
+Define PANIC
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: PANIC

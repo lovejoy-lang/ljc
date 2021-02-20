@@ -17,7 +17,7 @@ Program Listing for File utf.c
        0x03C82080UL, 0xFA082080UL, 0x82082080UL
    };
    
-   static const byte TrailingBytesForUTF8[256] = {
+   static const u8 TrailingBytesForUTF8[256] = {
        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -44,7 +44,7 @@ Program Listing for File utf.c
    
        usize i;
        for (i = 0; i < dest.len - 1; ++i) {
-           byte nb = TrailingBytesForUTF8[(usize)(*sptr)];
+           u8 nb = TrailingBytesForUTF8[(usize)(*sptr)];
            if (sptr + nb >= src_end)
                break;
    
@@ -59,8 +59,8 @@ Program Listing for File utf.c
            dest.value[i] = ch;
        }
    
-       dest.value[i] = 0; // Always null-terminate, despite known length.
-       return SLICE(dest, 0, i);
+       dest.value[i] = 0; // Always NUL-terminate, despite known length.
+       return SLICE(runic, dest, 0, i);
    }
    
    string ucs4_to_utf8(string dest, runic src)
@@ -98,7 +98,7 @@ Program Listing for File utf.c
    
        if (dptr < dest_end)
            *dptr = '\0';
-       return SLICE(dest, 0, dptr - dest.value);
+       return SLICE(string, dest, 0, dptr - dest.value);
    }
    
    string rune_to_utf8(string dest, rune ch)
@@ -108,27 +108,27 @@ Program Listing for File utf.c
    
        if (ch < 0x80) {
            dptr[0] = (byte)ch;
-           return SLICE(dest, 0, 1);
+           return SLICE(string, dest, 0, 1);
        }
        if (ch < 0x800) {
            dptr[0] = (ch >> 6) | 0xC0;
            dptr[1] = (ch & 0x3F) | 0x80;
-           return SLICE(dest, 0, 2);
+           return SLICE(string, dest, 0, 2);
        }
        if (ch < 0x10000) {
            dptr[0] = (ch >> 12) | 0xE0;
            dptr[1] = ((ch >> 6) & 0x3F) | 0x80;
            dptr[2] = (ch & 0x3F) | 0x80;
-           return SLICE(dest, 0, 3);
+           return SLICE(string, dest, 0, 3);
        }
        if (ch < 0x110000) {
            dptr[0] = (ch >> 18) | 0xF0;
            dptr[1] = ((ch >> 12) & 0x3F) | 0x80;
            dptr[2] = ((ch >> 6) & 0x3F) | 0x80;
            dptr[3] = (ch & 0x3F) | 0x80;
-           return SLICE(dest, 0, 4);
+           return SLICE(string, dest, 0, 4);
        }
-       return SLICE(dest, 0, 0);
+       return SLICE(string, dest, 0, 0);
    }
    
    /* Moving through stirngs. */
@@ -236,24 +236,24 @@ Program Listing for File utf.c
        usize len = dest.len;
    
        switch (ch) {
-       case U'\n': return SLICE(dest, 0, snprintf(buf, len, "\\n"));
-       case U'\t': return SLICE(dest, 0, snprintf(buf, len, "\\t"));
-       case U'\r': return SLICE(dest, 0, snprintf(buf, len, "\\r"));
-       case U'\b': return SLICE(dest, 0, snprintf(buf, len, "\\b"));
-       case U'\f': return SLICE(dest, 0, snprintf(buf, len, "\\f"));
-       case U'\v': return SLICE(dest, 0, snprintf(buf, len, "\\v"));
-       case U'\a': return SLICE(dest, 0, snprintf(buf, len, "\\a"));
-       case U'\\': return SLICE(dest, 0, snprintf(buf, len, "\\\\"));
+       case U'\n': return SLICE(string, dest, 0, snprintf(buf, len, "\\n"));
+       case U'\t': return SLICE(string, dest, 0, snprintf(buf, len, "\\t"));
+       case U'\r': return SLICE(string, dest, 0, snprintf(buf, len, "\\r"));
+       case U'\b': return SLICE(string, dest, 0, snprintf(buf, len, "\\b"));
+       case U'\f': return SLICE(string, dest, 0, snprintf(buf, len, "\\f"));
+       case U'\v': return SLICE(string, dest, 0, snprintf(buf, len, "\\v"));
+       case U'\a': return SLICE(string, dest, 0, snprintf(buf, len, "\\a"));
+       case U'\\': return SLICE(string, dest, 0, snprintf(buf, len, "\\\\"));
        }
    
        if (ch < 32 || ch == 0x7F)
-           return SLICE(dest, 0, snprintf(buf, len, "\\x%hhX", (u8)ch));
+           return SLICE(string, dest, 0, snprintf(buf, len, "\\x%hhX", (u8)ch));
        else if (ch > 0xFFFF)
-           return SLICE(dest, 0, snprintf(buf, len, "\\U%X",  (u32)ch));
+           return SLICE(string, dest, 0, snprintf(buf, len, "\\U%X",  (u32)ch));
        else if (ch >= 0x80 && ch <= 0xFFFF)
-           return SLICE(dest, 0, snprintf(buf, len, "\\u%hX", (u16)ch));
+           return SLICE(string, dest, 0, snprintf(buf, len, "\\u%hX", (u16)ch));
    
-       return SLICE(dest, 0, snprintf(buf, len, "%c", (byte)ch));
+       return SLICE(string, dest, 0, snprintf(buf, len, "%c", (byte)ch));
    }
    
    string utf8_unescape(string dest, string src)
@@ -266,7 +266,7 @@ Program Listing for File utf.c
        while (i < src.len && c < dest.len) {
            if (src.value[i] == '\\') {
                ++i;
-               amt = read_escape(SLICE(src, i, -1), &ch);
+               amt = read_escape(SLICE(string, src, i, -1), &ch);
            } else {
                ch = (rune)(src.value[i]);
                amt = 1;
@@ -283,10 +283,10 @@ Program Listing for File utf.c
            c += amt;
        }
    
-       if (c < dest.len)  // Try to NULL-terminate.
+       if (c < dest.len)  // Try to NUL-terminate.
            dest.value[c] = '\0';
    
-       return SLICE(dest, 0, c);
+       return SLICE(string, dest, 0, c);
    }
    
    
@@ -299,7 +299,7 @@ Program Listing for File utf.c
            string slice = { .value = buf, .len = dest.len - c };
    
            if (escape_quotes && src.value[i++] == '"')
-               slice = SLICE(slice, 0, snprintf(buf, slice.len, "\\\""));
+               slice = SLICE(string, slice, 0, snprintf(buf, slice.len, "\\\""));
            else
                slice = escape_rune(slice, read_rune(src, &i));
    
@@ -310,7 +310,7 @@ Program Listing for File utf.c
        if (c < dest.len)
            *buf = '\0';
    
-       return SLICE(dest, 0, c);
+       return SLICE(string, dest, 0, c);
    }
    
    /* Standard function replacements. */
@@ -324,7 +324,7 @@ Program Listing for File utf.c
        until (offs >= s.len) {
            c = read_rune(s, &offs);
            if (c == ch)
-               return SLICE(s, last_offs, -1);
+               return SLICE(string, s, last_offs, -1);
    
            last_offs = offs;
            ++(*i);

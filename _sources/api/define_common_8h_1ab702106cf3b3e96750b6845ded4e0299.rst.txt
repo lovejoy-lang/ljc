@@ -1,0 +1,13 @@
+.. _exhale_define_common_8h_1ab702106cf3b3e96750b6845ded4e0299:
+
+Define RESET
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: RESET

@@ -1,0 +1,16 @@
+.. _exhale_struct_structSite:
+
+Struct Site
+===========
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: Site
+   :members:
+   :protected-members:
+   :undoc-members:

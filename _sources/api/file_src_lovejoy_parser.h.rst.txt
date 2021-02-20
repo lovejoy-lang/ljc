@@ -1,0 +1,73 @@
+
+.. _file_src_lovejoy_parser.h:
+
+File parser.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir_src_lovejoy>` (``src/lovejoy``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/lovejoy/parser.h``)
+-------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_lovejoy_parser.h.rst
+
+
+
+Detailed Description
+--------------------
+
+Incremental parsing of source, which in turns increments the lexer. 
+
+
+
+Includes
+--------
+
+
+- ``hir.h`` (:ref:`file_src_lovejoy_hir.h`)
+
+- ``lexer.h`` (:ref:`file_src_lovejoy_lexer.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_lovejoy_parser.c`
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structParserContext`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_parser_8h_1a4a1f7c71e75c4677dd5b9fd8b4161953`
+
+- :ref:`exhale_function_parser_8h_1a519b27a09c64e8cb457ecd16584c955e`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_parser_8h_1aaf27d4bfdf901a2a7696966ddf4ece25`
+
