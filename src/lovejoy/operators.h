@@ -3,9 +3,9 @@
 /// Which way an operator groups parentheses when chained
 /// (if possible to chain at all).
 enum Associativity {
+	ASSOC_NEITHER = 0, ///< Operator may not be chained w/o parentheses.
 	ASSOC_LEFT,
 	ASSOC_RIGHT,
-	ASSOC_NEITHER  ///< Operator may not be chained w/o parentheses.
 };
 unqualify(enum, Associativity);
 

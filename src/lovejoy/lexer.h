@@ -5,9 +5,9 @@
 
 /// Token Type (TT), classifies each lexeme.
 enum TokenType {
-	TT_NUMBER,  ///< Literal.
-	TT_STRING,  ///< Literal.
-	TT_CHAR,    ///< Literal.
+	TT_NUMBER = 0,  ///< Literal.
+	TT_STRING,      ///< Literal.
+	TT_CHAR,        ///< Literal.
 	TT_OPERATOR,
 	TT_IDENT,
 	TT_LPAREN,

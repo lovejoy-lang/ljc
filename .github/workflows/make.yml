@@ -15,9 +15,9 @@ jobs:
     - uses: actions/checkout@v2
     - run: |
         sudo apt-get update -y
-        sudo apt-get install -y dc coreutils build-essential
+        sudo apt-get install -y gcc dc coreutils build-essential
         sudo apt-get upgrade -y
         true  # Don't care.
     - name: make
-      run: make clean all
+      run: CC=gcc make clean all
 

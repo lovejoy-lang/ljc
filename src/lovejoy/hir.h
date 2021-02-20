@@ -16,13 +16,13 @@ struct Site {
 unqualify(struct, Site);
 
 enum NodeKind {
-	CALL_NODE,
+	CALL_NODE = 0,
 	BLOCK_NODE,
 	RETURN_NODE,
 	FEILD_NODE,
 	DECLARATION_NODE,
 	SUBSCRIPT_NODE,
-	PATH_NODE,  ///< e.g. `a`, `::b`, `A::B::c`, `std::xyz`, etc.
+	DISAMB_NODE,  ///< e.g. `a`, `::b`, `A::B::c`, `std::xyz`, etc.
 	MODULE_NODE,
 	IMPORT_NODE,
 	CAST_NODE,
@@ -38,7 +38,7 @@ struct HIR_Return;       unqualify(struct, HIR_Return);
 struct HIR_Branch;       unqualify(struct, HIR_Branch);
 struct HIR_FieldAccess;  unqualify(struct, HIR_FeildAccess);
 struct HIR_Subscript;    unqualify(struct, HIR_Subscript);
-struct HIR_Path;         unqualify(struct, HIR_Path);
+struct HIR_Disamb;       unqualify(struct, HIR_Disamb);
 struct HIR_Declaration;  unqualify(struct, HIR_Declaration);
 struct HIR_Module;       unqualify(struct, HIR_Module);
 struct HIR_Import;       unqualify(struct, HIR_Import);
@@ -56,7 +56,7 @@ struct HIR_Expr {
 		HIR_Branch *jump_expr;
 		HIR_FeildAccess *field_expr;
 		HIR_Subscript *subscipt_expr;
-		HIR_Path *path_expr;
+		HIR_Disamb *disamb_expr;
 		HIR_Declaration *declaration_expr;
 		HIR_Module *module_expr;
 		HIR_Import *import_expr;
@@ -72,7 +72,7 @@ newarray(HIR_Array, HIR_Expr);
 newarray(HIR_Tuple, HIR_Expr);
 
 enum LiteralKind {
-	ARRAY_LITERAL,
+	ARRAY_LITERAL = 0,
 	TUPLE_LITERAL,
 	STRING_LITERAL,
 	INTEGER_LITERAL,
