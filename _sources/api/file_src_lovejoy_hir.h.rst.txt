@@ -83,6 +83,8 @@ Typedefs
 
 - :ref:`exhale_typedef_hir_8h_1a3b94ed08c456a4f0476c16d404746fea`
 
+- :ref:`exhale_typedef_hir_8h_1ae0b419a667fa771a88908665db2633c7`
+
 - :ref:`exhale_typedef_hir_8h_1accb70ab7fc522966b9f7b90accc06c86`
 
 - :ref:`exhale_typedef_hir_8h_1afa93850981e347e1255d3114a4f3dbe9`
@@ -94,8 +96,6 @@ Typedefs
 - :ref:`exhale_typedef_hir_8h_1abe2fde0a138b74f56501c8808444db03`
 
 - :ref:`exhale_typedef_hir_8h_1a74ee3a1e82bcf8ea009dfb58913093fc`
-
-- :ref:`exhale_typedef_hir_8h_1a3c57b220f44ec8dd4ce95e546a6bfeda`
 
 - :ref:`exhale_typedef_hir_8h_1ae12a29ba93b60b9d84c40f7f137822a4`
 

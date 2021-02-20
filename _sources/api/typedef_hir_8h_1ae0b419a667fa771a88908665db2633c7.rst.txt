@@ -1,0 +1,13 @@
+.. _exhale_typedef_hir_8h_1ae0b419a667fa771a88908665db2633c7:
+
+Typedef HIR_Disamb
+==================
+
+- Defined in :ref:`file_src_lovejoy_hir.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: HIR_Disamb

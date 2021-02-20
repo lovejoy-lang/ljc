@@ -16,9 +16,9 @@ Program Listing for File lexer.h
    #include "operators.h"
    
    enum TokenType {
-       TT_NUMBER,  
-       TT_STRING,  
-       TT_CHAR,    
+       TT_NUMBER = 0,  
+       TT_STRING,      
+       TT_CHAR,        
        TT_OPERATOR,
        TT_IDENT,
        TT_LPAREN,

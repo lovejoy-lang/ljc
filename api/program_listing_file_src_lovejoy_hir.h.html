@@ -54,13 +54,13 @@
 <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">Site</span><span class="p">);</span>
 
 <span class="k">enum</span> <span class="n">NodeKind</span> <span class="p">{</span>
-    <span class="n">CALL_NODE</span><span class="p">,</span>
+    <span class="n">CALL_NODE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="n">BLOCK_NODE</span><span class="p">,</span>
     <span class="n">RETURN_NODE</span><span class="p">,</span>
     <span class="n">FEILD_NODE</span><span class="p">,</span>
     <span class="n">DECLARATION_NODE</span><span class="p">,</span>
     <span class="n">SUBSCRIPT_NODE</span><span class="p">,</span>
-    <span class="n">PATH_NODE</span><span class="p">,</span>
+    <span class="n">DISAMB_NODE</span><span class="p">,</span>
     <span class="n">MODULE_NODE</span><span class="p">,</span>
     <span class="n">IMPORT_NODE</span><span class="p">,</span>
     <span class="n">CAST_NODE</span><span class="p">,</span>
@@ -76,7 +76,7 @@
 <span class="k">struct</span> <span class="n">HIR_Branch</span><span class="p">;</span>       <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">HIR_Branch</span><span class="p">);</span>
 <span class="k">struct</span> <span class="n">HIR_FieldAccess</span><span class="p">;</span>  <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">HIR_FeildAccess</span><span class="p">);</span>
 <span class="k">struct</span> <span class="n">HIR_Subscript</span><span class="p">;</span>    <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">HIR_Subscript</span><span class="p">);</span>
-<span class="k">struct</span> <span class="n">HIR_Path</span><span class="p">;</span>         <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">HIR_Path</span><span class="p">);</span>
+<span class="k">struct</span> <span class="n">HIR_Disamb</span><span class="p">;</span>       <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">HIR_Disamb</span><span class="p">);</span>
 <span class="k">struct</span> <span class="n">HIR_Declaration</span><span class="p">;</span>  <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">HIR_Declaration</span><span class="p">);</span>
 <span class="k">struct</span> <span class="n">HIR_Module</span><span class="p">;</span>       <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">HIR_Module</span><span class="p">);</span>
 <span class="k">struct</span> <span class="n">HIR_Import</span><span class="p">;</span>       <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">HIR_Import</span><span class="p">);</span>
@@ -93,7 +93,7 @@
         <span class="n">HIR_Branch</span> <span class="o">*</span><span class="n">jump_expr</span><span class="p">;</span>
         <span class="n">HIR_FeildAccess</span> <span class="o">*</span><span class="n">field_expr</span><span class="p">;</span>
         <span class="n">HIR_Subscript</span> <span class="o">*</span><span class="n">subscipt_expr</span><span class="p">;</span>
-        <span class="n">HIR_Path</span> <span class="o">*</span><span class="n">path_expr</span><span class="p">;</span>
+        <span class="n">HIR_Disamb</span> <span class="o">*</span><span class="n">disamb_expr</span><span class="p">;</span>
         <span class="n">HIR_Declaration</span> <span class="o">*</span><span class="n">declaration_expr</span><span class="p">;</span>
         <span class="n">HIR_Module</span> <span class="o">*</span><span class="n">module_expr</span><span class="p">;</span>
         <span class="n">HIR_Import</span> <span class="o">*</span><span class="n">import_expr</span><span class="p">;</span>
@@ -108,7 +108,7 @@
 <span class="n">newarray</span><span class="p">(</span><span class="n">HIR_Tuple</span><span class="p">,</span> <span class="n">HIR_Expr</span><span class="p">);</span>
 
 <span class="k">enum</span> <span class="n">LiteralKind</span> <span class="p">{</span>
-    <span class="n">ARRAY_LITERAL</span><span class="p">,</span>
+    <span class="n">ARRAY_LITERAL</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="n">TUPLE_LITERAL</span><span class="p">,</span>
     <span class="n">STRING_LITERAL</span><span class="p">,</span>
     <span class="n">INTEGER_LITERAL</span><span class="p">,</span>

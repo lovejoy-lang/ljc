@@ -13,9 +13,9 @@ Program Listing for File operators.h
    #include "common.h"
    
    enum Associativity {
+       ASSOC_NEITHER = 0, 
        ASSOC_LEFT,
        ASSOC_RIGHT,
-       ASSOC_NEITHER  
    };
    unqualify(enum, Associativity);
    
