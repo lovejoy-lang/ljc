@@ -33,7 +33,10 @@ i32 main(i32 argc, const byte **argv)
 			eprintf("Source file: %s\n", argv[i]);
 
 			FILE *f = fopen(argv[i], "rb");
-			if (f == nil)  return 1;
+			if (f == nil) {
+				eprintln("Could not open `%s' for reading.", argv[i]);
+				return 1;
+			}
 
 			byte *source;
 			usize source_len;

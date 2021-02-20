@@ -1,0 +1,198 @@
+-- A module or namespace, is defined as such:
+
+SomeModule := module {
+	a := 3
+	f(x: u16) := x & 0x000F
+}
+
+-- And accessed as so
+SomeModule::a
+
+-- e.g.
+assert(SomeModule::f(0x1234) == 4)
+
+-- Entier code blocks can be executed in the context
+-- of the module contents, e.g.
+
+SomeModule::{
+	assert(a == 3)
+	assert(f(0x1234) == 4)
+}
+
+-- Or just singular expressions
+c := 3
+SomeModule::(a + f(0x1234) - c == 4)
+
+-- Because of the nature of the disambiguation operator,
+-- be aware of mistakes like this:
+SomeModule::c == 3
+-- Since, SomeModule doesn't have a `c` member variable, it uses the local `c`.
+-- However, this is an easy mistake for the compiler to spot,
+-- so this will emit a warning about “Redundant use of `::` operator”,
+-- or “Disambiguation operator (`::`), disambiguates nothing”.
+-- since the whole `SomeModule::` part, serves no purpose.
+
+-- There are no special keywords for making
+-- public and private members of a module
+-- Instead, you may use an anonymous module,
+-- and re-export public members to a named module.
+
+MyModule := module {
+	a := 6
+	b := 7  -- Shh! this one's private!
+	c := b + 2
+} :: module { a; c }
+
+MyModule::a == 6
+MyModule::c == 9
+MyModule::b  -- Error! There is no such member of that module.
+
+-- Opening/using a module:
+open MyModule::{a; c}
+
+-- If you don't care to list all the names you're using,
+-- you can just open the whole module.
+
+open MyModule
+
+-- If your module exists in another file,
+-- first import its contents, then use its modules.
+
+import "git.sr.ht/~lj/io"  -- Will try `http(s)://`,`git://` protocol, etc.
+open io::{puts; print}
+
+-- More generally, open just exposes names in a scope:
+
+open {
+	x = 3
+	y = 8
+}
+
+assert(x == 3)
+assert(y == 8)
+
+-- Works with just single values, of course,
+-- since braces just mean "group these statements"
+
+Also, does the power-menu module not work in i3, because I have it in my config, but it doesn't show up.
+
+open x := 4
+-- same as just saying
+x := 4
+-- ...not very useful
+
+-- but when accessing a module, it is useful!
+CoolModule := module {
+	y := 3
+	x := y + 1
+}
+
+open CoolModule::x
+assert(x == 4)
+
+-- without open...
+
+val := {
+	z = 9
+	z + 1
+}
+
+print(z)  -- Error, z is not in this scope.
+
+assert(val == 10) -- However, we may use the result of z + 1.
+
+-- Hence, we may use `open` for a another way of getting
+-- private module members.
+
+AnotherModule := module open module {
+	h := 3
+	k := 9  -- Secret!
+	j := k + h
+}::{h; j}
+
+-- ie
+
+AnotherModule := module {
+	open (module {
+		h := 3
+		k := 9  -- Secret!
+		j := k + h
+	})::{h; j}
+}
+
+-- or
+
+AnotherModule := module {
+	module {
+		h := 3
+		k := 9
+		j := k + h
+	} :: open { h; j }
+}
+
+-- ie
+
+AnotherModule := module module {
+	h := 3
+	k := 9
+	j := k + h
+} :: open { h; j }
+
+
+-- Another common use for modules, is to avoid polluting the
+-- scope with overlapping `data` constructors (avoiding variable
+-- name overloading)
+
+-- e.g.
+
+DataType1 := data {
+	SomeName(i32): Self
+	OtherName : Self
+}
+
+DataType2 := data {
+	SomeName(f64): Self
+	OtherName: Self
+}
+
+a := OtherName  -- Ambiguous, unknown yet which type it belongs to.
+b: DataType1 = OtherName  -- Explicit.
+
+b := (OtherName : DataType1)  -- Same again.
+b := DataType1::OtherName  -- Same again.
+
+-- To always require an explicit `::` operator, do as so...
+
+DataType3 := module data {
+	SomeName(u16): Self
+	OtherName: Self
+}
+
+-- `DataType3` is both a 'Module' and 'Type', so DataType3 has been overloaded.
+-- (If the last expression a `module` block/expression, is evaluated,
+--  but not used (eg not assigned) then the module will export that
+--  expression's value, under the name of the module, overloading the name.
+
+-- Same as saying
+
+(DataType3: Module, DataType3: Type) = {
+	TheModule: Module = module {
+		TheData: Type = data {
+			SomeName(u16): Self
+			OtherName: Self
+		}
+	}
+	(TheModule, TheModule::TheData)
+}
+
+-- or, same again
+
+DataType3 := module {
+	DataType3 := data {
+		SomeName(u16): Self
+		OtherName: Self
+	}
+}
+open DataType3::DataType3
+
+

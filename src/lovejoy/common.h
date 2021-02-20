@@ -5,6 +5,9 @@
 #ifndef COMMON_HEADER
 #define COMMON_HEADER
 
+#undef  _GNU_SOURCE
+#define _GNU_SOURCE 1 ///< Use GNU specific source.
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -15,15 +18,15 @@
 #include <assert.h>
 
 /* Misc macros */
-#define STR_HELPER(x) #x
-#define STR(x) STR_HELPER(x)
+#define TSTR_HELPER(x) #x
+#define TSTR(x) TSTR_HELPER(x)
 
 /* Version number */
 #define V_MAJOR 0
 #define V_MINOR 1
 #define V_PATCH 0
 
-#define VERSION "v" STR(V_MAJOR) "." STR(V_MINOR) "." STR(V_PATCH)
+#define VERSION "v" TSTR(V_MAJOR) "." TSTR(V_MINOR) "." TSTR(V_PATCH)
 
 #define REALLOC_FACTOR 1.5
 
@@ -41,16 +44,23 @@
 	usize len; \
 	T (*value); \
 } NT
+#define newhashable(NT, T) typedef struct _##NT { \
+	u64 hash; \
+	T value; \
+} NT
 #define unqualify(D, T) typedef D T T
 #define nil NULL
 
 #define UNUSED(x) (void)(x)
 
-#define print(...) printf(__VA_ARGS__)
-#define println(lit, ...) printf(lit "\n", ## __VA_ARGS__)
-#define eprintf(...) fprintf(stderr, __VA_ARGS__)
+#define PANIC(lit, ...) \
+	panic("\n[**] Panicking!\n[**] CAUSE:\n -- \t%s(): " \
+	      lit "\n[**] Aborting...\n", __func__, ## __VA_ARGS__)
+#define print(...) novel_fprintf(stdout, __VA_ARGS__)
+#define println(...) novel_fprintf_newline(stdout, __VA_ARGS__)
+#define eprintf(...) novel_fprintf(stderr, __VA_ARGS__)
 #define eprint(...) eprintf(__VA_ARGS__)
-#define eprintln(lit, ...) fprintf(stderr, lit "\n", ## __VA_ARGS__)
+#define eprintln(...) novel_fprintf_newline(stderr, __VA_ARGS__)
 
 /* Types */
 /// Useful for resource counting etc.
@@ -116,7 +126,6 @@ typedef u32 rune;
 	typedef __uint128_t u128;
 #endif
 
-
 typedef ptrdiff_t isize;
 typedef    size_t usize; ///< Use for storing array indices or object sizes.
 
@@ -139,12 +148,25 @@ typedef uintmax_t umax;
 	typedef long double f128;
 #endif
 
+/// Array with pointer to void.
+newarray(GenericArray, u0);
+/// Slice with pointer to void.
+newslice(GenericSlice, u0);
+
 /// Immutable wrapper for UTF-8 encoded string (bytes are mutable).
 newslice(string, byte);
 /// Imutable warpper for UCS-4/UTF-32 encoded runic string (runes are mutable).
 newslice(runic, rune);
 
+/// Symbols are interned strings.
+newhashable(symbol, string);
+
+/* Common Constants */
+static const byte NUL_BYTE = '\0';
+static const string NUL_STRING = { .len = 0, .value = (byte *)&NUL_BYTE };
+
 /* Common Functions */
+extern u0 panic(const byte *, ...);
 extern bool is_zero(imax);
 extern bool is_zerof(f64);
 extern bool is_zeroed(imax *, usize);
@@ -155,26 +177,73 @@ extern bool is_zeroed(imax *, usize);
 extern u0 zero(u0 *blk, usize width);
 extern u0 *emalloc(usize, usize);
 /// Push element to array.
-/// @param[in,out] arr Pointer to the dynamic array, cast to (u0 *).
+/// @param[in,out] self Pointer to the dynamic array, cast to (u0 *).
 /// @param[in] element Pointer to element to be pushed,  cast to (u0 *).
 /// @param[in] width The `sizeof(T)` where `T` is the type of the element
 ///                  that is being pushed.
 /// @returns How much capacity increased.
-extern usize push(u0 *arr, const u0 *element, usize width);
+extern usize push(u0 *self, const u0 *element, usize width);
+/// Works like push, but extends the array by multiple elements.
+/// @param[in,out] self A pointer to a dynamic array, of any type.
+/// @param[in] slice A pointer to a slice, and a slice only
+///                  (*not* an array, dynamic array, etc.).
+/// @param[in] width The `sizeof(T)` where `T` is the type of the individual
+//                   elements that are being appended to the array.
+extern usize extend(u0 *self, const u0 *slice, usize width);
 /// Pops/removes element from top of the stack.
 /// @returns Pointer to popped element.
 extern u0 *pop(u0 *array, usize width);
+/// puts(...) to STDERR.
 extern i32 eputs(const byte *);
+/// Size of the type of a `printf`-style format specifer.
+/// e.g. `sizeof_specifier("hx") == sizeof(unsigned short int);`.
+extern usize sizeof_specifier(const byte *);
+/// Custom `printf` for other data-types.
+/// @note Heap allocates memory, should be freed after printing.
+extern string novel_vsprintf(byte *, va_list);
+extern string novel_sprintf(byte *, ...);
+extern i32 novel_vfprintf(FILE *, byte *, va_list);
+extern i32 novel_fprintf(FILE *, byte *, ...);
+extern i32 novel_fprintf_newline(FILE *, byte *, ...);
+extern i32 novel_printf(byte *, ...);
 /// Compare two strings for equality.
-extern bool string_eq(string, string);
+extern bool string_eq(const string, const string);
+extern i16 string_cmp(const string, const string);
+/// Hash a string.
+extern u64 hash_string(string);
 
 /* Common Macros */
+
+// ANSI colour code.
+#define ANSI(CODE) "\x1b[" CODE "m"
+#define BOLD   "1"
+#define FAINT  "2"
+#define ITALIC "3"
+#define UNDER  "4"
+#define BLINK  "5"
+#define RAPID  "6"
+#define INVERT "7"
+#define HIDDEN "8"
+#define STRIKE "9"
+#define BOLD_OFF   "21"  // Or sometimes, double-underline...
+#define FAINT_OFF  "22"
+#define ITALIC_OFF "23"
+#define UNDER_OFF  "24"
+#define BLINK_OFF  "25"
+#define RAPID_OFF  "26"
+#define INVERT_OFF "27"
+#define HIDDEN_OFF "28"
+#define STRIKE_OFF "29"
+#define RESET "0"
+
+#define MIN(A, B) (((A) > (B)) ? (B) : (A))
+#define MAX(A, B) (((A) > (B)) ? (A) : (B))
 
 /// Unwraps pointer/value in sizing wrapper struct.
 #define UNWRAP(STRUCTURE) (STRUCTURE).value
 /// Initialise sizing wrapper with literal.
 #define INIT(TYPE, ...) { \
-	.len = sizeof((TYPE[])__VA_ARGS__), \
+	.len = sizeof((TYPE[])__VA_ARGS__)/sizeof(TYPE), \
 	.value = (TYPE[])__VA_ARGS__ \
 }
 /// Initialise sizing wrapper with of string literal.
@@ -183,20 +252,22 @@ extern bool string_eq(string, string);
 	.value = (byte[]){ __VA_ARGS__ } \
 }
 
+#define STR(...) ((string)STRING(__VA_ARGS__))
+
 /// Empty slice of certain type.
-#define SEMPTY(TYPE) ((TYPE){ .len = 0, .value = NULL })
+#define SEMPTY(TYPE) ((TYPE){ .len = 0, .value = nil })
 /// Empty array of certain type.
-#define AEMPTY(TYPE) ((TYPE){ .len = 0, .cap = 0, .value = NULL })
+#define AEMPTY(TYPE) ((TYPE){ .len = 0, .cap = 0, .value = nil })
 
 /// Is array empty?
 #define IS_EMPTY(ARR) ((ARR).len == 0)
 
 /// Heap allocates a variable sized array.
-#define AMAKE(TYPE, CAP) ((TYPE){ \
+#define AMAKE(TYPE, CAP) { \
 	.len = 0, \
 	.cap = (CAP), \
 	.value = emalloc((CAP), sizeof(TYPE)) \
-})
+}
 
 /// Heap allocates a constant sized slice type.
 #define SMAKE(TYPE, LEN) { \
@@ -205,16 +276,26 @@ extern bool string_eq(string, string);
 }
 
 /// Take a slice/substring/view of sized type.
-#define SLICE(OBJ, START, END) ((typeof(OBJ)){ \
-	.len = (((isize)(END) < 0) ? (OBJ).len : 0) + (END) - (START), \
+#define SLICE(TYPE, OBJ, START, END) ((TYPE){ \
+	.len = (((isize)(END) < 0) ? (OBJ).len + 1 : 0) + (END) - (START), \
 	.value = (OBJ).value + (START) \
 })
 
 /// Works like `SLICE`, but on a pointer instead of an array.
-#define VIEW(PTR, START, END) { \
+#define VIEW(TYPE, PTR, START, END) ((TYPE){ \
 	.len = (END) - (START), \
 	.value = (PTR) + (START) \
-}
+})
+
+#define SYMBOLIC(str) ((symbol){ \
+	.hash = hash_string(str), \
+	.value = str \
+})
+
+#define SYMBOL_LITERAL(STR_LIT) ((symbol){ \
+	.hash = hash_string(STRING(STR_LIT)), \
+	.value = STRING(STR_LIT) \
+})
 
 /// For-each loop, iterates across an array or slice.
 /// For example:

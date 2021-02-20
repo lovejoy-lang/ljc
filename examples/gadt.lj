@@ -73,6 +73,21 @@ East(0) == North(90)   -- true.
 -- This is an example of how it does not make sense to
 -- automatically define equality for data types.
 
+-- Now, similar to the usage of `::`, we may use `.` for a whole block/expr.
+dir := West(54)
+-- We may normally say something like
+270 + dir.direction == dir.degrees_from_north()
+-- But imagine we are writing `dir.` many times, and want to reduce this,
+-- we may instead write
+dir.(270 + direction == degrees_from_north())
+-- Or, equivalently, for a whole block
+dir.{
+	west_offs := 270
+	direction + west_offs == degrees_from_north()
+}
+-- Which disambiguates appropriately, errors would be
+-- throw, if any of the member names clashed with local names.
+
 
 -- Safer linked list
 Empty := data {}    -- Empty type, no value.
@@ -88,6 +103,12 @@ head(list: SafeList($A, NonEmpty)): A = {
 		Cons(a, _) => a
 	}
 }
+
+tail(list: SafeList($A, NonEmpty)): SafeList(A, $B)
+	= case list { Cons(_, xs) => xs }
+
+-- Overload
+tail(list: SafeList($A, Empty)): SafeList(A, Empty) = Nil
 
 -- Peano
 Natural := data {

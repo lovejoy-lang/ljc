@@ -1,18 +1,18 @@
 #include "common.h"
 #include <string.h>
 
+#pragma once
+
 /// Is `c` the start of a UTF-8 sequence?
 #define is_utf(c) (((c) & 0xC0) != 0x80)
 
 /// Wrap C-string to internal `string`.
-/// Length does _not_ count the null-terminator.
-/// @param[in] cstring Null terminated string to be wrapped
+/// Length does _not_ count the NUL-terminator.
+/// @param[in] c NUL-terminated C-string to be wrapped
 /// @returns Wrapped UTF-8 string.
-inline string wrap_string(const byte *cstring)
-{
-	string s = { .len = strlen(cstring), .value = (byte *)cstring };
-	return s;
-}
+static inline
+string wrap_string(const byte *c)
+	{ return ((string){ .len = strlen(c), .value = (byte *)c }); }
 
 /* Conversions. */
 
@@ -25,7 +25,7 @@ inline string wrap_string(const byte *cstring)
 /// @returns Slice of converted runic `dest` with correct length.
 runic utf8_to_ucs4(runic dest, string src);
 
-/// Convert UCS-4 to UTF-8, will try to NULL-terminate, if there is space.
+/// Convert UCS-4 to UTF-8, will try to NUL-terminate, if there is space.
 /// No error checking is done. `dest.len >= 4 * src.len + 4`
 /// To ensure a fit.  Ensure enough space in `dest` string.
 /// @param[out] dest Empty string structure.
@@ -35,7 +35,7 @@ runic utf8_to_ucs4(runic dest, string src);
 string ucs4_to_utf8(string dest, runic src);
 
 /// Single UCS-4 rune to UTF-8 string.
-/// `dest` should allocate 4 bytes, or 5 if it is desired to NULL-terminate.
+/// `dest` should allocate 4 bytes, or 5 if it is desired to NUL-terminate.
 /// @param[out] dest Empty string structure to hold UTF-8 bytes.
 /// @param[in] ch Single UCS-4 character / rune.
 /// @returns Slice of `dest` with correct length.
@@ -83,7 +83,7 @@ usize read_escape(string src, rune *dest);
 
 /// Given a rune, convert it to an ASCII escape sequence.
 /// @param[out] dest Empty string, should be large enough for minimum
-///                  4 bytes, plus 1 byte for the null-terminator.
+///                  4 bytes, plus 1 byte for the NUL-terminator.
 /// @param[in] ch The UCS-4 rune to convert from.
 /// @returns Slice of `dest` with correct length.
 string escape_rune(string dest, rune ch);

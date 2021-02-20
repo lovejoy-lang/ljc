@@ -17,7 +17,7 @@ enum TokenType {
 	TT_LCURLY,
 	TT_RCURLY,
 	TT_TERM,  ///< Statement terminator.
-	TT_NONE ///< Whitespace, &c.
+	TT_NONE   ///< Whitespace, &c.
 };
 unqualify(enum, TokenType);
 
@@ -46,12 +46,12 @@ unqualify(struct, Lexeme);
 
 /// Number of bytes in token.
 
-inline
+static inline
 usize lexeme_span(const Lexeme *lexeme)
 	{ return lexeme->end - lexeme->start; }
 
 /// Line column number that token starts at.
-inline
+static inline
 usize lexeme_col(const Lexeme *lexeme)
 	{ return lexeme->start - lexeme->line + 1; }
 

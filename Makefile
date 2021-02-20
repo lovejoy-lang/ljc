@@ -11,9 +11,20 @@ OPT ?= -O3
 WARN := -Wall -Wpedantic -Wextra -Wshadow
 LINKS :=
 INCLUDES := -Isrc
-OPTIONS := -funsigned-char
+OPTIONS := -funsigned-char -std=gnu17
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DDIR)/$(*F).d
 CFLAGS += $(DEPFLAGS) $(WARN) $(OPTIONS) $(OPT) $(INCLUDES)
+
+ifeq ($(CC),clang)
+	WARN += -Wno-gnu-zero-variadic-macro-arguments -Wno-language-extension-token
+	OPTIONS += -fms-extensions
+endif
+ifeq ($(CC),gcc)
+	OPTIONS += -fplan9-extensions
+endif
+ifeq ($(OPT),-O0)
+	OPTIONS += -finline-functions
+endif
 
 MAIN := $(ODIR)/bin.o
 TESTS_MAIN := $(ODIR)/tests.o
@@ -57,7 +68,7 @@ $(DDIR):
 
 pre-build: $(ODIR) $(DDIR)
 
-test: clean pre-build $(ODIR)/tests.o
+test: pre-build $(ODIR)/tests.o
 	$(eval T := $(TIME))
 	$(begin_command)
 	$(CC) $(OPT) -o $(TARGET)_test $(OBJS) $(TESTS_MAIN) $(LINKS)

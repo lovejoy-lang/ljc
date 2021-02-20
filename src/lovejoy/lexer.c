@@ -50,7 +50,7 @@ Lexeme *peek(LexerContext *ctx, u16 count, const byte *source)
 
 TokenType character_type(byte chr)
 {
-	// Spaces or null.
+	// Whitespace or NUL.
 	switch (chr) {
 		case '\n':
 		case ';':
@@ -226,7 +226,7 @@ make_token:;
 		// then it becomes 2 +- 3.
 		OperatorTable operators = ctx->operator_table;
 		foreach (op, operators) {
-			string op_substr = VIEW((byte *)source, 0, op->name.len);
+			string op_substr = VIEW(string, (byte *)source, 0, op->name.len);
 			if (string_eq(op->name, op_substr)) {
 				token->end = source + op_substr.len;
 				goto return_token;
@@ -245,7 +245,7 @@ make_token:;
 		// the previous check for known operators, then it does not exist.
 		// Hence, we throw an error.
 		// TODO: Throw proper lexer error.
-		eprintln("Error: Operator does not exist.");
+		eprintln("Error: Operator (`%c') is not recognised.", *source);
 		return nil;
 	default:
 		return nil;
