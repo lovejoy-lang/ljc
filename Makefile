@@ -11,7 +11,7 @@ OPT ?= -O3
 WARN := -Wall -Wpedantic -Wextra -Wshadow
 LINKS :=
 INCLUDES := -Isrc
-OPTIONS := -funsigned-char -std=gnu17
+OPTIONS := -funsigned-char -std=gnu11
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DDIR)/$(*F).d
 CFLAGS += $(DEPFLAGS) $(WARN) $(OPTIONS) $(OPT) $(INCLUDES)
 
