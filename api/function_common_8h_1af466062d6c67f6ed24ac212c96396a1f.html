@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Function get_operator &#8212; Lovejoy Compiler 0.1.0 documentation</title>
+    <title>Function hash_string &#8212; Lovejoy Compiler 0.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
@@ -21,8 +21,8 @@
     <link rel="shortcut icon" href="../_static/lovejoy_icon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Function hash_string" href="function_common_8h_1af466062d6c67f6ed24ac212c96396a1f.html" />
-    <link rel="prev" title="Function extend" href="function_common_8h_1a34dc4b7ca92c5e8d2990ec06c8d7236c.html" />
+    <link rel="next" title="Function hex_digit" href="function_utf_8h_1a1ce2fce91e8c560a2072b6d19c8661d6.html" />
+    <link rel="prev" title="Function get_operator" href="function_operators_8h_1a1660bdfdd316aae83ae0231a45a58603.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -39,21 +39,17 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="function-get-operator">
-<span id="exhale-function-operators-8h-1a1660bdfdd316aae83ae0231a45a58603"></span><h1>Function get_operator<a class="headerlink" href="#function-get-operator" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="function-hash-string">
+<span id="exhale-function-common-8h-1af466062d6c67f6ed24ac212c96396a1f"></span><h1>Function hash_string<a class="headerlink" href="#function-hash-string" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p>Defined in <a class="reference internal" href="file_src_lovejoy_operators.h.html#file-src-lovejoy-operators-h"><span class="std std-ref">File operators.h</span></a></p></li>
+<li><p>Defined in <a class="reference internal" href="file_src_lovejoy_common.h.html#file-src-lovejoy-common-h"><span class="std std-ref">File common.h</span></a></p></li>
 </ul>
 <div class="section" id="function-documentation">
 <h2>Function Documentation<a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp function">
-<dt id="_CPPv412get_operator13OperatorTable6string6Fixity">
-<span id="_CPPv312get_operator13OperatorTable6string6Fixity"></span><span id="_CPPv212get_operator13OperatorTable6string6Fixity"></span><span id="get_operator__OperatorTable.string.Fixity"></span><span class="target" id="operators_8h_1a1660bdfdd316aae83ae0231a45a58603"></span><a class="reference internal" href="structOperator.html#_CPPv48Operator" title="Operator"><span class="pre">Operator</span></a> <span class="pre">*</span><code class="sig-name descname"><span class="pre">get_operator</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_operators_8h_1ac0f6232fc48681a9327420365fa7e38b.html#_CPPv413OperatorTable" title="OperatorTable"><span class="pre">OperatorTable</span></a>, <a class="reference internal" href="typedef_common_8h_1a0b4bfb080fddac459a72b23384488aeb.html#_CPPv46string" title="string"><span class="pre">string</span></a>, <a class="reference internal" href="enum_operators_8h_1a4a574b64b7ce7bf6916f93fe687812e3.html#_CPPv46Fixity" title="Fixity"><span class="pre">Fixity</span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412get_operator13OperatorTable6string6Fixity" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Get an operator given name and fixity, will return specific operator with priority to fixity, in order of: PREFIX, POSTFIX, INFIX. <dl class="simple">
-<dt><strong>Note</strong></dt><dd><p>May return <code class="docutils literal notranslate"><span class="pre">nil</span></code> when no such operator is found. </p>
-</dd>
-</dl>
-</p>
+<dt id="_CPPv411hash_stringK6string">
+<span id="_CPPv311hash_stringK6string"></span><span id="_CPPv211hash_stringK6string"></span><span id="hash_string__stringC"></span><span class="target" id="common_8h_1af466062d6c67f6ed24ac212c96396a1f"></span><a class="reference internal" href="typedef_common_8h_1a55d3d19e932b759bb92c80c6991b80b2.html#_CPPv43u64" title="u64"><span class="pre">u64</span></a> <code class="sig-name descname"><span class="pre">hash_string</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="typedef_common_8h_1a0b4bfb080fddac459a72b23384488aeb.html#_CPPv46string" title="string"><span class="pre">string</span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411hash_stringK6string" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Hash a string. </p>
 </dd></dl>
 
 </div>
@@ -96,8 +92,8 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="root.html">Lovejoy Compiler API</a><ul>
-      <li>Previous: <a href="function_common_8h_1a34dc4b7ca92c5e8d2990ec06c8d7236c.html" title="previous chapter">Function extend</a></li>
-      <li>Next: <a href="function_common_8h_1af466062d6c67f6ed24ac212c96396a1f.html" title="next chapter">Function hash_string</a></li>
+      <li>Previous: <a href="function_operators_8h_1a1660bdfdd316aae83ae0231a45a58603.html" title="previous chapter">Function get_operator</a></li>
+      <li>Next: <a href="function_utf_8h_1a1ce2fce91e8c560a2072b6d19c8661d6.html" title="next chapter">Function hex_digit</a></li>
   </ul></li>
   </ul></li>
 </ul>

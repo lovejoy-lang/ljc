@@ -223,7 +223,7 @@
 <span class="k">extern</span> <span class="n">i32</span> <span class="nf">novel_printf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
 <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">string_eq</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">i16</span> <span class="nf">string_cmp</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="p">);</span>
-<span class="k">extern</span> <span class="n">u64</span> <span class="nf">hash_string</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">u64</span> <span class="nf">hash_string</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="p">);</span>
 
 <span class="cm">/* Common Macros */</span>
 
@@ -259,7 +259,7 @@
 <span class="cp">}</span>
 <span class="cp">#define STRING(...) { \</span>
 <span class="cp">    .len = sizeof((byte[]){ __VA_ARGS__ }) - 1, \</span>
-<span class="cp">    .value = (byte[]){ __VA_ARGS__ } \</span>
+<span class="cp">    .value = __VA_ARGS__ \</span>
 <span class="cp">}</span>
 
 <span class="cp">#define STR(...) ((string)STRING(__VA_ARGS__))</span>

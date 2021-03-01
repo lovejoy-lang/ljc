@@ -100,7 +100,7 @@ Functions
 
 - :ref:`exhale_function_common_8h_1a34dc4b7ca92c5e8d2990ec06c8d7236c`
 
-- :ref:`exhale_function_common_8h_1a381743af5bb2c19b3cb7cb363185091b`
+- :ref:`exhale_function_common_8h_1af466062d6c67f6ed24ac212c96396a1f`
 
 - :ref:`exhale_function_common_8h_1ad0afd688064afb10105c37cb34ceec2c`
 
