@@ -77,9 +77,9 @@
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">blk</span> <span class="o">==</span> <span class="n">nil</span> <span class="o">||</span> <span class="n">width</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">UNIT</span><span class="p">;</span>
-    <span class="n">umin</span> <span class="o">*</span><span class="n">_blk</span> <span class="o">=</span> <span class="n">blk</span><span class="p">;</span>
+    <span class="n">umin</span> <span class="o">*</span><span class="n">bytes</span> <span class="o">=</span> <span class="n">blk</span><span class="p">;</span>
     <span class="n">until</span> <span class="p">(</span><span class="n">width</span><span class="o">--</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="o">*</span><span class="n">_blk</span><span class="o">++</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="o">*</span><span class="n">bytes</span><span class="o">++</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">UNIT</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -200,9 +200,9 @@
     <span class="k">return</span> <span class="n">hash</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">i32</span> <span class="nf">eputs</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span>
+<span class="n">ierr</span> <span class="nf">eputs</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">i32</span> <span class="n">err</span><span class="p">;</span>
+    <span class="n">ierr</span> <span class="n">err</span><span class="p">;</span>
     <span class="n">err</span> <span class="o">=</span> <span class="n">fputs</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">stderr</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
     <span class="n">err</span> <span class="o">=</span> <span class="n">fputc</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">,</span> <span class="n">stderr</span><span class="p">);</span>
@@ -341,7 +341,7 @@
         <span class="p">}</span> <span class="k">break</span><span class="p">;</span>
         <span class="k">case</span> <span class="sc">&#39;C&#39;</span><span class="o">:</span> <span class="p">{</span>  <span class="c1">// &#39;%C&#39;, rune formatter.</span>
             <span class="n">rune</span> <span class="n">value</span> <span class="o">=</span> <span class="n">va_arg</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">rune</span><span class="p">);</span>
-            <span class="n">string</span> <span class="n">ucs_bytes</span> <span class="o">=</span> <span class="n">STRING</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\0\0\0\0\0</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="n">string</span> <span class="n">ucs_bytes</span> <span class="o">=</span> <span class="n">INIT</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="p">{</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">});</span>
             <span class="n">ucs_bytes</span> <span class="o">=</span> <span class="n">rune_to_utf8</span><span class="p">(</span><span class="n">ucs_bytes</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
             <span class="n">extend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ucs_bytes</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
         <span class="p">}</span> <span class="k">break</span><span class="p">;</span>
@@ -566,39 +566,39 @@
     <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">i32</span> <span class="nf">novel_vfprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">args</span><span class="p">)</span>
+<span class="n">ierr</span> <span class="nf">novel_vfprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="kt">va_list</span> <span class="n">args</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="n">novel_vsprintf</span><span class="p">(</span><span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
-    <span class="n">i32</span> <span class="n">res</span> <span class="o">=</span> <span class="n">fputs</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">stream</span><span class="p">);</span>
+    <span class="n">ierr</span> <span class="n">res</span> <span class="o">=</span> <span class="n">fputs</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">stream</span><span class="p">);</span>
     <span class="n">free</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">i32</span> <span class="nf">novel_fprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
+<span class="n">ierr</span> <span class="nf">novel_fprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
 <span class="p">{</span>
     <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
     <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">format</span><span class="p">);</span>
-    <span class="n">i32</span> <span class="n">res</span> <span class="o">=</span> <span class="n">novel_vfprintf</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="n">ierr</span> <span class="n">res</span> <span class="o">=</span> <span class="n">novel_vfprintf</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
     <span class="n">va_end</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">i32</span> <span class="nf">novel_fprintf_newline</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
+<span class="n">ierr</span> <span class="nf">novel_fprintf_newline</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
 <span class="p">{</span>
     <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
     <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">format</span><span class="p">);</span>
-    <span class="n">i32</span> <span class="n">res</span> <span class="o">=</span> <span class="n">novel_vfprintf</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="n">ierr</span> <span class="n">res</span> <span class="o">=</span> <span class="n">novel_vfprintf</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">res</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">EOF</span> <span class="o">==</span> <span class="n">fputc</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">,</span> <span class="n">stream</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">EOF</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">res</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">i32</span> <span class="nf">novel_printf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
+<span class="n">ierr</span> <span class="nf">novel_printf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
 <span class="p">{</span>
     <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
     <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">format</span><span class="p">);</span>
-    <span class="n">i32</span> <span class="n">res</span> <span class="o">=</span> <span class="n">novel_vfprintf</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="n">ierr</span> <span class="n">res</span> <span class="o">=</span> <span class="n">novel_vfprintf</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
     <span class="n">va_end</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
     <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
 <span class="p">}</span>

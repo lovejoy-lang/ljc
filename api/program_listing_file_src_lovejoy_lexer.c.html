@@ -149,6 +149,14 @@
         <span class="p">}</span>
 <span class="p">}</span>
 
+<span class="k">static</span> <span class="n">ierr</span> <span class="nf">expect_string</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">source</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="n">expected</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">string</span> <span class="n">view</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">)</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">expected</span><span class="p">.</span><span class="n">len</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">string_eq</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="n">expected</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">NO_ERROR</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">LEXER_ERROR_UNEXPECTED</span><span class="p">;</span>
+<span class="p">}</span>
+
 <span class="n">Lexeme</span> <span class="o">*</span><span class="nf">lex</span><span class="p">(</span><span class="n">LexerContext</span> <span class="o">*</span><span class="n">ctx</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="n">source</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineptr</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span>
@@ -204,7 +212,7 @@
     <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_TERM</span> <span class="o">&amp;&amp;</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">last_token_type</span> <span class="o">==</span> <span class="n">TT_TERM</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">lex</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">source</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>  <span class="c1">// Tail recursion should be optimised.</span>
 
-    <span class="n">Lexeme</span> <span class="o">*</span><span class="n">token</span> <span class="o">=</span> <span class="n">emalloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Lexeme</span><span class="p">));</span>
+    <span class="n">Lexeme</span> <span class="o">*</span><span class="n">token</span> <span class="o">=</span> <span class="n">emalloc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Lexeme</span><span class="p">));</span>
     <span class="n">token</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">=</span> <span class="n">tt</span><span class="p">;</span>
     <span class="n">token</span><span class="o">-&gt;</span><span class="n">start</span> <span class="o">=</span> <span class="n">source</span><span class="p">;</span>
     <span class="n">token</span><span class="o">-&gt;</span><span class="n">line</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">-&gt;</span><span class="n">lineptr</span><span class="p">;</span>
@@ -227,9 +235,29 @@
     <span class="p">}</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">tt</span> <span class="o">==</span> <span class="n">TT_CHAR</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// A &#39;char&#39; is one rune.</span>
+        <span class="o">++</span><span class="n">source</span><span class="p">;</span>
         <span class="n">usize</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="n">next_rune</span><span class="p">(</span><span class="n">wrap_string</span><span class="p">(</span><span class="n">source</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">);</span>
-        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="n">width</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">source</span> <span class="o">==</span> <span class="sc">&#39;\\&#39;</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// Rune is denoted by an escape sequence.</span>
+            <span class="o">++</span><span class="n">source</span><span class="p">;</span>  <span class="c1">// Skip backslash.</span>
+            <span class="n">string</span> <span class="n">view</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">)</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+
+            <span class="n">rune</span> <span class="n">ch</span><span class="p">;</span>  <span class="n">UNUSED</span><span class="p">(</span><span class="n">ch</span><span class="p">);</span>
+            <span class="n">width</span> <span class="o">+=</span> <span class="n">read_escape</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ch</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  <span class="c1">// Literal rune.</span>
+            <span class="n">string</span> <span class="n">view</span> <span class="o">=</span> <span class="n">VIEW</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">)</span><span class="n">source</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+            <span class="n">next_rune</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">source</span> <span class="o">+=</span> <span class="n">width</span><span class="p">;</span>
+
+        <span class="n">ierr</span> <span class="n">err</span> <span class="o">=</span> <span class="n">expect_string</span><span class="p">(</span><span class="n">source</span><span class="o">++</span><span class="p">,</span> <span class="n">STR</span><span class="p">(</span><span class="s">&quot;&#39;&quot;</span><span class="p">));</span>
+        <span class="n">unless</span> <span class="p">(</span><span class="n">err</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// TODO: Proper error reporting.</span>
+            <span class="n">eprintln</span><span class="p">(</span><span class="s">&quot;error: Expected single-quote at end of character.&quot;</span>
+                <span class="s">&quot;  Got `%c&#39; instead.&quot;</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">source</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+            <span class="k">return</span> <span class="n">nil</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">token</span><span class="o">-&gt;</span><span class="n">end</span> <span class="o">=</span> <span class="n">source</span><span class="p">;</span>
         <span class="k">goto</span> <span class="n">return_token</span><span class="p">;</span>
     <span class="p">}</span>
 
@@ -283,7 +311,7 @@
         <span class="c1">// the previous check for known operators, then it does not exist.</span>
         <span class="c1">// Hence, we throw an error.</span>
         <span class="c1">// TODO: Throw proper lexer error.</span>
-        <span class="n">eprintln</span><span class="p">(</span><span class="s">&quot;Error: Operator (`%c&#39;) is not recognised.&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">source</span><span class="p">);</span>
+        <span class="n">eprintln</span><span class="p">(</span><span class="s">&quot;error: Operator (`%c&#39;) is not recognised.&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">source</span><span class="p">);</span>
         <span class="k">return</span> <span class="n">nil</span><span class="p">;</span>
     <span class="k">default</span><span class="o">:</span>
         <span class="k">return</span> <span class="n">nil</span><span class="p">;</span>

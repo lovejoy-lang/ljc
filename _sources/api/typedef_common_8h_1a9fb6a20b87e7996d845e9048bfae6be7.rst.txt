@@ -1,0 +1,13 @@
+.. _exhale_typedef_common_8h_1a9fb6a20b87e7996d845e9048bfae6be7:
+
+Typedef ierr
+============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: ierr

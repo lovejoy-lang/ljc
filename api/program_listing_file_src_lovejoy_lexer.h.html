@@ -82,6 +82,11 @@
 <span class="p">};</span>
 <span class="n">unqualify</span><span class="p">(</span><span class="k">struct</span><span class="p">,</span> <span class="n">Lexeme</span><span class="p">);</span>
 
+<span class="k">enum</span> <span class="n">LexerError</span> <span class="p">{</span>
+    <span class="n">LEXER_ERROR_UNEXPECTED</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="n">LEXER_ERROR_EOS</span>        <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
+<span class="p">};</span>
+<span class="n">unqualify</span><span class="p">(</span><span class="k">enum</span><span class="p">,</span> <span class="n">LexerError</span><span class="p">);</span>
 
 <span class="k">static</span> <span class="kr">inline</span>
 <span class="n">usize</span> <span class="nf">lexeme_span</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span><span class="p">)</span>

@@ -50,7 +50,7 @@
 
 <span class="n">byte</span> <span class="o">*</span><span class="nf">compile_source</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">);</span>
 
-<span class="n">i32</span> <span class="nf">main</span><span class="p">(</span><span class="n">i32</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="n">ierr</span> <span class="nf">main</span><span class="p">(</span><span class="k">const</span> <span class="n">i32</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="k">const</span> <span class="o">*</span><span class="k">const</span> <span class="n">argv</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">byte</span> <span class="o">*</span><span class="n">locale</span><span class="p">;</span> <span class="n">UNUSED</span><span class="p">(</span><span class="n">locale</span><span class="p">);</span>
     <span class="n">locale</span> <span class="o">=</span> <span class="n">setlocale</span><span class="p">(</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
@@ -78,7 +78,7 @@
             <span class="n">source</span> <span class="o">=</span> <span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">)</span><span class="n">calloc</span><span class="p">(</span><span class="n">source_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">byte</span><span class="p">));</span>
             <span class="n">fread</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">source_len</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">f</span><span class="p">);</span>
 
-            <span class="n">byte</span> <span class="o">*</span><span class="n">bin</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">unused</span><span class="p">));</span>
+            <span class="n">byte</span> <span class="o">*</span><span class="n">bin</span><span class="p">;</span>  <span class="n">UNUSED</span><span class="p">(</span><span class="n">bin</span><span class="p">);</span>
             <span class="n">bin</span> <span class="o">=</span> <span class="n">compile_source</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">source</span><span class="p">);</span>
             <span class="n">fclose</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
             <span class="n">free</span><span class="p">(</span><span class="n">source</span><span class="p">);</span>

@@ -66,7 +66,7 @@
         <span class="k">case</span> <span class="nl">TT_NONE</span><span class="p">:</span>     <span class="n">repr</span> <span class="o">=</span>    <span class="s">&quot;none-token&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
         <span class="k">default</span><span class="o">:</span>          <span class="n">repr</span> <span class="o">=</span>   <span class="s">&quot;false-token&quot;</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="n">wrap_string</span><span class="p">(</span><span class="n">repr</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">to_string</span><span class="p">(</span><span class="n">repr</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="n">string</span> <span class="nf">display_lexeme</span><span class="p">(</span><span class="k">const</span> <span class="n">Lexeme</span> <span class="o">*</span><span class="n">lexeme</span><span class="p">)</span>
@@ -86,7 +86,7 @@
     <span class="p">}</span>
 
     <span class="n">repr</span><span class="p">[</span><span class="n">len</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">wrap_string</span><span class="p">(</span><span class="n">repr</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">to_string</span><span class="p">(</span><span class="n">repr</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="cp">#endif</span>

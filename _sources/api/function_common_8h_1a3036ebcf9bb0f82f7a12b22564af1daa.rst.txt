@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a3036ebcf9bb0f82f7a12b22564af1daa:
+
+Function eputs
+==============
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: eputs(const byte *)

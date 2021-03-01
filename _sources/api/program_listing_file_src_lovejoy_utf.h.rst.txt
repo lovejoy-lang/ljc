@@ -18,7 +18,7 @@ Program Listing for File utf.h
    #define is_utf(c) (((c) & 0xC0) != 0x80)
    
    static inline
-   string wrap_string(const byte *c)
+   string to_string(const byte *c)
        { return ((string){ .len = strlen(c), .value = (byte *)c }); }
    
    /* Conversions. */

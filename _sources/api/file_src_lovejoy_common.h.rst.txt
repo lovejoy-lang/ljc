@@ -96,7 +96,7 @@ Functions
 
 - :ref:`exhale_function_common_8h_1a39ecb10d1f8fb459d69bd3e90122f284`
 
-- :ref:`exhale_function_common_8h_1af26267c04316df33c9ac4ce78e348e75`
+- :ref:`exhale_function_common_8h_1a3036ebcf9bb0f82f7a12b22564af1daa`
 
 - :ref:`exhale_function_common_8h_1a34dc4b7ca92c5e8d2990ec06c8d7236c`
 
@@ -108,15 +108,15 @@ Functions
 
 - :ref:`exhale_function_common_8h_1a33e91eed2d1c91d9564791e790d8e99c`
 
-- :ref:`exhale_function_common_8h_1ac92b51637b4b8d45c4fa70c8077ce87e`
+- :ref:`exhale_function_common_8h_1af371179e4990b527625018fc4597ca6c`
 
-- :ref:`exhale_function_common_8h_1aea62bd3c48d47675d4297652deaeb5c4`
+- :ref:`exhale_function_common_8h_1a02df5280bde20690d205bcfc23c0a4c9`
 
-- :ref:`exhale_function_common_8h_1aa228ed27dbe10f2df7e9f89b6805ad71`
+- :ref:`exhale_function_common_8h_1aaceb48ba296fae2b6c3f8f9505f25205`
 
 - :ref:`exhale_function_common_8h_1a31c0de5a94fec66897f0351a70d7965d`
 
-- :ref:`exhale_function_common_8h_1a784c7aa821dfbc07814af10a3cb5fb85`
+- :ref:`exhale_function_common_8h_1a106cec8d6e14baf16f97e58072d59eaa`
 
 - :ref:`exhale_function_common_8h_1af47785ed8b9652e974d08d9e70c4f976`
 
@@ -207,6 +207,8 @@ Defines
 
 - :ref:`exhale_define_common_8h_1a7a7ca81d2a85873283b5ec82953b1b25`
 
+- :ref:`exhale_define_common_8h_1a258bb72419ef143530a2f8f55e7d57af`
+
 - :ref:`exhale_define_common_8h_1a1f834688bccf9caba7835192662bc492`
 
 - :ref:`exhale_define_common_8h_1a0eabd5db583e036746080f1d4f74cc92`
@@ -289,6 +291,8 @@ Typedefs
 - :ref:`exhale_typedef_common_8h_1a0706f2d9c35aaa3def9868d33a06f6a5`
 
 - :ref:`exhale_typedef_common_8h_1a1c4d2c177261d546b5f902542d31d35a`
+
+- :ref:`exhale_typedef_common_8h_1a9fb6a20b87e7996d845e9048bfae6be7`
 
 - :ref:`exhale_typedef_common_8h_1aa5e59e4e6417eecf0bba295c1f89a7c3`
 

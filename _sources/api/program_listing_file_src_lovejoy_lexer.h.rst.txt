@@ -52,6 +52,11 @@ Program Listing for File lexer.h
    };
    unqualify(struct, Lexeme);
    
+   enum LexerError {
+       LEXER_ERROR_UNEXPECTED = 11,
+       LEXER_ERROR_EOS        = 12,
+   };
+   unqualify(enum, LexerError);
    
    static inline
    usize lexeme_span(const Lexeme *lexeme)

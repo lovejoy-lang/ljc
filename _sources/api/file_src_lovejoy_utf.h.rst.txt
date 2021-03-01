@@ -80,6 +80,8 @@ Functions
 
 - :ref:`exhale_function_utf_8h_1a04b6c9ed69a5052da6ca788c76d4d4f5`
 
+- :ref:`exhale_function_utf_8h_1ab358f57109a0dbdd1bf721eae2cf3043`
+
 - :ref:`exhale_function_utf_8h_1a5ca4a2c5dffb625694dddda825022256`
 
 - :ref:`exhale_function_utf_8h_1ae1e0b3990ee44d184d29eecd6ff5d8b3`
@@ -93,8 +95,6 @@ Functions
 - :ref:`exhale_function_utf_8h_1a91bc79033e14ab8502918ffc0c058014`
 
 - :ref:`exhale_function_utf_8h_1aaa418820fe18d784b08d6bf035fa214c`
-
-- :ref:`exhale_function_utf_8h_1aafcd5b72b32f229c49f081836ccebc49`
 
 
 Defines

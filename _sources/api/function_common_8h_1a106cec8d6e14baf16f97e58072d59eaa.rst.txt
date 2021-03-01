@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a106cec8d6e14baf16f97e58072d59eaa:
+
+Function novel_vfprintf
+=======================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: novel_vfprintf(FILE *, byte *, va_list)

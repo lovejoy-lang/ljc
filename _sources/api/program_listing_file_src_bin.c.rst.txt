@@ -21,7 +21,7 @@ Program Listing for File bin.c
    
    byte *compile_source(const byte *, const byte *);
    
-   i32 main(i32 argc, const byte **argv)
+   ierr main(const i32 argc, const byte *const *const argv)
    {
        byte *locale; UNUSED(locale);
        locale = setlocale(LC_ALL, "");
@@ -49,7 +49,7 @@ Program Listing for File bin.c
                source = (byte *)calloc(source_len + 1, sizeof(byte));
                fread(source, source_len, 1, f);
    
-               byte *bin __attribute__((unused));
+               byte *bin;  UNUSED(bin);
                bin = compile_source(argv[i], source);
                fclose(f);
                free(source);

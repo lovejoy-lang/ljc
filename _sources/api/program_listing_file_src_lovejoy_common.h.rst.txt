@@ -71,6 +71,7 @@ Program Listing for File common.h
    #define nil NULL
    
    #define UNUSED(x) (void)(x)
+   #define NO_ERROR EXIT_SUCCESS;
    
    #define PANIC(lit, ...) \
        panic("\n[**] Panicking!\n[**] CAUSE:\n -- \t%s(): " \
@@ -86,6 +87,8 @@ Program Listing for File common.h
    
    typedef void u0;
    #define UNIT ;
+   
+   typedef int ierr;
    
    #define __UCHAR8__ char
    
@@ -183,14 +186,14 @@ Program Listing for File common.h
    //                   elements that are being appended to the array.
    extern usize extend(u0 *self, const u0 *slice, usize width);
    extern u0 *pop(u0 *array, usize width);
-   extern i32 eputs(const byte *);
+   extern ierr eputs(const byte *);
    extern usize sizeof_specifier(const byte *);
    extern string novel_vsprintf(byte *, va_list);
    extern string novel_sprintf(byte *, ...);
-   extern i32 novel_vfprintf(FILE *, byte *, va_list);
-   extern i32 novel_fprintf(FILE *, byte *, ...);
-   extern i32 novel_fprintf_newline(FILE *, byte *, ...);
-   extern i32 novel_printf(byte *, ...);
+   extern ierr novel_vfprintf(FILE *, byte *, va_list);
+   extern ierr novel_fprintf(FILE *, byte *, ...);
+   extern ierr novel_fprintf_newline(FILE *, byte *, ...);
+   extern ierr novel_printf(byte *, ...);
    extern bool string_eq(const string, const string);
    extern i16 string_cmp(const string, const string);
    extern u64 hash_string(const string);
@@ -229,7 +232,7 @@ Program Listing for File common.h
    }
    #define STRING(...) { \
        .len = sizeof((byte[]){ __VA_ARGS__ }) - 1, \
-       .value = __VA_ARGS__ \
+       .value = (byte[]){ __VA_ARGS__ } \
    }
    
    #define STR(...) ((string)STRING(__VA_ARGS__))

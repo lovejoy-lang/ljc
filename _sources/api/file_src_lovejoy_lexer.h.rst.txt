@@ -67,6 +67,8 @@ Enums
 -----
 
 
+- :ref:`exhale_enum_lexer_8h_1a2bc0e90a48628bde27540493c56177b8`
+
 - :ref:`exhale_enum_lexer_8h_1aa520fbf142ba1e7e659590c07da31921`
 
 
@@ -98,6 +100,8 @@ Typedefs
 - :ref:`exhale_typedef_lexer_8h_1aa6d56f8bfe92772eef5da4f35e93b830`
 
 - :ref:`exhale_typedef_lexer_8h_1abb3ac3c7d13ebf90ad1d345939a74add`
+
+- :ref:`exhale_typedef_lexer_8h_1a5a598010519300c88ebb8756dcdc366f`
 
 - :ref:`exhale_typedef_lexer_8h_1a223ce5df2488277839246d7ebf52a7f8`
 

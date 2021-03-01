@@ -1,0 +1,13 @@
+.. _exhale_typedef_lexer_8h_1a5a598010519300c88ebb8756dcdc366f:
+
+Typedef LexerError
+==================
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: LexerError

@@ -1,0 +1,13 @@
+.. _exhale_function_common_8h_1a02df5280bde20690d205bcfc23c0a4c9:
+
+Function novel_fprintf_newline
+==============================
+
+- Defined in :ref:`file_src_lovejoy_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: novel_fprintf_newline(FILE *, byte *, ...)

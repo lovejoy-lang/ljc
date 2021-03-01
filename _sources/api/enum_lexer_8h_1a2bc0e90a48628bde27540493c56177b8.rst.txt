@@ -1,0 +1,13 @@
+.. _exhale_enum_lexer_8h_1a2bc0e90a48628bde27540493c56177b8:
+
+Enum LexerError
+===============
+
+- Defined in :ref:`file_src_lovejoy_lexer.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: LexerError

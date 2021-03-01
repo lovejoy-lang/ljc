@@ -101,6 +101,7 @@
 <span class="cp">#define nil NULL</span>
 
 <span class="cp">#define UNUSED(x) (void)(x)</span>
+<span class="cp">#define NO_ERROR EXIT_SUCCESS;</span>
 
 <span class="cp">#define PANIC(lit, ...) \</span>
 <span class="cp">    panic(&quot;\n[**] Panicking!\n[**] CAUSE:\n -- \t%s(): &quot; \</span>
@@ -116,6 +117,8 @@
 
 <span class="k">typedef</span> <span class="kt">void</span> <span class="n">u0</span><span class="p">;</span>
 <span class="cp">#define UNIT ;</span>
+
+<span class="k">typedef</span> <span class="kt">int</span> <span class="n">ierr</span><span class="p">;</span>
 
 <span class="cp">#define __UCHAR8__ char</span>
 
@@ -213,14 +216,14 @@
 <span class="c1">//                   elements that are being appended to the array.</span>
 <span class="k">extern</span> <span class="n">usize</span> <span class="nf">extend</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">u0</span> <span class="o">*</span><span class="n">slice</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">u0</span> <span class="o">*</span><span class="nf">pop</span><span class="p">(</span><span class="n">u0</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="n">usize</span> <span class="n">width</span><span class="p">);</span>
-<span class="k">extern</span> <span class="n">i32</span> <span class="nf">eputs</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">ierr</span> <span class="nf">eputs</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">usize</span> <span class="nf">sizeof_specifier</span><span class="p">(</span><span class="k">const</span> <span class="n">byte</span> <span class="o">*</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">string</span> <span class="nf">novel_vsprintf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="kt">va_list</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">string</span> <span class="nf">novel_sprintf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
-<span class="k">extern</span> <span class="n">i32</span> <span class="nf">novel_vfprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="kt">va_list</span><span class="p">);</span>
-<span class="k">extern</span> <span class="n">i32</span> <span class="nf">novel_fprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
-<span class="k">extern</span> <span class="n">i32</span> <span class="nf">novel_fprintf_newline</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
-<span class="k">extern</span> <span class="n">i32</span> <span class="nf">novel_printf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
+<span class="k">extern</span> <span class="n">ierr</span> <span class="nf">novel_vfprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="kt">va_list</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">ierr</span> <span class="nf">novel_fprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
+<span class="k">extern</span> <span class="n">ierr</span> <span class="nf">novel_fprintf_newline</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="p">,</span> <span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
+<span class="k">extern</span> <span class="n">ierr</span> <span class="nf">novel_printf</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="p">,</span> <span class="p">...);</span>
 <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">string_eq</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">i16</span> <span class="nf">string_cmp</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="p">);</span>
 <span class="k">extern</span> <span class="n">u64</span> <span class="nf">hash_string</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="p">);</span>
@@ -259,7 +262,7 @@
 <span class="cp">}</span>
 <span class="cp">#define STRING(...) { \</span>
 <span class="cp">    .len = sizeof((byte[]){ __VA_ARGS__ }) - 1, \</span>
-<span class="cp">    .value = __VA_ARGS__ \</span>
+<span class="cp">    .value = (byte[]){ __VA_ARGS__ } \</span>
 <span class="cp">}</span>
 
 <span class="cp">#define STR(...) ((string)STRING(__VA_ARGS__))</span>
