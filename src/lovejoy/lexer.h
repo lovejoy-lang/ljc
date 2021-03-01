@@ -56,7 +56,6 @@ usize lexeme_col(const Lexeme *lexeme)
 	{ return lexeme->start - lexeme->line + 1; }
 
 /// Get stand-alone substring of lexeme.
-/// @note Allocates memory.
 string lexeme_substring(const Lexeme *);
 
 /// Type of token character probably belongs to.

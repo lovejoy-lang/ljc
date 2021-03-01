@@ -70,13 +70,14 @@ byte *compile_source(const byte *name, const byte *source)
 		source = lexeme->end;
 
 		// Print fo debugging
-		string lexeme_repr = display_lexeme(lexeme);
-		eprintln("(lexem %02lu:%02lu %s)",
+		eprintln("(lexem %02lu:%02lu :%S ‘%S’)",
 			lexeme->lineno,
 			lexeme_col(lexeme),
-			UNWRAP(lexeme_repr));
+			display_tt(lexeme->type),
+			(lexeme->type != TT_TERM)
+				? lexeme_substring(lexeme)
+				: STR(";"));
 
-		free(UNWRAP(lexeme_repr));
 		lexeme_free(lexeme);
 	}
 	eputs("EOT - End of Token Stream");

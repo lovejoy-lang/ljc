@@ -210,7 +210,7 @@ extern i32 novel_printf(byte *, ...);
 extern bool string_eq(const string, const string);
 extern i16 string_cmp(const string, const string);
 /// Hash a string.
-extern u64 hash_string(string);
+extern u64 hash_string(const string);
 
 /* Common Macros */
 
@@ -249,7 +249,7 @@ extern u64 hash_string(string);
 /// Initialise sizing wrapper with of string literal.
 #define STRING(...) { \
 	.len = sizeof((byte[]){ __VA_ARGS__ }) - 1, \
-	.value = (byte[]){ __VA_ARGS__ } \
+	.value = __VA_ARGS__ \
 }
 
 #define STR(...) ((string)STRING(__VA_ARGS__))

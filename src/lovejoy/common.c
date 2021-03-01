@@ -186,7 +186,7 @@ static string LENGTH_SUBSPECIFIERS
 ///
 /// Here, those correspond to:
 ///
-/// flag ::= {'+' | '-' | ' ' | '#' | '0'}
+/// flag ::= '+' | '-' | ' ' | '#' | '0'
 /// flags ::= {flag}
 /// width ::= {'0'..'9'} | '*'
 /// precision ::= {'0'..'9'} | '*'

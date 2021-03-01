@@ -61,3 +61,9 @@ $ ./ljc_test
 
 ## Future Goals
 - Become self-hosting.
+
+
+## `common.h`
+The `common.h` and `common.c` files describe general functions and macros
+used by this project.  For enhanced C syntax highlighting, appropriate to this
+project, consider using my [`.vim/after/syntax/c.vim`](https://github.com/Demonstrandum/Dotfiles/blob/master/.vim/after/syntax/c.vim).

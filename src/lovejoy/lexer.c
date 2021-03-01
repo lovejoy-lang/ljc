@@ -21,10 +21,7 @@ LexerContext NewLexer()
 string lexeme_substring(const Lexeme *lexeme)
 {
 	usize span = lexeme_span(lexeme);
-	byte *ss = emalloc(span + 1, sizeof(byte));
-	strncpy(ss, lexeme->start, span);
-	ss[span] = '\0';
-	return wrap_string(ss);
+	return VIEW(string, (byte *)lexeme->start, 0, span);
 }
 
 u0 lexeme_free(Lexeme *lexeme)
@@ -95,7 +92,7 @@ TokenType character_type(byte chr)
 /// @private
 static const byte *skip_whitespace(const byte *source)
 {
-	while (1)
+	loop
 		switch (*source) {
 		case '\0': return source;
 		case '\t':
@@ -148,7 +145,7 @@ Lexeme *lex(LexerContext *ctx, const byte *source)
 		case '\n':
 			++ctx->lineno;
 			ctx->lineptr = source + 1;
-			// fallthrough
+			/* fallthrough */
 		case ';':
 			++source;
 			is_terminal = true;
@@ -166,7 +163,7 @@ make_token:;
 	if (tt == TT_TERM && ctx->last_token_type == TT_TERM)
 		return lex(ctx, source + 1);  // Tail recursion should be optimised.
 
-	Lexeme *token = (Lexeme *)malloc(sizeof(Lexeme));
+	Lexeme *token = emalloc(sizeof(Lexeme));
 	token->type = tt;
 	token->start = source;
 	token->line = ctx->lineptr;
