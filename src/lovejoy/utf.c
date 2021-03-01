@@ -182,7 +182,7 @@ usize read_escape(string src, rune *dest)
 {
 	rune ch;
 	byte *sptr = src.value;
-	byte digs[9] = "\0\0\0\0\0\0\0\0";
+	byte digs[8 + 1] = "\0\0\0\0\0\0\0\0";
 	usize dno = 0, i = 1;
 
 	ch = (rune)sptr[0];  // Take the literal character.

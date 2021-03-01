@@ -108,6 +108,15 @@ static const byte *skip_whitespace(const byte *source)
 		}
 }
 
+/// @private
+static ierr expect_string(const byte *source, const string expected)
+{
+	string view = VIEW(string, (byte *)source, 0, expected.len);
+	if (string_eq(view, expected))
+		return NO_ERROR;
+	return LEXER_ERROR_UNEXPECTED;
+}
+
 Lexeme *lex(LexerContext *ctx, const byte *source)
 {
 	if (ctx->lineptr == nil)
@@ -163,7 +172,7 @@ make_token:;
 	if (tt == TT_TERM && ctx->last_token_type == TT_TERM)
 		return lex(ctx, source + 1);  // Tail recursion should be optimised.
 
-	Lexeme *token = emalloc(sizeof(Lexeme));
+	Lexeme *token = emalloc(1, sizeof(Lexeme));
 	token->type = tt;
 	token->start = source;
 	token->line = ctx->lineptr;
@@ -186,9 +195,29 @@ make_token:;
 	}
 	if (tt == TT_CHAR) {
 		// A 'char' is one rune.
+		++source;
 		usize width = 0;
-		next_rune(wrap_string(source), &width);
-		token->end = source + width;
+
+		if (*source == '\\') {  // Rune is denoted by an escape sequence.
+			++source;  // Skip backslash.
+			string view = VIEW(string, (byte *)source, 0, 16);
+
+			rune ch;  UNUSED(ch);
+			width += read_escape(view, &ch);
+		} else {  // Literal rune.
+			string view = VIEW(string, (byte *)source, 0, 16);
+			next_rune(view, &width);
+		}
+		source += width;
+
+		ierr err = expect_string(source++, STR("'"));
+		unless (err == 0) {  // TODO: Proper error reporting.
+			eprintln("error: Expected single-quote at end of character."
+				"  Got `%c' instead.", *(source - 1));
+			return nil;
+		}
+
+		token->end = source;
 		goto return_token;
 	}
 
@@ -242,7 +271,7 @@ make_token:;
 		// the previous check for known operators, then it does not exist.
 		// Hence, we throw an error.
 		// TODO: Throw proper lexer error.
-		eprintln("Error: Operator (`%c') is not recognised.", *source);
+		eprintln("error: Operator (`%c') is not recognised.", *source);
 		return nil;
 	default:
 		return nil;

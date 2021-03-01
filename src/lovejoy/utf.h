@@ -6,12 +6,12 @@
 /// Is `c` the start of a UTF-8 sequence?
 #define is_utf(c) (((c) & 0xC0) != 0x80)
 
-/// Wrap C-string to internal `string`.
+/// Wrap C-string to internal `string` slice.
 /// Length does _not_ count the NUL-terminator.
 /// @param[in] c NUL-terminated C-string to be wrapped
-/// @returns Wrapped UTF-8 string.
+/// @returns UTF-8 string slice.
 static inline
-string wrap_string(const byte *c)
+string to_string(const byte *c)
 	{ return ((string){ .len = strlen(c), .value = (byte *)c }); }
 
 /* Conversions. */
@@ -77,7 +77,7 @@ u0 prev_rune(string, usize *);
 /// are to succeed it.  The resulting rune is stored in `dest`.
 /// @param[in] src String pointing to char after backslash.
 /// @param[out] dest Pointer to location where resulting rune is to be stored.
-/// @returns How many characters read as part of parsing (including `u`/`U`).
+/// @returns How many bytes read as part of parsing (including `u`/`U`).
 ///          Returns `0` if escape is invalid.
 usize read_escape(string src, rune *dest);
 

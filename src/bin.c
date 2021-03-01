@@ -19,7 +19,7 @@ byte *compile_source(const byte *, const byte *);
  * Handle command-line arguments,
  * compile files with given options.
  */
-i32 main(i32 argc, const byte **argv)
+ierr main(const i32 argc, const byte *const *const argv)
 {
 	byte *locale; UNUSED(locale);
     locale = setlocale(LC_ALL, "");
@@ -47,7 +47,7 @@ i32 main(i32 argc, const byte **argv)
 			source = (byte *)calloc(source_len + 1, sizeof(byte));
 			fread(source, source_len, 1, f);
 
-			byte *bin __attribute__((unused));
+			byte *bin;  UNUSED(bin);
 			bin = compile_source(argv[i], source);
 			fclose(f);
 			free(source);

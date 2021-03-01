@@ -1,0 +1,13 @@
+rune ch_0 = 'a'
+rune ch_1 = 'A'
+rune ch_2 = '\n'
+rune ch_3 = '\0'
+
+rune c1 = '\U00030EDD'
+rune c2 = '𰻝'
+
+main(_) := exit(0) with {
+	assert(c1 == c2);
+	#assert(widthof(ch_0) == widthof(c1));
+	#assert(widthof(c1) * BYTE_BITS == 32);
+}

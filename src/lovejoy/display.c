@@ -24,7 +24,7 @@ string display_tt(TokenType tt)
 		case TT_NONE:     repr =    "none-token"; break;
 		default:          repr =   "false-token"; break;
 	}
-	return wrap_string(repr);
+	return to_string(repr);
 }
 
 string display_lexeme(const Lexeme *lexeme)
@@ -44,7 +44,7 @@ string display_lexeme(const Lexeme *lexeme)
 	}
 
 	repr[len] = '\0';
-	return wrap_string(repr);
+	return to_string(repr);
 }
 
 #endif

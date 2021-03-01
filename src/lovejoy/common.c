@@ -35,9 +35,9 @@ u0 zero(u0 *blk, usize width)
 {
 	if (blk == nil || width == 0)
 		return UNIT;
-	umin *_blk = blk;
+	umin *bytes = blk;
 	until (width-- == 0)
-		*_blk++ = 0;
+		*bytes++ = 0;
 	return UNIT;
 }
 
@@ -159,9 +159,9 @@ u64 hash_string(string str)
 	return hash;
 }
 
-i32 eputs(const byte *s)
+ierr eputs(const byte *s)
 {
-	i32 err;
+	ierr err;
 	err = fputs(s, stderr);
 	if (err < 0) return err;
 	err = fputc('\n', stderr);
@@ -312,7 +312,7 @@ string novel_vsprintf(byte *format, va_list args)
 		} break;
 		case 'C': {  // '%C', rune formatter.
 			rune value = va_arg(args, rune);
-			string ucs_bytes = STRING("\0\0\0\0\0");
+			string ucs_bytes = INIT(byte, { 0, 0, 0, 0, 0 });
 			ucs_bytes = rune_to_utf8(ucs_bytes, value);
 			extend(&bytes, &ucs_bytes, sizeof(byte));
 		} break;
@@ -537,39 +537,39 @@ string novel_sprintf(byte *format, ...)
 	return res;
 }
 
-i32 novel_vfprintf(FILE *stream, byte *format, va_list args)
+ierr novel_vfprintf(FILE *stream, byte *format, va_list args)
 {
 	string s = novel_vsprintf(format, args);
-	i32 res = fputs(s.value, stream);
+	ierr res = fputs(s.value, stream);
 	free(s.value);
 	return res;
 }
 
-i32 novel_fprintf(FILE *stream, byte *format, ...)
+ierr novel_fprintf(FILE *stream, byte *format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	i32 res = novel_vfprintf(stream, format, args);
+	ierr res = novel_vfprintf(stream, format, args);
 	va_end(args);
 	return res;
 }
 
-i32 novel_fprintf_newline(FILE *stream, byte *format, ...)
+ierr novel_fprintf_newline(FILE *stream, byte *format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	i32 res = novel_vfprintf(stream, format, args);
+	ierr res = novel_vfprintf(stream, format, args);
 	if (res < 0) return res;
 	if (EOF == fputc('\n', stream))
 		return EOF;
 	return res + 1;
 }
 
-i32 novel_printf(byte *format, ...)
+ierr novel_printf(byte *format, ...)
 {
 	va_list args;
 	va_start(args, format);
-	i32 res = novel_vfprintf(stdout, format, args);
+	ierr res = novel_vfprintf(stdout, format, args);
 	va_end(args);
 	return res;
 }

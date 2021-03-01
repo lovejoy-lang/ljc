@@ -52,6 +52,7 @@
 #define nil NULL
 
 #define UNUSED(x) (void)(x)
+#define NO_ERROR EXIT_SUCCESS;
 
 #define PANIC(lit, ...) \
 	panic("\n[**] Panicking!\n[**] CAUSE:\n -- \t%s(): " \
@@ -70,6 +71,10 @@ newtype(atomic_t, int);
 /// Thanks to Terry for this one.
 typedef void u0;
 #define UNIT ;
+
+/// Explicitly mark functions that return error-codes
+/// as returning `ierr` instead of just `int`.
+typedef int ierr;
 
 #define __UCHAR8__ char
 
@@ -194,7 +199,7 @@ extern usize extend(u0 *self, const u0 *slice, usize width);
 /// @returns Pointer to popped element.
 extern u0 *pop(u0 *array, usize width);
 /// puts(...) to STDERR.
-extern i32 eputs(const byte *);
+extern ierr eputs(const byte *);
 /// Size of the type of a `printf`-style format specifer.
 /// e.g. `sizeof_specifier("hx") == sizeof(unsigned short int);`.
 extern usize sizeof_specifier(const byte *);
@@ -202,10 +207,10 @@ extern usize sizeof_specifier(const byte *);
 /// @note Heap allocates memory, should be freed after printing.
 extern string novel_vsprintf(byte *, va_list);
 extern string novel_sprintf(byte *, ...);
-extern i32 novel_vfprintf(FILE *, byte *, va_list);
-extern i32 novel_fprintf(FILE *, byte *, ...);
-extern i32 novel_fprintf_newline(FILE *, byte *, ...);
-extern i32 novel_printf(byte *, ...);
+extern ierr novel_vfprintf(FILE *, byte *, va_list);
+extern ierr novel_fprintf(FILE *, byte *, ...);
+extern ierr novel_fprintf_newline(FILE *, byte *, ...);
+extern ierr novel_printf(byte *, ...);
 /// Compare two strings for equality.
 extern bool string_eq(const string, const string);
 extern i16 string_cmp(const string, const string);
@@ -249,7 +254,7 @@ extern u64 hash_string(const string);
 /// Initialise sizing wrapper with of string literal.
 #define STRING(...) { \
 	.len = sizeof((byte[]){ __VA_ARGS__ }) - 1, \
-	.value = __VA_ARGS__ \
+	.value = (byte[]){ __VA_ARGS__ } \
 }
 
 #define STR(...) ((string)STRING(__VA_ARGS__))

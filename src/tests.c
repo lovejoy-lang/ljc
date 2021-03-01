@@ -18,7 +18,7 @@
 u0 utf8_ucs4_conversions(byte *cstring)
 {
 	// UTF-8 string.
-	string s = wrap_string(cstring);
+	string s = to_string(cstring);
 	println("s = \"%s\"", UNWRAP(s));
 	FOR_EACH(c, s) println("byte: 0x%X", *c);
 	println("s.len = %zu", s.len);
@@ -43,7 +43,7 @@ u0 utf8_ucs4_conversions(byte *cstring)
 
 newtype(Natural, u64);  // New-type idiom.
 
-i32 main(i32 argc, const byte **argv)
+ierr main(i32 argc, const byte **argv)
 {
 	UNUSED(argc); UNUSED(argv);
 	byte *locale; UNUSED(locale);

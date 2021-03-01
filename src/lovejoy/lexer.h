@@ -44,8 +44,16 @@ struct Lexeme {
 };
 unqualify(struct, Lexeme);
 
-/// Number of bytes in token.
+/// Error codes signifying lexical errors.
+enum LexerError {
+	/// Unexpected character(s) when lexing.
+	LEXER_ERROR_UNEXPECTED = 11,
+    /// No EOS (end of string) was found.
+	LEXER_ERROR_EOS        = 12,
+};
+unqualify(enum, LexerError);
 
+/// Number of bytes in token.
 static inline
 usize lexeme_span(const Lexeme *lexeme)
 	{ return lexeme->end - lexeme->start; }
